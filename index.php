@@ -98,7 +98,7 @@ $answer=<<<aaa
 <h3>调用示例（x6）post<h3/>
 <p>.*<p/>
 <br/>
-<p>$ p o s t(大写不要空格) https://www.coldeggs.top/test/index.php petname=%昵称%&qq=%QQ%&msg=%参数-1%&qun=%群号%&atqq=%AT0%&robot=%robot%&qhost=%主人%$<p/>
+<p>$ p o s t(大写不要空格) https://www.coldeggs.top/robot/index.php petname=%昵称%&qq=%QQ%&msg=%参数-1%&qun=%群号%&atqq=%AT0%&robot=%robot%&qhost=%主人%$<p/>
 <footer>
 <centre>
 <a>property in copyright coldeggs<a/>
