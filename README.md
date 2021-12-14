@@ -1,6 +1,10 @@
 # [CP·Bot使用手册] by coldeggs  
 ## 引用phpmailer&phpqrcode  
 你好！  欢迎阅读本程序的使用文档  
+运行环境：
+- Linux
+- PHP 8.0
+- 国内IP的服务器
 
 ***
 1.首先你需要把本文件夹下的所有文件解压到服务器。  
