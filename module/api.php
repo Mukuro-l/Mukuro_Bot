@@ -26,7 +26,9 @@ return $data;
 //初始化
 function qun_host($qhost){
 if (file_exists('./bottp/'.$qhost.'.json')!=true){
+  mkdir("bottp");
 fopen('./bottp/'.$qhost.'.json',"w");
+  file_put_contents('./bottp/'.$qhost.'.json',"yes");
 }
 }
 
