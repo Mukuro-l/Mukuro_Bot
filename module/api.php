@@ -29,7 +29,28 @@ if (file_exists('./bottp/'.$qhost.'.json')!=true){
   mkdir("bottp");
 fopen('./bottp/'.$qhost.'.json',"w");
   file_put_contents('./bottp/'.$qhost.'.json',"yes");
+  if (file_exists('./group/'.$qhost.'.json')!=true){
+  mkdir("group");
+fopen('./group/'.$qun.'/'.$qhost.'.json',"w");
+
 }
+}
+}
+
+//获取艾特的qq
+
+function bot_atqq($msg){
+
+$atqq=str_replace('[CQ:at,qq=', '', $msg);
+
+$atqq=str_replace(']', '', $atqq);
+
+if ($atqq!=null){
+
+return $atqq;
+
+}
+
 }
 
 function Face_generation($host,$qun,$send_msg,$qq,$bots_msg_type){
