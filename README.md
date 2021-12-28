@@ -20,14 +20,14 @@
 - 建议你的服务器控制面板为宝塔面板。  
 - 如果你的服务器系统为纯净系统，则你还需要安装go，wget，PHP8.0(可通过宝塔面板一键安装)，nohup。其他指令请自行百度安装方法。  
 2. 如果你已经安装了以上指令，请你在服务器ssh选择一个文件夹执行以下指令。   
-```wget https://github.com/Mrs4s/go-cqhttp/releases/download/v1.0.0-beta8-fix1/go-cqhttp_linux_amd64.tar.gz```
+```wget https://github.com/Mrs4s/go-cqhttp/releases/download/v1.0.0-beta8-fix2/go-cqhttp_linux_amd64.tar.gz```
  - 下载完成之后解压，并将[config.yml]和[device.json]文件(必须为你设置好的)移动至你所解压的位置。  
  3. 一切准备OK之后，试运行执行以下指令[^./go-cqhttp]  
  - 如果登录需要扫码，请扫码，建议关闭设备锁。  
  - 登录成功之后请关闭ssh，再打开执行以下指令  
  ```nohup ./go-cqhttp >bot.log 2>&1 &  ```
  - 补充如何终止程序，在执行完毕指令之后会给出一串数字，使用指令[kill 数字]即可终止  
- - GO语言安装：```https://m.runoob.com/go/go-environment.html```
+ - GO语言安装：```https://www.runoob.com/go/go-environment.html```
  - 文件下载强烈建议使用wget指令。
  
  这样就大功告成了，如果出现不能发送消息的情况，很有可能你的账号被风控了，不过没关系一直在线一个星期就正常了。你的机器人日志在[^bot.log]
