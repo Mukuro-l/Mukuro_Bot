@@ -1,11 +1,92 @@
 <?php
 
 /* *name PHProbot_API
-   *version v1.1.5 增加函数qun_host，Face_generation，omelette，express
-   *date 2021.11.29
+   *version v1.1.6 增加函数word_stock Auto_check 修改qun_host初始化函数
+   *date 2021.12.30
    *nick coldeggs
    *explain PHProbot的api模块
+   祝大家新年快乐！
 */
+
+//记录词库函数
+function word_stock($msg){
+//判断词库是否存在
+if (file_exists('./word_stock/main.json')!=true){
+//创建文件夹
+mkdir("word_stock");
+//创建文件
+fopen('./word_stock/main.json',"w");
+//写入初始内容
+$data_array = array("你好"=>"你好啊，我是小冰");
+$data = ret_json($data_array);
+file_put_contents('./word_stock/main.json',$data);
+}
+
+//分割成数组
+$data_one = explode("=>",$msg);
+$data1 = $data_one[0];
+$data2 = $data_one[1];
+//读取
+$json = file_get_contents('./word_stock/main.json',"r");
+$json = json_decode($json,true);
+$a = array($json);
+//判断是否存在这条数据
+if ($a[0][$msg] != null){
+//输出
+    return $a[0][$msg];
+    }
+if ($data2 == null){
+print("data empty");
+}else{
+//循环添加数组
+foreach ($a as &$item) {
+        $item[$data1] = $data2;
+        $data_json = ret_json($item);
+        file_put_contents('./word_stock/main.json',$data_json);
+        return "true";
+    }
+    
+    }
+    
+}
+
+function Download_file($host,$qun,$send_msg,$qq,$bots_msg_type){
+
+    if ($send_msg == null){
+    die;
+    }else{
+    if (is_dir("bot_data") == true){
+        $bots_msg_type = "群聊";
+        bot_send_img($host,$qun,$send_msg,$qq,$bots_msg_type);
+            
+        }else{
+        mkdir("bot_data");
+        $num=rand(10489,88888888);
+     
+        $data = file_get_contents($data_url,"r");
+        //fopen('./bot_data/'.$num.'.jpg',"w");
+        file_put_content('./bot_data/'.$num.'.jpg',$data);
+        $return_msg = "文件已下载至：https://wen.coldeggs.top/bot_data/".$num.".jpg";
+        }
+        }
+        return $return_msg;
+}
+   
+function Auto_check($qun,$qhost){
+if (file_exists('./bottp/'.$qhost.'.json')!=true){
+$return_information = "––––[CP·BOT环境检查]––––\r\n condition：个人配置文件未成功生成，请检查文件权限！";
+}
+if (file_exists('./group/'.$qun.'/'.$qhost.'.json')!=true){
+$return_information = "––––[CP·BOT环境检查]––––\r\n condition：QQ群配置文件未成功生成，请检查文件权限！";
+}
+if (file_exists('./bottp/'.$qhost.'.json')!=true&&file_exists('./group/'.$qun.'/'.$qhost.'.json')!=true){
+$return_information = "––––[CP·BOT环境检查]––––\r\n condition：配置文件未成功生成，请检查文件权限！";
+}
+if (file_exists('./bottp/'.$qhost.'.json')==true&&file_exists('./group/'.$qun.'/'.$qhost.'.json')==true){
+$return_information = "––––[CP·BOT环境检查]––––\r\n condition：CP·BOT已准备就绪。\r\n document：./group/".$qun."/".$qhost.".json";
+}
+return $return_information;
+}
    
 //sha1()函数， "安全散列算法（SHA1）"
 //算法加密
@@ -24,17 +105,29 @@ return $data;
 }
 
 //初始化
-function qun_host($qhost){
+
+function qun_host($qhost,$qun){
+
 if (file_exists('./bottp/'.$qhost.'.json')!=true){
+
   mkdir("bottp");
+
 fopen('./bottp/'.$qhost.'.json',"w");
+
   file_put_contents('./bottp/'.$qhost.'.json',"yes");
-  if (file_exists('./group/'.$qhost.'.json')!=true){
+
+  if (file_exists('./group/'.$qun.'/'.$qhost.'.json')!=true){
+
   mkdir("group");
+
+  mkdir($qun);
+
 fopen('./group/'.$qun.'/'.$qhost.'.json',"w");
 
 }
+
 }
+
 }
 
 //获取艾特的qq
