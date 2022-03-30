@@ -8,6 +8,107 @@
    祝大家新年快乐！
 */
 
+/*class fake_msg{
+function out_qun($qq){
+$msg = "【".."(".$qq.")】悄悄地离开了群聊";
+}
+}
+*/
+
+class bilibili{
+public $bili_id;
+public $select;
+public $bili_msg;
+//bv转av号
+function bili_details($bili_id){
+$url="https://api.bilibili.com/x/web-interface/view?bvid=".$bili_id;
+$data=file_get_contents($url,"r");
+$data=json_decode($data,true);
+//bv号
+$data["data"]["bvid"];
+//av号
+$data["data"]["aid"];
+//tname主题
+$data["data"]["tname"];
+//封面
+$data["data"]["pic"];
+//标题
+$data["data"]["title"];
+//简介
+$data["data"]["desc"];
+//弹幕
+$data["data"]["duration"];
+//up主
+//print_r($data["data"]["owner"]);
+return "[CQ:image,file=".$data["data"]["pic"]."]\r\n标题：👉".$data["data"]["title"]."👈\r\n bv号：👉".$data["data"]["bvid"]."👈\r\n av号：👉".$data["data"]["aid"]."👈\r\n主题：👉".$data["data"]["tname"]."👈\r\n简介：👉".$data["data"]["desc"]."👈\r\n弹幕：👉".$data["data"]["duration"]."👈\r\n up主：👉".$data["data"]["owner"]["name"]."👈\r\n up主uid：👉".$data["data"]["owner"]["mid"]."👈\r\n up主头像：👉[CQ:image,file=".$data["data"]["owner"]["face"]."]👈";
+}
+function bili_ranking_list($bili_msg){
+$url = "";
+}
+
+}
+
+//解析快手视频
+function kuai_shou($kuai_url){
+$data=curl($kuai_url,['loadurl'=>1]);
+$data=curl($data,$paras=[
+'ua'=>'Mozilla/5.0 (Linux; Android 10; NEO-AL00; HMSCore 5.1.1.300; GMSCore 20.15.16) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 HuaweiBrowser/11.0.4.371 Mobile Safari/537.36'
+]);
+preg_match('/type="video\/mp4" src="(.*?)" alt/',$data,$html);
+if ($html[1]==null){
+return "获取失败";
+}else{
+return $html[1];
+}
+}
+
+//群公告
+function up_group_notes($up_group_notes,$host,$qun,$send_msg){
+$send_msg=urlencode($send_msg);
+$url = $host.$up_group_notes."?group_id=".$qun."&content=".$send_msg;
+curl($url);
+}
+
+
+//获取网易云热评
+function wyy_hot($id){
+$url="https://autumnfish.cn/comment/hot?type=0&id=".$id;
+$data=curl($url);
+$data=json_decode($data,true);
+$uid=$data['hotComments'][0]['user']['userId'];//用户id
+$name=$data['hotComments'][0]['user']['nickname'];//用户名
+$av_img=$data['hotComments'][0]['user']['avatarUrl'];//头像url
+$good=$data['hotComments'][0]['likedCount'];//点赞
+$pl=$data['hotComments'][0]['content'];//评论
+$send_msg="[CQ:image,file=".$av_img."]评论：".$pl."\r\n昵称：".$name."\r\n点赞：".$good;
+if ($pl==null){
+return "热评获取失败";
+}else{
+return $send_msg;
+}
+}
+
+function baidu_tts($tts_msg,$directory){
+$tts_msg = urlencode($tts_msg);
+if (is_dir("mp3")==true){
+$url="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=4&text=".$tts_msg;
+$data=curl($url);
+$rand=rand(486519,10000000);
+fopen("./mp3/".$rand.".mp3","w");
+file_put_contents("./mp3/".$rand.".mp3",$data);
+$tts_data= "http://".$_SERVER['HTTP_HOST'].Secondary_directory($directory)."mp3/".$rand.".mp3";
+}else{
+mkdir("mp3");
+$url="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=4&text=".$tts_msg;
+$data=file_get_contents($url,"r");
+$rand=rand(486519,10000000);
+fopen("./mp3/".$rand.".mp3","w");
+file_put_contents("./mp3/".$rand.".mp3",$data);
+$tts_data= "http://".$_SERVER['HTTP_HOST'].Secondary_directory($directory)."mp3/".$rand.".mp3";
+}
+return $tts_data;
+}
+
 //记录词库函数
 function word_stock($msg){
 //判断词库是否存在
@@ -87,7 +188,7 @@ $return_information = "––––[CP·BOT环境检查]––––\r\n conditi
 }
 return $return_information;
 }
-   
+
 //sha1()函数， "安全散列算法（SHA1）"
 //算法加密
 function create_unique() {
@@ -105,29 +206,18 @@ return $data;
 }
 
 //初始化
-
 function qun_host($qhost,$qun){
-
 if (file_exists('./bottp/'.$qhost.'.json')!=true){
-
   mkdir("bottp");
-
 fopen('./bottp/'.$qhost.'.json',"w");
-
   file_put_contents('./bottp/'.$qhost.'.json',"yes");
-
   if (file_exists('./group/'.$qun.'/'.$qhost.'.json')!=true){
-
   mkdir("group");
-
   mkdir($qun);
-
 fopen('./group/'.$qun.'/'.$qhost.'.json',"w");
 
 }
-
 }
-
 }
 
 //获取艾特的qq
@@ -160,46 +250,24 @@ bot_send_img($host,$qun,$send_msg,$qq,$bots_msg_type);
 
 
 //煎蛋爬虫
-function omelette($host,$qun,$send_msg,$qq,$bots_msg_type){
-$url = "http://i.jandan.net/pic";
+function omelette($host,$qun){
+$url = "http://i.jandan.net/top";
 $data=curl($url);
 preg_match_all('/img src="(.*?)"/',$data,$v);
-for ($i=0;$i<count($v[0]);$i++){
-sleep(1);
+//count($v[0])
+for ($i=0;$i<3;$i++){
 $md1=str_replace('//', '', $v[1][$i]);
-$send_msg="http://".$md1;
-$bots_msg_type="群聊";
-bot_send_img($host,$qun,$send_msg,$qq,$bots_msg_type);
+$data_url="http://".$md1;
+$msg=Download_file($data_url,$host);
+
 }
+return $msg;
 }
 
 //初始化
-qun_host($qhost);
+qun_host($qhost,$qun);
 
-//bv转av号
-function bv_toav($bv_id){
-$url="https://api.bilibili.com/x/web-interface/view?bvid=".$bv_id;
-$data=file_get_contents($url,"r");
-$data=json_decode($data,true);
-//bv号
-$data["data"]["bvid"];
-//av号
-$data["data"]["aid"];
-//tname主题
-$data["data"]["tname"];
-//封面
-$data["data"]["pic"];
-//标题
-$data["data"]["title"];
-//简介
-$data["data"]["desc"];
-//弹幕
-$data["data"]["duration"];
-//up主
-//print_r($data["data"]["owner"]);
-return "[CQ:image,file=".$data["data"]["pic"]."]\r\n标题：👉".$data["data"]["title"]."👈\r\n bv号：👉".$data["data"]["bvid"]."👈\r\n av号：👉".$data["data"]["aid"]."👈\r\n主题：👉".$data["data"]["tname"]."👈\r\n简介：👉".$data["data"]["desc"]."👈\r\n弹幕：👉".$data["data"]["duration"]."👈\r\n up主：👉".$data["data"]["owner"]["name"]."👈\r\n up主uid：👉".$data["data"]["owner"]["mid"]."👈\r\n up主头像：👉[CQ:image,file=".$data["data"]["owner"]["face"]."]👈";
 
-}
 
 //获取快递信息
 function express($express_id,$express_postid){
@@ -238,6 +306,7 @@ $myqun_bot_api=array(
         return $img_text;
 }
 
+//二级目录输出
 function Secondary_directory($directory){
 if ($directory == ""){
 $directory = '/';
@@ -553,7 +622,7 @@ $bot_msg_type=array(
         $myqun_bot_api=array(
     "域名"=>$host,
     "群号"=>$qun,
-    "信息"=>'[CQ:json,data='.$send_json.']'
+    "信息"=>'[CQ:json,data={"app":"com.tencent.weather"&#44"desc":"天气"&#44"view":"RichInfoView"&#44"ver":"0.0.0.1"&#44"prompt":"[应用]天气"&#44"appID":""&#44"sourceName":""&#44"actionData":""&#44"actionData_A":""&#44"sourceUrl":""&#44"meta":{"richinfo":{"adcode":""&#44"air":""&#44"city":"渠县"&#44"date":"01月07日 周5"&#44"max":"9"&#44"min":"7"&#44"ts":"1641537219"&#44"type":"203"&#44"wind":"0"}}&#44"text":""&#44"sourceAd":""&#44"extra":""}]'
     );
         if ($bots_msg_type=="群聊"){
         $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["群聊"]."?";
@@ -577,7 +646,7 @@ $myqun_bot_api=array(
     "域名"=>$host,
     "群号"=>$qun,
     "信息"=>$send_msg,
-    "回复"=>"[CQ:reply,id=".$msgid."]".$send_msg
+    "回复"=>"[CQ:reply,id=".$msgid.",text=".$send_msg."]"
     );
     if ($bots_msg_type=="群聊"){
         $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["群聊"]."?";
@@ -763,10 +832,12 @@ $df=json_decode($df,true);
     }
 
 //获取撤回消息
-function eve_qun_msg($qun,$send_msg,$host,$qun_msg_api,$chehuimsg){
-    $send_msg=$chehuimsg;
-    $bots_msg_type="群聊";
-    bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
+function eve_qun_msg($host,$msgid){
+    $url = $host."get_msg?message_id=".$msgid;
+    $data = curl($url);
+    $data = json_decode($data,true);
+    $msg = $data["data"]["message"];
+    return $msg;
 }
 
 //机器人发送图片函数
@@ -961,4 +1032,42 @@ $subject = $mail_bt;
 $content=$certno;
 //执行发信
 $flag = sendMail($email,$subject,$content);
+}
+
+//生成二维码，第二个参数为发送方式
+function QR_code($QR_content,$bots_msg_type){
+include './phpqrcode/phpqrcode.php';  //引入phpqrcode类文件
+$value = $QR_content; //二维码内容
+$errorCorrectionLevel = 'Q';//容错级别
+$matrixPointSize = 30;//生成图片大小
+//生成二维码图片
+QRcode::png($value, 'qrcode.png', $errorCorrectionLevel, $matrixPointSize, 2);
+$logo='logo.jpg';//准备好的logo图片  需要加入到二维码中的logo
+$QR='qrcode.png';//已经生成的原始二维码图
+if ($logo!==FALSE){
+$QR = imagecreatefromstring(file_get_contents($QR));
+$logo = imagecreatefromstring(file_get_contents($logo));
+$QR_width=imagesx($QR);//二维码图片宽度
+$QR_height=imagesy($QR);//二维码图片高度
+$logo_width=imagesx($logo);//logo图片宽度
+$logo_height=imagesy($logo);//logo图片高度
+$logo_qr_width=$QR_width / 5;
+$scale=$logo_width/$logo_qr_width;
+$logo_qr_height=$logo_height/$scale;
+$from_width=($QR_width -$logo_qr_width) / 2;
+//重新组合图片并调整大小
+
+imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width,$logo_qr_height, $logo_width, $logo_height);
+}
+
+//输出图片
+$file_name=rand(1567616,437661646);
+imagepng($QR, $file_name.'.png');
+$send_msg="http://".$_SERVER['HTTP_HOST'].Secondary_directory($directory).$file_name.".png";
+bot_send_img($host,$qun,$send_msg,$qq,$bots_msg_type);
+$folderpath = $_SERVER["DOCUMENT_ROOT"] ;//要操作的目录
+$deltype = array('png');
+foreach ($deltype as $file_type) {
+    clearn_file($folderpath, $file_type);
+}
 }
