@@ -1,7 +1,7 @@
 # [CP·Bot使用手册] by coldeggs  
 ## 引用phpmailer&phpqrcode  
 你好！  欢迎阅读本程序的使用文档  
-交流QQ群：634757204  
+交流QQ群：729473945  
 运行环境：
 - Linux
 - PHP 8.0
@@ -21,7 +21,7 @@
 - 建议你的服务器控制面板为宝塔面板。  
 - 如果你的服务器系统为纯净系统，则你还需要安装go，wget，PHP8.0(可通过宝塔面板一键安装)，nohup。其他指令请自行百度安装方法。  
 2. 如果你已经安装了以上指令，请你在服务器ssh选择一个文件夹执行以下指令。   
-```wget https://github.com/Mrs4s/go-cqhttp/releases/download/v1.0.0-beta8-fix2/go-cqhttp_linux_amd64.tar.gz```
+```wget https://github.com/Mrs4s/go-cqhttp/releases/download/v1.0.0-rc1/go-cqhttp_linux_amd64.tar.gz```
  - 下载完成之后解压，并将[config.yml]和[device.json]文件(必须为你设置好的)移动至你所解压的位置。  
  3. 一切准备OK之后，试运行执行以下指令[^./go-cqhttp]  
  - 如果登录需要扫码，请扫码，建议关闭设备锁。  
