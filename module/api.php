@@ -63,7 +63,7 @@ return $html[1];
 }
 
 //群公告
-function up_group_notes($up_group_notes,$host,$qun,$send_msg){
+function up_group_note($up_group_notes,$host,$qun,$send_msg){
 $send_msg=urlencode($send_msg);
 $url = $host.$up_group_notes."?group_id=".$qun."&content=".$send_msg;
 curl($url);
@@ -205,21 +205,32 @@ $data = md5($time);
 return $data;
 }
 
-//初始化
+/*
+//初始化   维护
 function qun_host($qhost,$qun){
-if (file_exists('./bottp/'.$qhost.'.json')!=true){
+if (file_exists('bottp')!=true){
   mkdir("bottp");
+  if (file_exists('./bottp/'.$qhost.'.json')!=true){
 fopen('./bottp/'.$qhost.'.json',"w");
   file_put_contents('./bottp/'.$qhost.'.json',"yes");
-  if (file_exists('./group/'.$qun.'/'.$qhost.'.json')!=true){
+  }
+  }
+  if (file_exists('group')!=true){
   mkdir("group");
+  if (file_exists('./group/'.$qun)!=true){
+  opendir('group');
   mkdir($qun);
-fopen('./group/'.$qun.'/'.$qhost.'.json',"w");
-
+  }
+  if (file_exists('./group/'.$qun.'/'.$qhost.'.json')!=true){
+opendir('./group/'.$qun.'/');
+fopen($qhost.'.json',"w");
+fopen('/robot.json',"w");
+fopen('/robotconf.json',"w");
 }
 }
 }
 
+*/
 //获取艾特的qq
 
 function bot_atqq($msg){
@@ -227,6 +238,8 @@ function bot_atqq($msg){
 $atqq=str_replace('[CQ:at,qq=', '', $msg);
 
 $atqq=str_replace(']', '', $atqq);
+
+$atqq=str_replace(' ', '', $atqq);
 
 if ($atqq!=null){
 
@@ -265,7 +278,7 @@ return $msg;
 }
 
 //初始化
-qun_host($qhost,$qun);
+//qun_host($qhost,$qun);
 
 
 
@@ -745,29 +758,7 @@ $dir_qun="./group/".$qun."/robot.json";
 //判断类型
 if ($bb_type=="开关机"){
 //判断是否存在
-if (file_exists($dir_qun)!=true&&$qq==$qhost){
-//读取
-$df=file_get_contents($dir_qun,"r");
-//转为数组
-$df=json_decode($df,true);
-//创建配置文件,w为只写
-    fopen($dir_qun,"w");
-    //设置权限0777
-    chmod($dir_qun,0777);
-    //数组
-    $put=array(
-    $qq=>$msg,
-    "群管"=>$df["群管"],
-    "识图"=>$df["识图"],
-    "解析"=>$df["解析"]
-    );
-    //数组转为JSON
-    $put=json_encode($put,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-    //写入
-    file_put_contents($dir_qun,$put);
-    $send_msg=$msg."成功";
-    //如果存在且QQ等于机器人主人
-    }else if ($qq==$qhost){
+if ($qq==$qhost){
     $df=file_get_contents($dir_qun,"r");
     $df=json_decode($df,true);
     $put=array(
@@ -1036,13 +1027,13 @@ $flag = sendMail($email,$subject,$content);
 
 //生成二维码，第二个参数为发送方式
 function QR_code($QR_content,$bots_msg_type){
-include './phpqrcode/phpqrcode.php';  //引入phpqrcode类文件
+require_once './phpqrcode/phpqrcode.php';  //引入phpqrcode类文件
 $value = $QR_content; //二维码内容
 $errorCorrectionLevel = 'Q';//容错级别
 $matrixPointSize = 30;//生成图片大小
 //生成二维码图片
 QRcode::png($value, 'qrcode.png', $errorCorrectionLevel, $matrixPointSize, 2);
-$logo='logo.jpg';//准备好的logo图片  需要加入到二维码中的logo
+$logo='logo.png';//准备好的logo图片  需要加入到二维码中的logo
 $QR='qrcode.png';//已经生成的原始二维码图
 if ($logo!==FALSE){
 $QR = imagecreatefromstring(file_get_contents($QR));
@@ -1063,11 +1054,6 @@ imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width,$l
 //输出图片
 $file_name=rand(1567616,437661646);
 imagepng($QR, $file_name.'.png');
-$send_msg="http://".$_SERVER['HTTP_HOST'].Secondary_directory($directory).$file_name.".png";
-bot_send_img($host,$qun,$send_msg,$qq,$bots_msg_type);
-$folderpath = $_SERVER["DOCUMENT_ROOT"] ;//要操作的目录
-$deltype = array('png');
-foreach ($deltype as $file_type) {
-    clearn_file($folderpath, $file_type);
-}
+$send_msg="http://".$_SERVER['HTTP_HOST']."/".$file_name.".png";
+return $send_msg;
 }
