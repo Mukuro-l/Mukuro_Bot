@@ -27,12 +27,12 @@ $bots_msg_type = "群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }else{
 $send_msg = $word_stock_data;
-$bots_msg_type = "回复";
+$bots_msg_type = "群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 }else{
 $send_msg = "真寻已经记录啦ε(*･ω･)_/ﾟ:･☆";
-$bots_msg_type = "回复";
+$bots_msg_type = "群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
@@ -46,37 +46,32 @@ bot_vio_api($host,$qun,$url,$qq,$bots_msg_type);
 if(preg_match('/[\x{4e00}-\x{9fa5}]/u', $msg)>0){//是否包含中文
 if (preg_match('/https:\/\/v.kuaishouapp.com.*\/\w+/', $msg, $url)){
 $kuai_url=$url[0];
-$send_msg=kuai_shou($kuai_url);
-$bots_msg_type="私聊";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
+$QR_content = kuai_shou($kuai_url);
+
+$bots_msg_type = "群聊";
+$send_msg=QR_code($QR_content,$bots_msg_type);
+bot_send_img($host,$qun,$send_msg,$qq,$bots_msg_type);
 }
 }
 
 if (preg_match("/^公告 ?(.*)\$/",$msg,$return)){
-if ($qhost!=$qq){
-exit;
-}
+if ($qhost==$qq){
+
 $send_msg = $return[1];
-up_group_notes($up_group_notes,$host,$qun,$send_msg);
+up_group_note($up_group_notes,$host,$qun,$send_msg);
+}
 }
 
+
 if ($msg=="菜单"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
 $Happy_new_year ="距离新年还剩：".(24-date("H"))."小时".(60-date("i"))."分";
 $send_msg=send_qqimg_api($qq).'点歌.*'."\r\n".'搜图.*'."\r\n".'我说.*'."\r\n".'舔狗日记'."\r\n"."生成密码"."\r\n"."抖音"."\r\n"."哔哩哔哩分区(维护中)"."\r\n"."群管/开/关"."\r\n"."官网"."\r\n"."要饭"."\r\n"."60s"."\r\n"."抽奖"."\r\n".'堆糖.*'."\r\n".'二维码.*'."\r\n"."公告[".file_get_contents("gonggao.txt","r")."]\r\n".date("Y/m/d H:i");
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     //$send_msg="点歌.*搜图.*我说.*舔狗日记生成密码";
     //$json_type="菜单";
     //$token=Tencent_json_token();
     //bot_msg_json($send_json,$json_type,$host,$bots_msg_type,$qq,$qun);
-    }
     }
 
 //———————事件监控———
@@ -90,113 +85,54 @@ if ($get_qun_eve=="group_recall"&&$qq!=$robot){
 }
 
 if ($get_qun_eve=="notify"&&$get_tishi_api=="poke"&&$chuo_userid==$robot){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
-    $bots_msg_type="回复";
+    $bots_msg_type="群聊";
     $text_array = array(
     "你是没有见过黑手是吧",
     "你再戳一个试试",
     "给你脸了是吧",
     "林子大了，什么都有"
     );
-    $send_msg="[CQ:tts,text=".$text_array[rand(0,count($text_array))]."]";
+    $send_msg='[CQ:tts,text='.$text_array[rand(1,count($text_array))].']';
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     
 }
-}
 
 if ($get_qun_eve=="notify"&&$get_tishi_api=="honor"&&$qunry=="talkative"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
     $send_msg="[CQ:at,qq=".$qq."]成为龙王，芜湖！";
     $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     
 }
-}
 if ($get_qun_eve=="notify"&&$get_tishi_api=="honor"&&$qunry=="performer"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
     $send_msg="[CQ:at,qq=".$qq."]获得群聊之火";
     $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
-}
 
 if ($get_qun_eve=="notify"&&$get_tishi_api=="honor"&&$qunry=="emotion"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$send_msg="没有开机";
-die;
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
     $send_msg="[CQ:at,qq=".$qq."]获得快乐源泉";
     $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     
 }
 if ($get_tishi_api=="add"&&$get_qing_api=="group"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$send_msg="没有开机";
-die;
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
     $send_msg="有人申请加群:".$qun."\r\n他的QQ：".$qq."\r\n他的验证消息为：".$get_yanz_qun;
     $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     
 }
 if ($get_qing_api=="friend"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$send_msg="没有开机";
-die;
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
     $send_msg="有人申请加我taQQ为：".$qq."\r\n他的验证消息为：".$get_yanz_qun;
     $bots_msg_type="主聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     
 }
 if ($get_qun_eve=="group_decrease"&&$get_tishi_api=="leave"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$send_msg="没有开机";
-die;
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
     $send_msg=send_qqimg_api($qq)."这个人：".$qq."，主动离开了本群！\r\n时间：".date("Y/m/d H:i");
     $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 if ($get_qun_eve=="group_decrease"&&$get_tishi_api=="kick"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$send_msg="没有开机";
-die;
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
     $send_msg=send_qqimg_api($qq)."这个B：".$qq."，被踢了，笑死我了。\r\n时间：".date("Y/m/d");
     $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
@@ -207,40 +143,18 @@ if ($get_qun_eve=="group_decrease"&&$get_tishi_api=="kick_me"){
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 if ($get_qun_eve=="group_admin"&&$get_tishi_api=="set"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$send_msg="没有开机";
-die;
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
 $send_msg="[CQ:at,qq=".$qq."]"."我知道你成为了管理，那我能和你py交易嘛(*^ω^*)";
 $bots_msg_type="群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 if ($get_qun_eve=="group_admin"&&$get_tishi_api=="unset"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$send_msg="没有开机";
-die;
-
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
 $send_msg="[CQ:at,qq=".$qq."]"."哎呀这个刁毛被下了管理，谁知道他偷哪位女群员了(≖͞_≖̥)";
 $bots_msg_type="群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 //进群事件
 if ($get_qun_eve=="group_increase"&&$qq!=$robot){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$send_msg="没有开机";
-die;
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
-    $send_msg="[CQ:at,qq=".$qq."][CQ:image,file=https://www.coldeggs.top/emo/qunhuanying.gif]欢迎入群！";
+    $send_msg="[CQ:at,qq=".$qq."]欢迎入群！";
     $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     
@@ -276,13 +190,6 @@ file_put_contents('./bottp/'.$qq.'.json',$Verification_Codeary);
 
 //滑稽表情回复
 if ($msg=="[CQ:face,id=178]"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
     $send_emo=array(
         1=>"年少不知少妇好，错把少女当成宝",
         2=>"你滑稽我也滑稽",
@@ -290,12 +197,11 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
         4=>"你猜我在想什么",
         5=>"我突然出现吓死你"
         );
-        $send_emo_id=rand(0,6);
+        $send_emo_id=rand(1,6);
         $send_msg="[CQ:face,id=178]".$send_emo[$send_emo_id];
-        $bots_msg_type="回复";
+        $bots_msg_type="群聊";
         bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     
-}
 }
 
 //复读语音//过滤
@@ -324,18 +230,10 @@ sleep(1);
 */
 //转语音
 if (preg_match("/^我说 ?(.*)\$/",$msg,$return)){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
     $send_msg="[CQ:tts,text=".$return[1]."]";
     $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     
-}
 }
 
 
@@ -343,18 +241,18 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 
 //$atqq=str_replace(' ', '', $atqq);
 if (bot_atqq($msg) == $robot){
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
 $send_msg="你好";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
 if (preg_match("/^😄 ?(.*)\$/",$msg,$return)){
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
 $send_msg="😅";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
-if (preg_match("/^BV ?(.*)\$/",$msg,$return)){
+if (preg_match_all("/^BV ?(.*)\$/",$msg,$return)){
 $miui=file_get_contents($dir_qun,"r");
 $miui=json_decode($miui,true);
 if ($miui[$qhost]!="开机"){
@@ -371,7 +269,7 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 //私聊消息
 if ($msg_type=="private"){
-if (file_exists('./bottp/'.$qq.'.json')==true){
+/*if (file_exists('./bottp/'.$qq.'.json')==true){
 $pan_qq=file_get_contents('./bottp/'.$qq.'.json',"r");
 if ($pan_qq!="yes"){
 $x_code=file_get_contents('./bottp/'.$qq.'.json',"r");
@@ -426,6 +324,7 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 }
 }
+*/
 if (preg_match("/^BV ?(.*)\$/",$msg,$return)){
 $bv_id=$return[0];
 $send_msg=bv_toav($bv_id);
@@ -450,13 +349,6 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 
 //搜图
 if (preg_match("/^搜图 ?(.*)\$/",$msg,$return)){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
     $url = 'http://image.so.com/i?q='.$return[1];
     $content = file_get_contents($url);
     preg_match_all('/"thumb":"[^,]*,/', $content, $result);
@@ -467,7 +359,6 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     $send_msg=$str;
     bot_send_img($host,$qun,$send_msg,$qq,$bots_msg_type);
     
-}
 }
 
 
@@ -490,13 +381,6 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
 if (preg_match("/^禁言 ?(.*)\$/",$msg,$return)){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
 if ($qq==$qhost){
     $qqjin=$return[1];
     $qqjin=str_replace(']', '', $qqjin);
@@ -513,16 +397,8 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 }
-}
 
-if (preg_match("/^解禁?(.*)\$/",$msg,$return)){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
+if (preg_match("/^解禁 ?(.*)\$/",$msg,$return)){
 if ($qq==$qhost){
     $qqjin=$return[1];
     $qqjin=str_replace(']', '', $qqjin);
@@ -538,16 +414,8 @@ if ($qq==$qhost){
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 }
-}
 
   if ($msg=="舔狗日记"){
-  $miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
   $arr=file('tg.txt');
     $n=rand(0,count($arr));
     $send_msg="舔狗日记
@@ -556,40 +424,24 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     $bots_msg_type="群聊";
   bot_msg_img($host,$send_msg,$qun,$qq,$bots_msg_type,$directory);
   }
-  }
   
 
 
 if ($msg=="状态"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
 $bots_getmsg_type="状态";
 bot_get_more_ion($host,$msg,$qun,$send_msg,$qqnick,$qq,$bots_msg_type,$bots_getmsg_type);
-opendir($qun);
+//opendir($qun);
 $dir_qqun="./group/".$qun."/robotconf.json";
 $send_mssg=file_get_contents($dir_qqun,"r");
 $send_mssg=json_decode($send_mssg,true);
 $url=send_qqimg_api($qq);
 $send_msg='昵称：'.$qqnick."\r\n丢失数据[".$send_mssg["丢失的数据"]."]"."\r\n接受消息[".$send_mssg["接受的消息"]."]"."\r\n发送消息[".$send_mssg["发送的消息"]."]"."\r\n断连次数[".$send_mssg["断连次数"]."]"."\r\n掉线次数[".$send_mssg["掉线次数"]."]"."\r\n发送的数据包[".$send_mssg["发送的数据"]."]"."\r\n收到的数据包[".$send_mssg["收到的数据"]."]";
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
 }
           
 
 if ($msg=="抽奖"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
 $timerand=array(
 60,
 120,
@@ -601,21 +453,12 @@ $time=$timerand[$random];
 $qqjin=$qq;
 qun_jinyan($host,$qun,$qqjin,$time);
 }
-}
 
 if ($msg=="生成密码"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
 $miyao=create_unique();
 $send_msg=$miyao;
 $bots_msg_type="回复";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
 }
 
 //开关机
@@ -659,13 +502,6 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
 if ($msg=="抖音"){
-    $miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
 $video_url=file_get_contents("http://api-bumblebee.1sapp.com:80/bumblebee/ring/list");
 $s = preg_match_all('/"ring_id":(.*?),"member_id":(.*?),"title":"(.*?)","content":"(.*?)","cover_pic":"(.*?)","origin_category":"(.*?)","pay_reward_num":(.*?),"pay_reward_coins":(.*?),"free_reward_num":(.*?),"free_reward_coins":(.*?),"view_cnt":(.*?),"like_cnt":(.*?),"favorite_cnt":(.*?),"origin_like_cnt":(.*?),"extra":(.*?),"status":(.*?),"video_url":"(.*?)","audio_url":"(.*?)","video_duration":(.*?),"video_size":(.*?),"category_id":(.*?),"gid":(.*?),"updated_at":"(.*?)","created_at":"(.*?)","avatar":"(.*?)","nickname":"(.*?)"/',$video_url,$v);
 if($s== 0){
@@ -682,12 +518,11 @@ $sj=$v[23][0];//获取时间
 $tx=$v[25][0];//获取头像
 $yh=$v[26][0];//获取昵称
 $send_msg="昵称：".$yh."\r\n标题：".$bt."[CQ:image,file=".$fm."]"."\r\n时长：".$sj;
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 $url=$sp;
 $bots_msg_type="群聊";
 bot_send_video($host,$url,$qun,$bots_msg_type);
-}
 }
 }
 
@@ -766,13 +601,7 @@ send_img_api2($msg,$qun,$send_msg,$qqnick,$qq,$bots_msg_type);
 
 
 if (preg_match("/^点歌 ?(.*)\$/",$msg,$return)){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else if ($return[1]==""){
+if ($return[1]==""){
 $send_msg="没有歌名你点nm！";
 $bots_msg_type="回复";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
@@ -787,7 +616,7 @@ $str="https://autumnfish.cn/search?keywords=".$ge;
     $id=$ga1['id'];
     if ($id==""){
     $send_msg="获取失败";
-    $bots_msg_type="回复";
+    $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     }else{
         $url= "http://music.163.com/song/media/outer/url?id=".$id.".mp3";
@@ -796,7 +625,7 @@ $str="https://autumnfish.cn/search?keywords=".$ge;
         bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 sleep(1);
 $send_msg=wyy_hot($id);
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
         }
         }
@@ -804,15 +633,9 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
 if (preg_match("/^语音点歌 ?(.*)\$/",$msg,$return)){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else if ($return[1]==""){
+if ($return[1]==""){
 $send_msg="没有歌名你点nm！";
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }else{
 $ge=urlencode($return[1]);
@@ -825,7 +648,7 @@ $str="https://autumnfish.cn/search?keywords=".$ge;
     $id=$ga1['id'];
     if ($id==""){
     $send_msg="获取失败";
-    $bots_msg_type="回复";
+    $bots_msg_type="群聊";
     bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
     }else{
         $url= "http://music.163.com/song/media/outer/url?id=".$id.".mp3";
@@ -844,20 +667,12 @@ file_put_contents("dei.txt",$i);
 
 
 if ($msg=="60s"){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else{
 $img_60s=file_get_contents("http://api.03c3.cn/zb/api.php","r");
 $img_60s=json_decode($img_60s,true);
 $img_60s=$img_60s['imageUrl'];
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
 $send_msg="[CQ:image,file=".$img_60s."]";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}
 }
 
 if ($msg=="老婆"&&$qq==$qhost){
@@ -876,7 +691,7 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
 if ($msg=="官网"){
-$send_msg="本程序官网：www.coldeggs.top";
+$send_msg="抱歉，站点已停止运行";
 $bots_msg_type="私聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
@@ -896,7 +711,7 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
 if ($msg=="要饭"){
-$send_msg="开发者饿饿，拜托🙏🏻了[CQ:image,file=https://www.coldeggs.top/pim/Alipay.jpg]";
+$send_msg="抱歉，无图片";
 $bots_msg_type="回复";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
@@ -905,7 +720,7 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 if (preg_match("/^翻 ?(.*)\$/",$msg,$return)){
 for ($numeb=1;$numeb<5;$numeb++){
 $send_msg=$return[1]*$numeb;
-$bots_msg_type="回复";
+$bots_msg_type="群聊";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
@@ -914,7 +729,8 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 if (preg_match("/^二维码 ?(.*)\$/",$msg,$return)){
 $QR_content = $return[1];
 $bots_msg_type = "群聊";
-QR_code($QR_content,$bots_msg_type);
+$send_msg=QR_code($QR_content,$bots_msg_type);
+bot_send_img($host,$qun,$send_msg,$qq,$bots_msg_type);
 }
 
 if (preg_match("/^伪音 ?(.*)\$/",$msg,$return)){
@@ -944,13 +760,7 @@ bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
 }
 
 if (preg_match("/^堆糖 ?(.*)\$/",$msg,$return)){
-$miui=file_get_contents($dir_qun,"r");
-$miui=json_decode($miui,true);
-if ($miui[$qhost]!="开机"){
-$bots_msg_type="回复";
-$send_msg="没有开机";
-bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
-}else if ($return[1]==""){
+if ($return[1]==""){
 $send_msg="没有名字你搜nm！";
 $bots_msg_type="回复";
 bot_api($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid);
