@@ -3,16 +3,14 @@
    *@msg 获取消息
    *@qq 获取发送者QQ
    *@petname 获取发送者昵称(适配中)
-   *@atqq 获取艾特QQ(适配中)
+   *@atqq 获取艾特QQ
    *@qhost 获取主人QQ
    *@robot 获取机器人QQ
-   *@version v1.1.1
-   *@date 2021.11.11
-   *@Nick ツバキの花
+   *@version v1.2.0
+   *@date 2022.4.15
+   *@Nick coldeggs
    *@QQ1940826077
    *coldeggs机器人2021.08.21
-   *沐袅网络科技有限公司版权所有
-   *联系邮箱coldeggsblog@coldeggs.top
 */
 
 //设置编码为UTF-8
