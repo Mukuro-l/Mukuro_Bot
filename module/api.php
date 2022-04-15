@@ -17,10 +17,86 @@ $msg = "【".."(".$qq.")】悄悄地离开了群聊";
 }
 */
 
-function ret_json($json) {
-    return stripslashes(json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+//发送消息
+class bot_msg_api{
+public $host;
+public $qun;
+public $send_msg;
+public $qq;
+public $bots_msg_type;
+public $msgid;
+//send($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid)
+function send($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid){
+//$send_msg=urlencode($send_msg);
+
+/*
+{
+    "action": "send_private_msg",
+    "params": {
+        "user_id": 10001000,
+        "message": "你好"
+    },
+    "echo": "123"
+}
+*/
+
+    $bot_msg_type=array(
+        "群聊"=>"send_group_msg",
+        "私聊"=>"send_private_msg",
+        "踢人"=>"set_group_kick"
+        );
+    if ($bots_msg_type=="群聊"){
+    $url = array(
+    "action"=>$bot_msg_type["群聊"],
+    "params"=>array(
+    "group_id"=>$qun,
+    "message"=>$send_msg,
+    "auto_escape"=>false
+    ));
+    
+    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    $ws->push($frame->fd, $url);
+    }
+    if ($bots_msg_type=="私聊"){
+        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["私聊"]."?";
+        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&user_id=".$qq."&message=".$myqun_bot_api["信息"]."&auto_escape=false";
+        $url=$host_type_qun.$qun_msg_sen;
+        curl($url);
+        
+    }
+
+    if ($bots_msg_type=="主聊"){
+        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["私聊"]."?";
+        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&user_id=1940826077&message=".$myqun_bot_api["信息"]."&auto_escape=false";
+        $url=$host_type_qun.$qun_msg_sen;
+        curl($url);
+        
+    }
+    if ($bots_msg_type=="回复私聊"){
+        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["私聊"]."?";
+        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&user_id=".$qq."&message=".$myqun_bot_api["信息"]."&auto_escape=false";
+        $url=$host_type_qun.$qun_msg_sen;
+        curl($url);
+        
+    }
+    if ($bots_msg_type=="踢人"){
+        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["踢人"]."?";
+        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&user_id=".$qq."&reject_add_request=false";
+        $url=$host_type_qun.$qun_msg_sen;
+        curl($url);
+    }
+    if ($bots_msg_type=="回复"){
+        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["群聊"]."?";
+        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&message=".$myqun_bot_api["回复"]."&auto_escape=false";
+        $url=$host_type_qun.$qun_msg_sen;
+        curl($url);
+        
+    }
+    
 }
 
+}
 
 
 class bilibili{
@@ -653,73 +729,6 @@ $bot_msg_type=array(
         }
 }
 
-
-
-//发送消息
-class bot_msg_api{
-public $host;
-public $qun;
-public $send_msg;
-public $qq;
-public $bots_msg_type;
-public $msgid;
-//send($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid)
-function send(){
-//$send_msg=urlencode($send_msg);
-    $bot_msg_type=array(
-        "群聊"=>"send_group_msg",
-        "私聊"=>"send_private_msg",
-        "踢人"=>"set_group_kick"
-        );
-    if ($bots_msg_type=="群聊"){
-    $url = array(
-    $bot_msg_type["群聊"],
-    "group_id"=>$qun,
-    "message"=>$send_msg,
-    "auto_escape"=>false
-    );
-    $url = ret_json($url);
-    $ws->push($frame->fd, $url);
-    }
-    if ($bots_msg_type=="私聊"){
-        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["私聊"]."?";
-        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&user_id=".$qq."&message=".$myqun_bot_api["信息"]."&auto_escape=false";
-        $url=$host_type_qun.$qun_msg_sen;
-        curl($url);
-        
-    }
-
-    if ($bots_msg_type=="主聊"){
-        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["私聊"]."?";
-        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&user_id=1940826077&message=".$myqun_bot_api["信息"]."&auto_escape=false";
-        $url=$host_type_qun.$qun_msg_sen;
-        curl($url);
-        
-    }
-    if ($bots_msg_type=="回复私聊"){
-        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["私聊"]."?";
-        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&user_id=".$qq."&message=".$myqun_bot_api["信息"]."&auto_escape=false";
-        $url=$host_type_qun.$qun_msg_sen;
-        curl($url);
-        
-    }
-    if ($bots_msg_type=="踢人"){
-        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["踢人"]."?";
-        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&user_id=".$qq."&reject_add_request=false";
-        $url=$host_type_qun.$qun_msg_sen;
-        curl($url);
-    }
-    if ($bots_msg_type=="回复"){
-        $host_type_qun=$myqun_bot_api["域名"].$bot_msg_type["群聊"]."?";
-        $qun_msg_sen="group_id=".$myqun_bot_api["群号"]."&message=".$myqun_bot_api["回复"]."&auto_escape=false";
-        $url=$host_type_qun.$qun_msg_sen;
-        curl($url);
-        
-    }
-    
-}
-
-}
 
 //非常重要的函数，用来获取信息(不是服务器上报的信息)
 function bot_get_more_ion($host,$msg,$qun,$send_msg,$qqnick,$qq,$bots_msg_type,$bots_getmsg_type){
