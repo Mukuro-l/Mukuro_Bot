@@ -50,12 +50,12 @@ mkdir('./Data/Log/Group/'.date('Y-m-d',time()));
 
 //判断类型并存入对应日志目录
 if(!empty($Data['group_id'])){
-	file_put_contents('./Data/Log/Group/'.date('Y-m-d',time()).'/'.$Data['group_id'].'.txt',$content, FILE_APPEND);
+	file_put_contents('./Data/Log/Group/'.date('Y-m-d',time()).'/'.$Data['group_id'].'.txt',$Data, FILE_APPEND);
 }elseif(!empty($Data['user_id'])){
-	file_put_contents('./Data/Log/User/'.date('Y-m-d',time()).'/'.$Data['user_id'].'.txt',$content, FILE_APPEND);
+	file_put_contents('./Data/Log/User/'.date('Y-m-d',time()).'/'.$Data['user_id'].'.txt',$Data, FILE_APPEND);
 }elseif($Data['meta_event_type'] !== 'heartbeat'){
 	//排除心跳事件
-	file_put_contents('./Data/Log/Other/'.date('Y-m-d',time()).'.txt',$content, FILE_APPEND);
+	file_put_contents('./Data/Log/Other/'.date('Y-m-d',time()).'.txt',$Data, FILE_APPEND);
 }
 
 //══════api字段们═════/
