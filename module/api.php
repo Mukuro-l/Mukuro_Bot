@@ -18,15 +18,6 @@
     "echo": "123"
 }
 */
-//全局变量
-function initialization(){
-$GLOBALS["qun"];
-$GLOBALS["qq"];
-$GLOBALS["bots_msg_type"];
-$GLOBALS["msg_id"];
-
-}
-
 
 //发送消息
 class bot_msg_api{
