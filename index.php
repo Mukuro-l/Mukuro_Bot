@@ -16,7 +16,7 @@
 
 @include './module/config.php';//机器人配置模块
 //ws正向服务器
-//创建WebSocket Server对象，监听0.0.0.0:6700端口
+//创建WebSocket Server对象，监听端口
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $port);
 
 $Welcome_to_use = json_encode($Welcome_to_use,JSON_UNESCAPED_UNICODE);
@@ -36,6 +36,7 @@ $Data = $frame->data;
 
 //该代码借鉴于https://github.com/hanximeng/BOT_API/blob/main/index.php
 //创建日志文件夹用来存放群组及私聊消息
+if (is_dir("Data")!=true){
 mkdir('./Data');
 mkdir('./Data/Log');
 mkdir('./Data/Cron/');
@@ -44,6 +45,8 @@ mkdir('./Data/Log/Other');
 mkdir('./Data/Log/Group');
 mkdir('./Data/Log/User/'.date('Y-m-d',time()));
 mkdir('./Data/Log/Group/'.date('Y-m-d',time()));
+}
+	
 
 //判断类型并存入对应日志目录
 if(!empty($Data['group_id'])){
