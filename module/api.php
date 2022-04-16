@@ -8,8 +8,9 @@
 */
 
 /*
-{
+{   //action为api
     "action": "send_private_msg",
+    //params为参数
     "params": {
         "user_id": 10001000,
         "message": "你好"
@@ -17,25 +18,25 @@
     "echo": "123"
 }
 */
+//全局变量
+function initialization(){
+$GLOBALS["qun"];
+$GLOBALS["qq"];
+$GLOBALS["bots_msg_type"];
+$GLOBALS["msg_id"];
 
-/*class fake_msg{
-function out_qun($qq){
-$msg = "【".."(".$qq.")】悄悄地离开了群聊";
 }
-}
-*/
 
 
 //发送消息
 class bot_msg_api{
-public $host;
 public $qun;
 public $send_msg;
 public $qq;
 public $bots_msg_type;
 public $msgid;
 
-function send($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid){
+function send($send_msg){
 
     if ($bots_msg_type == "group"){
     $url = array(
@@ -58,6 +59,28 @@ function send($host,$qun,$send_msg,$qq,$bots_msg_type,$msgid){
     
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
     return $url;
+    }
+    if ($bots_msg_type == "私聊"){
+    $url = array(
+    "action"=>"send_private_msg",
+    "params"=>array(
+    "user_id"=>$qq,
+    "message"=>$send_msg
+    ));
+    
+    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    return $url;
+    }
+    if ($bots_msg_type == "群聊"){
+    $url = array(
+    "action"=>"send_group_msg",
+    "params"=>array(
+    "group_id"=>$qun,
+    "message"=>$send_msg
+    ));
+    
+    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+   return $url;
     }
 }
 
