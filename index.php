@@ -12,7 +12,8 @@
    *@QQ1940826077
    *coldeggs机器人2021.08.21
 */
-
+//屏蔽错误
+error_reporting(0);
 
 @include './module/config.php';//机器人配置模块
 //ws正向服务器
@@ -21,7 +22,7 @@ $ws = new Swoole\WebSocket\Server('0.0.0.0', $port);
 
 //监听WebSocket连接打开事件
 $ws->on('Open', function ($ws, $request) {
-    $ws->push($request->fd, "go-cqhttp已连接");
+    echo "go-cqhttp已连接";
 });
 
 //监听WebSocket消息事件
