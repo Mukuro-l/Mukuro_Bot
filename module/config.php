@@ -23,17 +23,6 @@ echo "config.php未设置，启动失败。";
 exit;
 
 }
+$Welcome_to_use = "PHProbot已成功启动\n欢迎使用PHProbot\n项目地址：https://github.com/2744602949/PHProbot\nQQ邮箱：coldeggs@qq.com\nOutlook邮箱：g2744602949@outlook.com";
 
-$Welcome_to_use = array(
-
-"action"=>"send_private_msg",
-
-"params"=>array(
-
-"user_id"=>$qhost,
-
-"message"=>"PHProbot已成功启动\r\n欢迎使用PHProbot\r\n项目地址：https://github.com/2744602949/PHProbot\r\nQQ邮箱：coldeggs@qq.com\r\nOutlook邮箱：g2744602949@outlook.com"
-
-)
-);
 ?>
