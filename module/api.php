@@ -38,11 +38,9 @@
 
 class bot_msg_api{
 
-public $send_msg;
 
-function send($Data,$send_type){
+function send($Data,$send_type,$send_msg){
 
-global $send_msg;
 
 $data=json_decode($Data,true);
 
