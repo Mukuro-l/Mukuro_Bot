@@ -19,10 +19,9 @@
 //创建WebSocket Server对象，监听端口
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $port);
 
-$Welcome_to_use = json_encode($Welcome_to_use,JSON_UNESCAPED_UNICODE);
 //监听WebSocket连接打开事件
 $ws->on('Open', function ($ws, $request) {
-    $ws->push($request->fd, $Welcome_to_use);
+    $ws->push($request->fd, "go-cqhttp已连接");
 });
 
 //监听WebSocket消息事件
@@ -119,7 +118,7 @@ foreach($list as $file){
 
 //监听WebSocket连接关闭事件
 $ws->on('Close', function ($ws, $fd) {
-    echo "进程-{$fd} 已关闭\n";
+    echo "gocq客户端：-{$fd} 已关闭\n";
 });
 
 $ws->start();
