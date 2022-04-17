@@ -1,5 +1,5 @@
-# [CP·Bot使用手册] by coldeggs  
-## 引用phpmailer&phpqrcode  
+# [PHProbot使用手册] by coldeggs  
+## 引用phpqrcode  
 你好！  欢迎阅读本程序的使用文档  
 交流QQ群：729473945  
 运行环境：
