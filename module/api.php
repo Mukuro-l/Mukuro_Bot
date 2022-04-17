@@ -60,7 +60,7 @@ $qq=$data['user_id'];//qq号
 
     "group_id"=>$qun,
 
-    "message"=>$send_msg
+    "message"=>$_msg
 
     ));
 
@@ -82,7 +82,7 @@ $qq=$data['user_id'];//qq号
 
     "user_id"=>$qq,
 
-    "message"=>$send_msg
+    "message"=>$_msg
 
     ));
 
