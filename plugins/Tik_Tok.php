@@ -36,9 +36,9 @@ $tx=$v[25][0];//获取头像
 
 $yh=$v[26][0];//获取昵称
 
-$send_msg="昵称：".$yh."\r\n标题：".$bt."[CQ:image,file=".$fm."]"."\r\n时长：".$sj;
+$_msg="昵称：".$yh."\r\n标题：".$bt."[CQ:image,file=".$fm."]"."\r\n时长：".$sj;
 
-$bots_msg_type=$msg_type;
+$S_type=$msg_type;
 
 $return_msg = $server_msg -> send($qun,$_msg,$qq,$S_type,$msgid);
 
@@ -46,9 +46,9 @@ $return_msg = $server_msg -> send($qun,$_msg,$qq,$S_type,$msgid);
 
 $url=$sp;
 
-$bots_msg_type=$msg_type;
+$S_type=$msg_type;
 
-$send_msg = "[CQ:video,file=".$url."]";
+$_msg = "[CQ:video,file=".$url."]";
 
 $return_msg = $server_msg -> send($qun,$_msg,$qq,$S_type,$msgid);
 
