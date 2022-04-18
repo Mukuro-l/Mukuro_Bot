@@ -58,18 +58,18 @@ include './module/config.php';
 //fd为客户端标识, $ws调用push函数发送(第二个参数为消息内容)
 
 $Data = $frame->data;
-
-//输出data
-
-if ($Return_Data == true){
-
-echo $Data;
-
-}
-
 //json转为PHP数组，必须转为PHP对象
 
 @$Data = json_decode($Data,true);
+//输出data
+
+if ($Return_Data == true){
+if ($Data['meta_event_type'] != 'heartbeat'){
+print_r($Data);
+}
+}
+
+
 
 //该代码借鉴于https://github.com/hanximeng/BOT_API/blob/main/index.php
 
@@ -166,7 +166,7 @@ if(!empty($Data['group_id'])){
 //══════事件监控字段们═════＊/
 
 @include_once './module/api.php';//机器人各类api模块
-@include_once './module/curl.php';//post
+//@include_once './module/curl.php';//post
 
 $list = glob('./plugins/*.php');
 
