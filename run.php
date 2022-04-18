@@ -166,7 +166,7 @@ if(!empty($Data['group_id'])){
 //══════事件监控字段们═════＊/
 
 @include_once './module/api.php';//机器人各类api模块
-//@include_once './module/curl.php';//post
+@include_once './module/curl.php';//post
 
 $list = glob('./plugins/*.php');
 
