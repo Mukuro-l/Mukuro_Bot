@@ -5,7 +5,7 @@
 运行环境：
 - Linux （建议Ubuntu发行版）
 - PHP7
-- swoole4
+- swoole4.8
 - GO
 - 国内IP的服务器
 
