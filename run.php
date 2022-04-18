@@ -44,7 +44,7 @@ $ws->on('Open', function ($ws, $request) {
 include './module/config.php';
     echo "go-cqhttp已连接\n";
 
- $Welcome_to_use = "PHProbot已成功启动\n欢迎使用PHProbot\n当前版本：".$SDK."\n项目地址：https://github.com/2744602949/PHProbot\nQQ邮箱：coldeggs@qq.com\nOutlook邮箱：g2744602949@outlook.com";
+ $Welcome_to_use = "PHProbot已成功启动\n欢迎使用PHProbot\n当前版本：".$SDK."\n项目地址：https://github.com/2744602949/PHProbot\nQQ邮箱：coldeggs@qq.com\nOutlook邮箱：g2744602949@outlook.com\n";
 
     echo $Welcome_to_use;
 
@@ -166,7 +166,7 @@ if(!empty($Data['group_id'])){
 //══════事件监控字段们═════＊/
 
 @include_once './module/api.php';//机器人各类api模块
-@include_once './module/curl.php';//post
+//@include_once './module/curl.php';//post
 
 $list = glob('./plugins/*.php');
 
