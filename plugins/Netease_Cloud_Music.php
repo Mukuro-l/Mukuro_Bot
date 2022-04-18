@@ -8,58 +8,31 @@ use function Swoole\Coroutine\run;
 
 $server_msg = new bot_msg_api();
 
-if (preg_match("/^语音点歌 ?(.*)\$/",$msg,$return)){                                  if ($return[1]==""){
-
+if (preg_match("/^语音点歌 ?(.*)\$/",$msg,$return)){
+ if ($return[1]==""){
  $_msg="没有歌名你点nm！";
-
- 
-
  $S_type = $msg_type;
-
- 
-
  $return_msg = $server_msg -> send($qun,$_msg,$qq,$S_type,$msgid);
-
  $ws -> push($frame->fd, $return_msg);
-
 }else{
-
 $ge=urlencode($return[1]);
-
 $str="https://autumnfish.cn/search?keywords=".$ge;
-
 $str=file_get_contents($str);
-
 $str=json_decode($str,true);
-
 $str=$str['result'];
-
 $str=$str['songs'];//歌曲列表
-
 $ge1=$str[0];
-
 $id=$ga1['id'];
-
  if ($id==""){
-
  $_msg="获取失败";
-
 $S_type = $msg_type;
-
 $return_msg = $server_msg->send($qun,$_msg,$qq,$S_type,$msgid);  
-
 echo "bot发送消息：[".$_msg."]\n";
-
 $ws->push($frame->fd, $return_msg);
-
 }else{
-
 for ($i=0;$i<20;$i++){
-
 $list = "1.".$str[$i]."\r\n";
-
 file_put_contents($qq."song_list.txt",$list,FILE_APPEND);
-
 }
 
 $list = file_get_contents($qq."song_list.txt","r");
@@ -112,9 +85,7 @@ $url = "http://music.163.com/song/media/outer/url?id=".$id.".mp3"
 
 $url_data = file_get_contents($url);
 
-file_put_contents("../gocq/data/voices/".$qq."-music.mp3",$url_da
-
-ta);
+file_put_contents("../gocq/data/voices/".$qq."-music.mp3",$url_data);
 
 echo "协程[".Coroutine::getcid()."]执行完毕\n";
 
@@ -206,7 +177,7 @@ file_put_contents($qq."song.txt",$return[1]);
 
 for ($i=0;$i<20;$i++){
 
-$list = ($i+1)".<".$str[$i]['name'].">--".$str[$i]['artists'][0]['name']."\r\n";
+$list = ($i+1).".<".$str[$i]['name'].">--".$str[$i]['artists'][0]['name']."\r\n";
 
 file_put_contents($qq."song_list.txt",$list,FILE_APPEND);
 
