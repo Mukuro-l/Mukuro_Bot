@@ -60,6 +60,7 @@ $url = "http://music.163.com/song/media/outer/url?id=".$id.".mp3";
 $url_data = file_get_contents($url);
 
 file_put_contents($qq."-music.mp3",$url_data);
+ echo "协程[".Coroutine::getcid()."]执行完毕\n";
 
 //获取cid
 
@@ -75,7 +76,7 @@ file_put_contents($qq."-music.mp3",$url_data);
 
 }
 
-echo "协程[".Coroutine::getcid()."]执行完毕\n";
+
 
 );
 
