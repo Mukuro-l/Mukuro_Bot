@@ -26,11 +26,11 @@
 
 */
 
+@include './module/config.php';//机器人配置模块
+
 //屏蔽错误
 
-error_reporting(0);
-
-@include './module/config.php';//机器人配置模块
+error_reporting($Error_level);
 
 //ws正向服务器
 
