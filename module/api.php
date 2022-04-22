@@ -13,7 +13,7 @@
 */
 
 /*
-
+该json来自onebot官方文档
 {
 
     "action": "send_private_msg",
@@ -90,6 +90,30 @@ function send($qun,$_msg,$qq,$S_type,$msgid){
 
     return $url;
 
+    }
+//指定发送方式
+    if ($S_type == "私聊"){
+        $url = array(
+            "action"=>"send_private_msg",
+            "params"=>array(
+            "user_id"=>$qq,
+            "message"=>$_msg
+        
+            ));
+            $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+            return $url;
+    }
+    if ($S_type == "群聊"){
+        $url = array(
+            "action"=>"send_group_msg",
+            "params"=>array(
+                "group_id"=>$qun,
+                "user_id"=>$qq,
+                "message"=>$_msg
+        
+            ));
+            $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+            return $url;
     }
 
     
