@@ -22,7 +22,7 @@ $str=json_decode($str,true);
 $str=$str['result'];
 $str=$str['songs'];//歌曲列表
 $ge1=$str[0];
-$id=$ga1['id'];
+$id=$ge1['id'];
 if ($id==null){
 $_msg="获取失败";
 $S_type = $msg_type;
