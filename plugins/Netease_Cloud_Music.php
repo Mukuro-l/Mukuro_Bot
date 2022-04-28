@@ -142,7 +142,7 @@ go(function () {
 $id=file_get_contents("Netease_Cloud_Music.txt");
 $url = "http://music.163.com/song/media/outer/url?id=".$id.".mp3";
 $url_data = file_get_contents($url);
-file_put_contents("../gocq/data/voices/".$id."-music.mp3",$url_data);
+file_put_contents("../gocq/data/voices/".$id.".mp3",$url_data);
 
 echo "协程[".Coroutine::getcid()."]执行完毕\n";
 
@@ -162,7 +162,7 @@ echo "协程[".Coroutine::getcid()."]执行完毕\n";
 );
 
 $S_type = $msg_type;
-$_msg = "[CQ:record,file=".$id."-music.mp3]";
+$_msg = "[CQ:record,file=".$id.".mp3]";
 $return_msg=$server_msg->send($qun,$_msg,$qq,$S_type,$msgid);
 echo "bot发送消息：[".$_msg."]\n";
 $ws->push($frame->fd, $return_msg);
