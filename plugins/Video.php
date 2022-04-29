@@ -12,6 +12,7 @@ $url = $url[0];
 }
 }
 use Images_spider\Images;
+$server_msg = new bot_msg_api();
 $api = new Images;
 if (strpos($url,'weibo') !== false){
     $arr = $api->weibo($url);
@@ -30,7 +31,14 @@ if (strpos($url,'weibo') !== false){
     );
 }
 if (!empty($arr)){
-    echo json_encode($arr, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+print_r($arr);
+foreach ($arr as $data){
+file_put_contents($qq."img_list.txt",$data."\r\n",FILE_APPEND);
+}
+$_msg = file_get_contents($qq."img_list.txt");
+$S_type = $msg_type;
+$return_msg = $server_msg -> send($qun,$_msg,$qq,$S_type,$msgid);
+ $ws -> push($frame->fd, $return_msg);
 }
 else{
     $arr = array(
