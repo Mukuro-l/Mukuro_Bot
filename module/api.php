@@ -31,22 +31,15 @@
 }
 
 */
-
+namespace PHProbot;
 //发送消息
 
-class bot_msg_api{
+class Api{
 
-public $qun;
-
-public $_msg;
-
-public $qq;
-
-public $S_type;
-
-public $msgid;
-
-function send($qun,$_msg,$qq,$S_type,$msgid){
+function send(){
+$S_type = $GLOBALS["S_type"];
+$ws = $GLOBALS["ws"];
+$frame = $GLOBALS["frame"];
 
     if ($S_type == "group"){
 
@@ -56,9 +49,9 @@ function send($qun,$_msg,$qq,$S_type,$msgid){
 
     "params"=>array(
 
-    "group_id"=>$qun,
+    "group_id"=>$GLOBALS["qun"],
 
-    "message"=>$_msg
+    "message"=>$GLOBALS['_msg']
 
     ));
 
@@ -66,8 +59,8 @@ function send($qun,$_msg,$qq,$S_type,$msgid){
 
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
 
-   return $url;
-
+   $ws -> push($frame->fd, $url);
+   echo "bot发送消息：[".$GLOBALS['_msg']."]\n";
     }
 
     if ($S_type == "private"){
@@ -78,9 +71,9 @@ function send($qun,$_msg,$qq,$S_type,$msgid){
 
     "params"=>array(
 
-    "user_id"=>$qq,
+    "user_id"=>$GLOBALS["qq"],
 
-    "message"=>$_msg
+    "message"=>$GLOBALS["_msg"]
 
     ));
 
@@ -88,32 +81,37 @@ function send($qun,$_msg,$qq,$S_type,$msgid){
 
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
 
-    return $url;
-
+    $ws -> push($frame->fd, $url);
+    echo "bot发送消息：[".$GLOBALS['_msg']."]\n";
     }
 //指定发送方式
     if ($S_type == "私聊"){
-        $url = array(
-            "action"=>"send_private_msg",
-            "params"=>array(
-            "user_id"=>$qq,
-            "message"=>$_msg
-        
-            ));
-            $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-            return $url;
+ $url = array(
+
+    "action"=>"send_private_msg",
+
+    "params"=>array(
+
+    "user_id"=>$GLOBALS["qq"],
+
+    "message"=>$GLOBALS["_msg"]
+
+    ));
+    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    $ws -> push($frame->fd, $url);
+    echo "bot发送消息：[".$GLOBALS['_msg']."]\n";
     }
     if ($S_type == "群聊"){
-        $url = array(
-            "action"=>"send_group_msg",
-            "params"=>array(
-                "group_id"=>$qun,
-                "user_id"=>$qq,
-                "message"=>$_msg
-        
-            ));
-            $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-            return $url;
+       $url = array(
+    "action"=>"send_group_msg",
+    "params"=>array(
+    "group_id"=>$GLOBALS["qun"],
+    "message"=>$GLOBALS["_msg"]
+
+    ));
+    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    $ws -> push($frame->fd, $url);
+    echo "bot发送消息：[".$GLOBALS['_msg']."]\n";
     }
 
     
