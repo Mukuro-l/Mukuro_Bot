@@ -11,18 +11,20 @@ if ($msg == "测试"){
 
 //设置消息发送类型，114版本可设置[群聊、私聊]
 
-//$msg_type 为自动识别的消息来源[群聊、私聊]
-
-$S_type = $msg_type;
-
-//设置发送消息内容
-
-$_msg = "Hello, World";
+$Api_data = array(
+"qun"=>$qun,
+"qq"=>$qq,
+//msg为设置发送消息
+"msg"=>"hello, world",
+//发送消息类型
+"S_type"=>$msg_type,
+"msg_id"=>$msg_id
+);
 
 //调用消息类 send函数，在115版本以前不支持
 
-PHProbot\Api::send();
-
+$data=PHProbot\Api::send($Api_data);
+$ws -> push($frame->fd, $data);
 }
 
 ?>
