@@ -56,8 +56,7 @@ file_put_contents($qq."song_list.txt",$list,FILE_APPEND);
 
 }
 file_put_contents($qq."song_list.txt",$list."PS：10秒内有效",FILE_APPEND);
-$list = file_get_contents($qq."song_list.txt","r");
-$S_type = $msg_type;
+$text = file_get_contents($qq."song_list.txt","r");
 $config = new Config();
 $config->setSavePath="../gocq/data/images/";
 Factory::setOptions($config);
