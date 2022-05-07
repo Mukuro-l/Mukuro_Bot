@@ -52,7 +52,7 @@ for ($i=0;$i<20;$i++){
 
 $list = ($i+1).".<".$str[$i]['name'].">--".$str[$i]['artists'][0]['name']."\r\n";
 
-
+file_put_contents($qq."song_list.txt",$list,FILE_APPEND);
 
 }
 file_put_contents($qq."song_list.txt",$list."PS：10秒内有效",FILE_APPEND);
