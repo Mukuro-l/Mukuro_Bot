@@ -3,6 +3,7 @@
 //协程容器
 use Swoole\Coroutine;
 use function Swoole\Coroutine\run;
+use Swoole\Timer;
 //图文合成
 use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
@@ -33,7 +34,7 @@ $str=json_decode($str,true);
 $str=$str['result'];
 $str=$str['songs'];//歌曲列表
 $ge1=$str[0];
-$id=$ga1['id'];
+$id=$ge1['id'];
 if ($id==null){
 $Api_data = array(
 "qun"=>$qun,
