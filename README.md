@@ -35,7 +35,8 @@
 # 启动  
 - 需先配置完毕，直接在PHProbot根目录```php run.php```即可  
 ## 开发  
-```<?php
+```
+<?php
 
 //该文件为PHProbot插件开发示例
 
