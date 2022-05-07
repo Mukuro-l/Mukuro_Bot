@@ -81,7 +81,7 @@ public function send($Api_data){
     
 
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-
+    return $url;
     echo "bot发送消息：[".$Api_data["msg"]."]\n";
     }
 //指定发送方式
