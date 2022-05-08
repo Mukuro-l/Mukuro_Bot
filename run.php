@@ -26,6 +26,10 @@
    Copyright2021-2022 coldeggs.AllRightsReserved
 
 */
+
+define("PHP_robot","版权归coldeggs所有2021-2022。");
+
+define("E_mail","g2744602949@outlook.com");
 /*
 机器人配置模块
 Robot configuration module
@@ -114,17 +118,16 @@ mkdir('./Data/Log/Group/'.date('Y-m-d',time()));
 
 if (!empty($Data['group_id'])){
 
-	file_put_contents('./Data/Log/Group/'.date('Y-m-d',time()).'/'.$Data['group_id'].'.txt',$Data, FILE_APPEND);
+@file_put_contents('./Data/Log/Group/'.date('Y-m-d',time()).'/'.$Data['group_id'].'.txt',$Data, FILE_APPEND);
 
 }elseif(!empty($Data['user_id'])){
 
-	file_put_contents('./Data/Log/User/'.date('Y-m-d',time()).'/'.$Data['user_id'].'.txt',$Data, FILE_APPEND);
+@file_put_contents('./Data/Log/User/'.date('Y-m-d',time()).'/'.$Data['user_id'].'.txt',$Data, FILE_APPEND);
 
 }elseif($Data['meta_event_type'] !== 'heartbeat'){
 
 	//排除心跳事件
-
-	file_put_contents('./Data/Log/Other/'.date('Y-m-d',time()).'.txt',$Data, FILE_APPEND);
+@file_put_contents('./Data/Log/Other/'.date('Y-m-d',time()).'.txt',$Data, FILE_APPEND);
 
 }
 
@@ -132,58 +135,63 @@ if (!empty($Data['group_id'])){
 
 //下方字段仅消息上报的字段
 
-$msg=$Data['message']?:$_GET['msg'];//消息
+@$msg=$Data['message']?:$_GET['msg'];//消息
 
-$real_msg=$Data['raw_message']?:$_GET['real_msg'];//真实消息
+@$real_msg=$Data['raw_message']?:$_GET['real_msg'];//真实消息
 
-$qqinformation=$Data['sender'];
+@$qqinformation=$Data['sender'];
 
-$qqnick=$qqinformation['nickname']?:$_GET['qqnick'];//昵称
+@$qqnick=$qqinformation['nickname']?:$_GET['qqnick'];//昵称
 
-$qun=$Data['group_id']?:$_GET['qun'];//群号
+@$qun=$Data['group_id']?:$_GET['qun'];//群号
 
-$qq=$Data['user_id']?:$_GET['qq'];//qq号
+@$qq=$Data['user_id']?:$_GET['qq'];//qq号
 
-$qqadmin_get=$qqinformation['role']?:$_GET['qqadmin_get'];//群职位：admin/member
+@$qqadmin_get=$qqinformation['role']?:$_GET['qqadmin_get'];//群职位：admin/member
 
-$get_qqsex=$qqinformation['sex']?:$_GET['get_qqsex'];///male为男，female为女，unknown未知
+@$get_qqsex=$qqinformation['sex']?:$_GET['get_qqsex'];///male为男，female为女，unknown未知
 
 //api字段//
 
 //事件监控字段//
 
-$get_qun_eve=$Data['notice_type']?:$_GET['get_qun_eve'];//事件
+@$get_qun_eve=$Data['notice_type']?:$_GET['get_qun_eve'];//事件
 
-$get_post_type=$Data['post_type']?:$_GET['get_post_type'];//获取上报类型
+@$get_post_type=$Data['post_type']?:$_GET['get_post_type'];//获取上报类型
 
-$get_tishi_api=$Data['sub_type']?:$_GET['get_tishi_api'];//获取提示类型
+@$get_tishi_api=$Data['sub_type']?:$_GET['get_tishi_api'];//获取提示类型
 
-$get_qing_api=$Data['request_type']?:$_GET['get_qing_api'];//获取请求类型
+@$get_qing_api=$Data['request_type']?:$_GET['get_qing_api'];//获取请求类型
 
-$get_yanz_qun=$Data['comment']?:$_GET['get_yanz_qun'];//获取群验证消息
+@$get_yanz_qun=$Data['comment']?:$_GET['get_yanz_qun'];//获取群验证消息
 
-$get_cao_qun=$Data['operator_id']?:$_GET['get_cao_qun'];//获取操作者qq
+@$get_cao_qun=$Data['operator_id']?:$_GET['get_cao_qun'];//获取操作者qq
 
-$qunry=$Data['honor_type']?:$_GET['qunry'];//获取荣耀类型
+@$qunry=$Data['honor_type']?:$_GET['qunry'];//获取荣耀类型
 
-$cheqq=$Data['operator_id']?:$_GET['cheqq'];//撤回操作qq
+@$cheqq=$Data['operator_id']?:$_GET['cheqq'];//撤回操作qq
 
-$msgid=$Data['message_id']?:$_GET['msgid'];//消息id
+@$msgid=$Data['message_id']?:$_GET['msgid'];//消息id
 
-$real_msgid=$Data['real_id']?:$_GET['real_msgid'];//获取真实信息id
+@$real_msgid=$Data['real_id']?:$_GET['real_msgid'];//获取真实信息id
 
-$msg_type=$Data['message_type']?:$_GET['msg_type'];//消息类型
+@$msg_type=$Data['message_type']?:$_GET['msg_type'];//消息类型
 
-$chuo_userid=$Data['target_id']?:$_GET['chuo_userid'];//被戳qq
+@$chuo_userid=$Data['target_id']?:$_GET['chuo_userid'];//被戳qq
 
 //事件监控字段//
+
+
+
 
 include_once './module/api.php';//机器人各类api模块
 
 //@include_once './module/curl.php';//post
 
 //载入
-include_once "./vendor/autoload.php";
+if (is_dir("vendor")){
+@include_once "./vendor/autoload.php";
+}
 //这里会载入plugins文件夹下的所有插件
 $list = glob('./plugins/*.php');
 foreach($list as $file){
