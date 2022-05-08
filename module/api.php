@@ -36,11 +36,9 @@ namespace PHProbot;
 
 
 
-
-
 class Api{
 
-public function send($Api_data){
+function send($Api_data){
 
     if ($Api_data["S_type"] == "group"){
 
@@ -64,7 +62,7 @@ public function send($Api_data){
    echo "bot发送消息：[".$Api_data["msg"]."]\n";
     }
 
-    if (Api_data["S_type"] == "private"){
+    if ($Api_data["S_type"] == "private"){
 
     $url = array(
 
@@ -81,7 +79,7 @@ public function send($Api_data){
     
 
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    return $url;
+   return $url;
     echo "bot发送消息：[".$Api_data["msg"]."]\n";
     }
 //指定发送方式
@@ -115,6 +113,20 @@ public function send($Api_data){
     }
 
     
+
+}
+
+function MC($option=[],$msg){
+if (isset($option)==true){
+if (is_array($option) == true){
+$quantity = count($option);
+for ($i=0;$i<$quantity;$i++){
+if ($msg == $option[$i]){
+return true;
+}
+}
+}
+}
 
 }
 
