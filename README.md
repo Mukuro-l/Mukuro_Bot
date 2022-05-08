@@ -1,5 +1,5 @@
 # [PHProbot使用手册] by coldeggs  
-## 引用phpqrcode  
+## 引用hahadu/image-factory  
 你好！  欢迎阅读本程序的使用文档  
 交流QQ群：729473945  
 运行环境：
@@ -32,6 +32,8 @@
 # 配置PHProbot  
 - 打开[module]文件夹  
 - 在config.php文件内配置  
+- 安装composer ```apt install composer```  
+- 在PHProbot目录下执行```composer require hahadu/image-factory```  
 # 启动  
 - 需先配置完毕，直接在PHProbot根目录```php run.php```即可  
 ## 开发  
