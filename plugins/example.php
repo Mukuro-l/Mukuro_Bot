@@ -7,7 +7,7 @@ use PHProbot\Api;
 
 //开始识别消息内容
 
-if ($msg == "测试"){
+if (PHProbot\Api::MC($option=["你好","测试"],$msg)==true){
 
 //设置消息发送类型，114版本可设置[群聊、私聊]
 
