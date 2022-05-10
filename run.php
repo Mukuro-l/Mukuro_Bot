@@ -52,7 +52,7 @@ error_reporting($Error_level);
 
 //创建WebSocket Server对象，监听端口
 
-$ws = new Swoole\WebSocket\Server('0.0.0.0', $port);
+$ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
 //定时器
 use Swoole\Timer;
 
@@ -61,8 +61,7 @@ use Swoole\Timer;
 $ws->on('Open', function ($ws, $request) {
 include './module/config.php';
 echo "go-cqhttp已连接\n";
-$Welcome_to_use = "PHProbot已成功启动\n欢迎使用PHProbot\n当前版本：".$SDK."\n项目地址：https://github.com/2744602949/PHProbot\nQQ邮箱：coldeggs@qq.com\nOutlook邮箱：g2744602949@outlook.com\n";
-sleep(2);
+$Welcome_to_use = "PHProbot已成功启动\n欢迎使用PHProbot\n当前版本：".$BOT_Config["SDK"]."\n项目地址：https://github.com/2744602949/PHProbot\nQQ邮箱：coldeggs@qq.com\nOutlook邮箱：g2744602949@outlook.com\n";
 echo $Welcome_to_use;
 
 });
@@ -181,16 +180,14 @@ if (!empty($Data['group_id'])){
 
 //事件监控字段//
 
-
-
-
 include_once './module/api.php';//机器人各类api模块
-
-//@include_once './module/curl.php';//post
-
+include './module/config.php';//配置
 //载入
 if (is_dir("vendor")){
 @include_once "./vendor/autoload.php";
+}else{
+echo "缺少必要的库，请阅读README.md文件\n"
+exit;
 }
 //这里会载入plugins文件夹下的所有插件
 $list = glob('./plugins/*.php');
@@ -200,7 +197,6 @@ include './plugins/'.$file;
 }
 
 //定时器逻辑
-include './module/config.php';
 if ($_tick == true){
 if (file_exists("tick_config.json")==true){
 //该变量返回值为定时器ID
