@@ -5,7 +5,6 @@
 - Linux （建议Ubuntu发行版）
 - PHP7
 - swoole4.8
-- GO
 - 国内IP的服务器
 - 仅在Ubuntu20.3，PHP7.4环境通过测试  
 - 通过amd\arm平台测试  
