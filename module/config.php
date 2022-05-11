@@ -5,10 +5,10 @@ $Config_data = array(
 "port" => 6700,
 
 //机器人QQ号
-"robot" => null,
+"robot" => 111111,
 
 //主人QQ，管理机器人
-"qhost" => null,
+"qhost" => 11111,
 
 //go-cqhttp的目录，直接填写文件夹名称
 "directory" => "",
