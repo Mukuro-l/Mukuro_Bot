@@ -39,68 +39,105 @@ namespace PHProbot;
 class Api{
 
 function send($Api_data){
+
 if (isset($Api_data)==true){
+
 if (is_array($Api_data)==true){
+
     if ($Api_data["S_type"] == "group"){
+
     $url = array(
+
     "action"=>"send_group_msg",
+
     "params"=>array(
+
     "group_id"=>$Api_data["qun"],
+
     "message"=>$Api_data["msg"]
+
     ));
+
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+
   return $url;
+
    echo "bot发送消息：[".$Api_data["msg"]."]\n";
+
     }
 
     if ($Api_data["S_type"] == "private"){
+
     $url = array(
+
     "action"=>"send_private_msg",
+
     "params"=>array(
+
     "user_id"=>$Api_data["qq"],
+
     "message"=>$Api_data["msg"]
+
     ));
+
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+
    return $url;
+
     echo "bot发送消息：[".$Api_data["msg"]."]\n";
-    }
-//指定发送方式
-    if ($Api_data["S_type"] == "私聊"){
- $url = array(
-    "action"=>"send_private_msg",
-    "params"=>array(
-    "user_id"=>$Api_data["qq"],
-    "message"=>$Api_data["msg"]
-    ));
-    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    return $url;
-    echo "bot发送消息：[".$Api_data["msg"]."]\n";
-    }
-    if ($Api_data["S_type"] == "群聊"){
-       $url = array(
-    "action"=>"send_group_msg",
-    "params"=>array(
-    "group_id"=>$Api_data["qun"],
-    "message"=>$Api_data["msg"]
-    ));
-    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    return $url;
-    echo "bot发送消息：[".$Api_data["msg"]."]\n";
-    }
-    if ($Api_data["S_type"] == "转发"){
-       $url = array(
-    "action"=>"send_group_forward_msg",
-    "params"=>array(
-    "group_id"=>$Api_data["qun"],
-    "message"=>$Api_data["msg"]
-    ));
-    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    return $url;
-    echo "bot转发消息：[".$Api_data["msg"]."]\n";
-    }
+
     }
 
-}
+//指定发送方式
+
+    if ($Api_data["S_type"] == "私聊"){
+
+ $url = array(
+
+    "action"=>"send_private_msg",
+
+    "params"=>array(
+
+    "user_id"=>$Api_data["qq"],
+
+    "message"=>$Api_data["msg"]
+
+    ));
+
+    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+
+    return $url;
+
+    echo "bot发送消息：[".$Api_data["msg"]."]\n";
+
+    }
+
+    if ($Api_data["S_type"] == "群聊"){
+
+       $url = array(
+
+    "action"=>"send_group_msg",
+
+    "params"=>array(
+
+    "group_id"=>$Api_data["qun"],
+
+    "message"=>$Api_data["msg"]
+
+    ));
+
+    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+
+    return $url;
+
+    echo "bot发送消息：[".$Api_data["msg"]."]\n";
+
+    }
+
+    }
+
+    }
+
 }
 
 function MC($option=[],$msg){
