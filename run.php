@@ -186,7 +186,7 @@ include './module/config.php';//配置
 if (is_dir("vendor")){
 @include_once "./vendor/autoload.php";
 }else{
-echo "缺少必要的库，请阅读README.md文件\n"
+echo "缺少必要的库，请阅读README.md文件\n";
 exit;
 }
 //这里会载入plugins文件夹下的所有插件
