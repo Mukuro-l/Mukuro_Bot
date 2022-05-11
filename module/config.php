@@ -14,7 +14,7 @@ $Config_data = array(
 "directory" => "",
 
 //版本号
-"SDK" => 114,
+"SDK" => 115,
 
 //是否输出完整data
 "Return_Data" => true,
