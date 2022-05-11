@@ -3,7 +3,7 @@ use PHProbot\Api;
 //图文合成
 use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
-$return=PHProbot\Api::MsgS($MsgS_Data=[$msg=>"词典","data"=>$msg]);
+$return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"词典","data"=>$msg]);
 if ($return!=null){
 $url = "https://api.iyk0.com/gzs/?msg=".urlencode($return);
 $data = file_get_contents($url);
