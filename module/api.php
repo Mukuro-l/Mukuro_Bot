@@ -4,7 +4,7 @@
 
    *version v1.2
 
-   *date 2022.4.15
+   *date 2022.5.11
 
    *nick coldeggs
 
@@ -29,7 +29,6 @@
     "echo": "123"
 
 }
-
 */
 namespace PHProbot;
 
@@ -88,9 +87,20 @@ if (is_array($Api_data)==true){
     return $url;
     echo "bot发送消息：[".$Api_data["msg"]."]\n";
     }
+    if ($Api_data["S_type"] == "转发"){
+       $url = array(
+    "action"=>"send_group_forward_msg",
+    "params"=>array(
+    "group_id"=>$Api_data["qun"],
+    "message"=>$Api_data["msg"]
+    ));
+    $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    return $url;
+    echo "bot转发消息：[".$Api_data["msg"]."]\n";
     }
     }
 
+}
 }
 
 function MC($option=[],$msg){
@@ -106,7 +116,17 @@ return true;
 }
 
 }
-
+//即为Message search
+function MsgS($MsgS_Data){
+if (isset($MsgS_Data)==true){
+if (is_array($MsgS_Data) == true){
+$msg=$MsgS_Data["msg"];
+if (preg_match("/^$msg ?(.*)\$/",$MsgS_Data["data"],$return)){
+return $return[1];
+}
+}
 }
 
+}
+}
 ?>
