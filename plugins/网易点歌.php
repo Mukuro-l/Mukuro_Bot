@@ -4,7 +4,7 @@
 use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
 use PHProbot\Api;
-$return=PHProbot\Api::MsgS($MsgS_Data=[$msg=>"点歌","data"=>$msg]);
+$return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"点歌","data"=>$msg]);
 if ($return==null){
  $Api_data = array(
 "qun"=>$qun,
