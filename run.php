@@ -79,7 +79,7 @@ $Data = $frame->data;
 $Data = json_decode($Data,true);
 
 //输出data
-if ($Return_Data == true){
+if ($BOT_Config["Return_Data"] == true){
 if ($Data['meta_event_type'] != 'heartbeat'){
 print_r($Data);
 }
@@ -197,7 +197,7 @@ include './plugins/'.$file;
 }
 
 //定时器逻辑
-if ($_tick == true){
+if ($BOT_Config["_tick"] == true){
 if (file_exists("tick_config.json")==true){
 //该变量返回值为定时器ID
 $the_tick=Swoole\Timer::tick(1000, function(){
