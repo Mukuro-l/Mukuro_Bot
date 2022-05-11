@@ -34,6 +34,7 @@
 # 配置PHProbot  
 - 打开[module]文件夹  
 - 在config.php文件内配置  
+- 安装hahadu/image-factory ```composer require hahadu/image-factory```  
 # 启动  
 - 需先配置完毕，直接在PHProbot根目录```php run.php```即可  
 ## 开发  
