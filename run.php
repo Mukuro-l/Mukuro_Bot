@@ -123,7 +123,7 @@ if (!empty($Data['group_id'])){
 
 @file_put_contents('./Data/Log/User/'.date('Y-m-d',time()).'/'.$Data['user_id'].'.txt',$Data, FILE_APPEND);
 
-}elseif($Data['meta_event_type'] !== 'heartbeat'){
+}else if(@$Data['meta_event_type'] !== 'heartbeat'){
 
 	//排除心跳事件
 @file_put_contents('./Data/Log/Other/'.date('Y-m-d',time()).'.txt',$Data, FILE_APPEND);
@@ -201,30 +201,27 @@ if ($BOT_Config["_tick"] == true){
 if (file_exists("tick_config.json")==true){
 //该变量返回值为定时器ID
 $the_tick=Swoole\Timer::tick(1000, function(){
-$data = file_get_contents("tick_config.json");
-$data = json_decode($data, true);
-$qq = $data['qq'];
-$time = $data['time'];
-if ([date("His")-$time]>=20){
-unlink($qq."song_list.txt");
-unlink("tick_config.json");
-echo "Swoole 定时器执行完毕\n";
-}
-});
-//清除定时器
+$tick_data=json_decode(file_get_contents("tick_config.json"),true);
+for ($i=0;$i<count($tick_data);$i++){
+if ($tick_data[$i]["time"]===date("H:i:s")){
+file_get_contents("http://127.0.0.1:".$tick_data[$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$i]["qun"]."&message=[CQ:at,qq=".$tick_data[$i]["qq"]."]".urlencode($tick_data[$i]["msg"]));
+
 Swoole\Timer::clear($the_tick);
 }
 }
 });
+}
+}
 
+});
 
 
 //监听WebSocket连接关闭事件
 
-$ws->on('Close', function ($ws, $fd) {
+$ws->on('Close', function ($ws, $fd) use($the_tick) {
 
     echo "go-cqhttp客户端：-{$fd} 已关闭\n";
-
+Swoole\Timer::clear($the_tick);
 });
 
 $ws->start();
