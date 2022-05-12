@@ -69,7 +69,7 @@ $Api_data = array(
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-Swoole\Timer::after(10000, function() use($qq){
+Swoole\Timer::after(15000, function() use($qq){
 if (file_exists($qq."song_list.txt")==true){
 unlink($qq."song_list.txt");
 }
