@@ -5,17 +5,7 @@ use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
 use PHProbot\Api;
 $return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"点歌","data"=>$msg]);
-if ($return==null){
- $Api_data = array(
-"qun"=>$qun,
-"qq"=>$qq,
-"msg"=>"点什么？名字呢？你吃了？",
-"S_type"=>$msg_type,
-"msg_id"=>$msg_id
-);
-$data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
-}else{
+if ($return!=null){
 
 $ge=urlencode($return);
 
