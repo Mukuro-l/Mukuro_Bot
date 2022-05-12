@@ -1,3 +1,4 @@
+# 请注意：main分支存在未发布的功能及特性，稳定性未知。建议使用发行版。  
 # [PHProbot使用手册] by coldeggs  
 ## 引用hahadu/image-factory  
 你好！  欢迎阅读本程序的使用文档  
