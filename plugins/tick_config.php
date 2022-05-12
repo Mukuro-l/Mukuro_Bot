@@ -45,7 +45,7 @@ $tick_array[count($tick_array)] = array(
 "time"=>$tickdata[1],
 "tick"=>$tickdata[5],
 "msg"=>$tickdata[4],
-"http_port"=>$BOT_Config["port"]
+"http_port"=>$BOT_Config["http_port"]
 );
 $data =json_encode($tick_array,JSON_UNESCAPED_UNICODE);
 file_put_contents("tick_config.json",$data);
