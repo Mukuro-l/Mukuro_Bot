@@ -205,7 +205,7 @@ $tick_data=json_decode(file_get_contents("tick_config.json"),true);
 for ($i=0;$i<count($tick_data);$i++){
 if ($tick_data[$i]["time"]===date("H:i:s")){
 if ($tick_data[$i]["tick"]!=0){
-file_get_contents("http://127.0.0.1:".$tick_data[$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$i]["qun"]."&message=[".urlencode($tick_data[$i]["msg"])."]".);
+file_get_contents("http://127.0.0.1:".$tick_data[$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$i]["qun"]."&message=[".urlencode($tick_data[$i]["msg"])."]");
 $tick_data[$i]["tick"]=$tick_data[$i]["tick"]-1;
 $data =json_encode($tick_data,JSON_UNESCAPED_UNICODE);
 file_put_contents("tick_config.json",$data);
