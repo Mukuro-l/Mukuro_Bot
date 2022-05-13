@@ -134,5 +134,29 @@ return false;
 }
 
 }
+
+//光学字符识别OCR 直接传入CQ码即可
+function OCR($return){
+if ($return!=null){
+$file=explode("[CQ:image,file=",$return);
+if (strstr($file[1],"subType")==true){
+$data=explode(',',$file[1]);
+}else{
+$data=explode("]",$file[1]);
+}
+$BOT_Config =json_decode(file_get_contents("config.json"),true);
+$url = "http://127.0.0.1:".$BOT_Config["http_port"]."/ocr_image?image=".$data[0];
+echo $data[0]."\n";
+$Data = json_decode(file_get_contents($url),true);
+
+$time = rand(576588,16050800);
+for ($i=0;$i<count($Data["data"]["texts"]);$i++){
+$list = $Data["data"]["texts"][$i]["text"]."\r\n";
+file_put_contents("./Ocr/".$time."ocr.txt",$list,FILE_APPEND);
+}
+return file_get_contents("./Ocr/".$time."ocr.txt");
+}
+
+}
 }
 ?>
