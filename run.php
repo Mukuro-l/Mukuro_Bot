@@ -55,6 +55,9 @@ error_reporting($BOT_Config["Error_level"]);
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
 //定时器
 use Swoole\Timer;
+//协程容器
+use Swoole\Coroutine;
+use function Swoole\Coroutine\run;
 
 //监听WebSocket连接打开事件
 
@@ -199,8 +202,9 @@ include './plugins/'.$file;
 //定时器逻辑
 if ($BOT_Config["_tick"] == true){
 if (file_exists("tick_config.json")==true){
+go(function(){
 //该变量返回值为定时器ID
-$the_tick=Swoole\Timer::tick(1000, function(){
+@$the_tick=Swoole\Timer::tick(2000, function(){
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
 for ($i=0;$i<count($tick_data);$i++){
 if ($tick_data[$i]["time"]===date("H:i:s")){
@@ -214,6 +218,7 @@ Swoole\Timer::clear($the_tick);
 }
 }
 });
+});
 }
 }
 
@@ -224,8 +229,9 @@ Swoole\Timer::clear($the_tick);
 
 $ws->on('Close', function ($ws, $fd) use($the_tick) {
 
-    echo "go-cqhttp客户端：-{$fd} 已关闭\n";
+echo "go-cqhttp客户端：-{$fd} 已关闭\n";
 Swoole\Timer::clear($the_tick);
+echo "清除定时器\n";
 });
 
 $ws->start();
