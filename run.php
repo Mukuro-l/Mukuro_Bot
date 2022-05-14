@@ -83,7 +83,7 @@ $Data = json_decode($Data,true);
 
 //输出data
 if ($BOT_Config["Return_Data"] == true){
-if ($Data['meta_event_type'] != 'heartbeat'){
+if (@$Data['meta_event_type'] != 'heartbeat'){
 print_r($Data);
 }
 }
@@ -227,10 +227,10 @@ Swoole\Timer::clear($the_tick);
 
 //监听WebSocket连接关闭事件
 
-$ws->on('Close', function ($ws, $fd) use($the_tick) {
+@$ws->on('Close', function ($ws, $fd) use($the_tick) {
 
 echo "go-cqhttp客户端：-{$fd} 已关闭\n";
-Swoole\Timer::clear($the_tick);
+@Swoole\Timer::clear($the_tick);
 echo "清除定时器\n";
 });
 
