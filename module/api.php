@@ -49,8 +49,8 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    echo "bot转发消息：[".$Api_data["msg"]."]\n";
   return $url;
-   echo "bot发送消息：[".$Api_data["msg"]."]\n";
     }
 
     if ($Api_data["S_type"] == "private"){
@@ -61,8 +61,8 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    echo "bot转发消息：[".$Api_data["msg"]."]\n";
    return $url;
-    echo "bot发送消息：[".$Api_data["msg"]."]\n";
     }
 //指定发送方式
     if ($Api_data["S_type"] == "私聊"){
@@ -73,8 +73,8 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    echo "bot转发消息：[".$Api_data["msg"]."]\n";
     return $url;
-    echo "bot发送消息：[".$Api_data["msg"]."]\n";
     }
     if ($Api_data["S_type"] == "群聊"){
        $url = array(
@@ -84,8 +84,8 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
+    echo "bot转发消息：[".$Api_data["msg"]."]\n";
     return $url;
-    echo "bot发送消息：[".$Api_data["msg"]."]\n";
     }
     if ($Api_data["S_type"] == "转发"){
        $url = array(
@@ -95,8 +95,9 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    return $url;
     echo "bot转发消息：[".$Api_data["msg"]."]\n";
+    return $url;
+    
     }
     }
 
@@ -156,6 +157,25 @@ file_put_contents("./Ocr/".$time."ocr.txt",$list,FILE_APPEND);
 }
 return file_get_contents("./Ocr/".$time."ocr.txt");
 }
+
+}
+//即为Get friends
+function GF(){
+$BOT_Config =json_decode(file_get_contents("config.json"),true);
+$url = "http://127.0.0.1:".$BOT_Config["http_port"]."/get_friend_list";
+$Data = json_decode(file_get_contents($url),true);
+for ($i=0;$i<count($Data["data"]);$i++){
+$list="ID：".$i."\r\nQQ：".$Data["data"][$i]["user_id"]."\r\n昵称：".$Data["data"][$i]["nickname"]."\r\n备注：".$Data["data"][$i]["remark"]."\r\n\r\n";
+file_put_contents("GF.txt",$list,FILE_APPEND);
+}
+return file_get_contents("GF.txt");
+
+}
+function DF($user_id){
+$BOT_Config =json_decode(file_get_contents("config.json"),true);
+$url = "http://127.0.0.1:".$BOT_Config["http_port"]."/delete_friend?friend_id=".$user_id;
+file_get_contents($url);
+return "已删除好友".$user_id;
 
 }
 }
