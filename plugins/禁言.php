@@ -37,9 +37,9 @@ $set_array = [
 //执行人
 "qq"=>$qq,
 //被禁言的QQ号
-"ban_user"=>$return_data[2],
+"ban_user"=>$return_data[1],
 //禁言时间
-"time"=>$return_data[3]
+"time"=>$return_data[2]
 ];
 if (PHProbot\GT::ban($set_array)=="OK"){
 $Api_data = array(
