@@ -57,7 +57,7 @@ $ws -> push($frame->fd, $data);
 $return_data=explode(",qq=",$return);
 $return_data1=explode("]",$return_data[1]);
 if (count($return_data1)==2){
-$return_time=str_replace(' ', '', $return_data[1]);
+$return_time=str_replace(' ', '', $return_data1[1]);
 $set_array = [
 "qun"=>$qun,
 //执行人
