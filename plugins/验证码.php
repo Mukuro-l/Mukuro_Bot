@@ -65,15 +65,12 @@ $Api_data = array(
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-}
-if (preg_match("/^[0-9]+$/u", $msg, $return)){
-run(function()use($msg,$qq){
-//30秒后判断
 Swoole\Timer::after(35000, function() use($qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $data_array = json_decode(file_get_contents("V_group.json"),true);
 for ($i=0;$i<count($data_array);$i++){
 if ($data_array[$i]["time"]!=0&&$data_array[$i]["qq"]==$qq){
+if ($data_array[$i]["ing"]==true){
 $data_array = json_decode(file_get_contents("V_group.json"),true);
 $data ="验证超时";
 $url = "http://127.0.0.1:".$BOT_Config["http_port"]."/send_group_msg?group_id=".$data_array[$i]["qun"]."&message=".$data;
@@ -82,10 +79,12 @@ $data_array[$i]["ing"]=false;
 file_put_contents("V_group.json",json_encode($data_array));
 echo "执行完成\n";
 }
+}
 echo "执行完成\n";
 }
 });
-//验证
+}
+if (preg_match("/^[0-9]+$/u", $msg, $return)){
 
 //创建协程判断
 go(function()use($msg,$qq){
@@ -107,12 +106,12 @@ echo "协程执行完毕\n";
 }
 );
 
+//30秒后判断
 Swoole\Timer::after(35000, function() use($qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $data_array = json_decode(file_get_contents("V_group.json"),true);
 for ($i=0;$i<count($data_array);$i++){
 if ($data_array[$i]["time"]!=0&&$data_array[$i]["qq"]==$qq){
-if ($data_array[$i]["ing"]==true){
 $data_array = json_decode(file_get_contents("V_group.json"),true);
 $data ="验证超时";
 $url = "http://127.0.0.1:".$BOT_Config["http_port"]."/send_group_msg?group_id=".$data_array[$i]["qun"]."&message=".$data;
@@ -121,11 +120,9 @@ $data_array[$i]["ing"]=false;
 file_put_contents("V_group.json",json_encode($data_array));
 echo "执行完成\n";
 }
-}
 echo "执行完成\n";
 }
 });
-
-});
 }
+
 ?>
