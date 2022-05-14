@@ -49,7 +49,7 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    echo "bot转发消息：[".$Api_data["msg"]."]\n";
+    echo "bot发送消息：[".$Api_data["msg"]."]\n";
   return $url;
     }
 
@@ -61,7 +61,7 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    echo "bot转发消息：[".$Api_data["msg"]."]\n";
+    echo "bot发送消息：[".$Api_data["msg"]."]\n";
    return $url;
     }
 //指定发送方式
@@ -73,7 +73,7 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    echo "bot转发消息：[".$Api_data["msg"]."]\n";
+    echo "bot发送消息：[".$Api_data["msg"]."]\n";
     return $url;
     }
     if ($Api_data["S_type"] == "群聊"){
@@ -84,7 +84,7 @@ if (is_array($Api_data)==true){
     "message"=>$Api_data["msg"]
     ));
     $url =json_encode($url,JSON_UNESCAPED_UNICODE);
-    echo "bot转发消息：[".$Api_data["msg"]."]\n";
+    echo "bot发送消息：[".$Api_data["msg"]."]\n";
     return $url;
     }
     if ($Api_data["S_type"] == "转发"){
@@ -178,5 +178,32 @@ file_get_contents($url);
 return "已删除好友".$user_id;
 
 }
+function Doc(){
+if (is_dir("Doc")!=true){
+mkdir("Doc");
+
 }
+
+}
+
+}
+
+//即为Group tube 群管
+class GT{
+//Super user group
+function ban($set_array){
+if (isset($set_array)==true){
+if (is_array($set_array)==true){
+$BOT_Config =json_decode(file_get_contents("config.json"),true);
+if ($BOT_Config["qhost"]==$set_array["qq"]){
+$url = "http://127.0.0.1:".$BOT_Config["http_port"]."/set_group_ban?group_id=".$set_array["qun"]."&user_id=".$set_array["ban_user"]."&duration=".$set_array["time"];
+file_get_contents($url);
+return "OK";
+}
+}
+}
+}
+
+}
+
 ?>
