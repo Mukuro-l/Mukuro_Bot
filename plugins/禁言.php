@@ -53,10 +53,10 @@ $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
 }
 }
-if (strstr("[CQ:at,qq=",$return)==true&&$return!=null){
-echo "测试";
+
 $return_data=explode(",qq=",$return);
 $return_data1=explode("]",$return_data[1]);
+if (count($return_data1)==2){
 $set_array = [
 "qun"=>$qun,
 //执行人
