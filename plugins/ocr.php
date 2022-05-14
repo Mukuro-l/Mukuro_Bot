@@ -3,7 +3,7 @@ use PHProbot\Api;
 /*
 *OCR图片识别插件
 */
-$return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"看图","data"=>$msg]);
+$return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"看图","data"=>$real_msg]);
 if ($return!=null){
 $data=PHProbot\Api::OCR($return);
 $Api_data = array(
