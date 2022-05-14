@@ -66,7 +66,7 @@ $Api_data = array(
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
 
-run(function()use($qq){
+run(function()use($msg,$qq){
 //30秒后判断
 Swoole\Timer::after(35000, function() use($qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
