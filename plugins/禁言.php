@@ -6,8 +6,6 @@ $return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"禁言","data"=>$msg]);
 //禁言#群号#QQ号#时间
 if ($return!=null){
 echo "测试";
-if (strstr("#",$return)==true){
-echo "测试";
 $return_data=explode("#",$return);
 if (count($return_data)==4){
 echo "测试";
@@ -53,7 +51,6 @@ $Api_data = array(
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-}
 }
 }
 if (strstr("[CQ:at,qq=",$return)==true&&$return!=null){
