@@ -46,7 +46,7 @@ include './module/config.php';
 屏蔽错误
 Masking error
 */
-//error_reporting($BOT_Config["Error_level"]);
+error_reporting($BOT_Config["Error_level"]);
 
 //ws正向服务器
 
