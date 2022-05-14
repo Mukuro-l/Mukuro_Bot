@@ -47,7 +47,7 @@ exit;
 if (count(json_decode(file_get_contents("config.json"),true))>count($Config_data)||count(json_decode(file_get_contents("config.json"),true))<count($Config_data)){
 $Config_data = json_encode($Config_data,JSON_UNESCAPED_UNICODE);
 file_put_contents("config.json",$Config_data);
-echo "[notification]：PHProbot检测到配置更改已重新生成配置文件\n"
+echo "[notification]：PHProbot检测到配置更改已重新生成配置文件\n";
 }
 }
 
