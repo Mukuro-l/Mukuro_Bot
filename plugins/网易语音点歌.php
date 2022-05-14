@@ -43,9 +43,9 @@ $config = new Config();
 $config->setSavePath="../gocq/data/images/";
 Factory::setOptions($config);
 $option=[
-'background'=>'#ff3cc1',
-'fill_color'=>'#fff',
-'font_size'=>'20',
+'background'=>'#f5f5dc',
+'fill_color'=>'#000000',
+'font_size'=>'30',
 'filename'=>$qq,
 'format'=>'jpg',
 ];
