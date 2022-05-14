@@ -7,8 +7,10 @@ $return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"禁言","data"=>$msg]);
 if ($return!=null){
 echo "测试";
 if (strstr("#",$return)==true){
+echo "测试";
 $return_data=explode("#",$return);
 if (count($return_data)==4){
+echo "测试";
 $set_array = [
 "qun"=>$return_data[1],
 //执行人
@@ -31,6 +33,7 @@ $ws -> push($frame->fd, $data);
 }
 }
 if (count($return_data)==3){
+echo "测试";
 $set_array = [
 "qun"=>$qun,
 //执行人
@@ -54,6 +57,7 @@ $ws -> push($frame->fd, $data);
 }
 }
 if (strstr("[CQ:at,qq=",$return)==true&&$return!=null){
+echo "测试";
 $return_data=explode(",qq=",$return);
 $return_data1=explode("]",$return_data[1]);
 $set_array = [
