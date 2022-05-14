@@ -65,7 +65,8 @@ $Api_data = array(
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-
+}
+if (preg_match("/^[0-9]+$/u", $msg, $return)){
 run(function()use($msg,$qq){
 //30秒后判断
 Swoole\Timer::after(35000, function() use($qq){
@@ -85,7 +86,7 @@ echo "执行完成\n";
 }
 });
 //验证
-if (preg_match("/^[0-9]+$/u", $msg, $return)){
+
 //创建协程判断
 go(function()use($msg,$qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
@@ -125,7 +126,6 @@ echo "执行完成\n";
 }
 });
 
-}
 });
 }
 ?>
