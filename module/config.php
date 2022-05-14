@@ -12,7 +12,7 @@ $Config_data = array(
 "robot" => 111111,
 
 //主人QQ，管理机器人
-"qhost" => 11111,
+"qhost" => 1940826077,
 
 //go-cqhttp的目录，直接填写文件夹名称。gocq需与PHProbot在同一父目录
 "directory" => "gocq",
