@@ -30,7 +30,10 @@ $Config_data = array(
 "Error_level" => "E_USER_ERROR",
 
 //定时器开关
-"_tick" => true
+"_tick" => true,
+
+//是否报时，需tick_config.json配置文件
+"_time" => true
 );
 
 //创建配置
@@ -41,6 +44,11 @@ echo "已生成config.json配置文件\n请配置config.json\n若您未查看con
 exit;
 }else{
 
+if (count(json_decode(file_get_contents("config.json"),true))>count($Config_data)||count(json_decode(file_get_contents("config.json"),true))<count($Config_data)){
+$Config_data = json_encode($Config_data,JSON_UNESCAPED_UNICODE);
+file_put_contents("config.json",$Config_data);
+echo "[notification]：PHProbot检测到配置更改已重新生成配置文件\n"
+}
 }
 
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
