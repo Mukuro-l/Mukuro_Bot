@@ -39,7 +39,7 @@ unlink("plugins_list.txt");
 }
 $return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"关闭","data"=>$msg]);
 if ($return!=null){
-if (strstr("关闭",$msg){
+if (strstr("关闭",$msg)){
 $plugins_data = json_decode(file_get_contents("plugins_switch.json"),true);
 do{
 for ($i=0;$i<count($plugins_data);$i++){
@@ -64,7 +64,7 @@ $ws -> push($frame->fd, $data);
 }
 $return1=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"开启","data"=>$msg]);
 if ($return1!=null){
-if (strstr("开启",$msg){
+if (strstr("开启",$msg)){
 $plugins_data = json_decode(file_get_contents("plugins_switch.json"),true);
 do{
 for ($i=0;$i<count($plugins_data);$i++){
