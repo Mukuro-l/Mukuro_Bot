@@ -149,6 +149,7 @@ $ws -> push($frame->fd, $data);
 }else{
 $data_array=json_decode(file_get_contents("V_group.json"),true);
   $data_array[]=[
+    "sum"=>(count($data_array)-1),
     "qq"=>$qq,
     "qun"=>$qun,
     //答案
