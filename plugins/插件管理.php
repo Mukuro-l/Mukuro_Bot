@@ -47,7 +47,7 @@ do{
 for ($i=0;$i<count($plugins_data);$i++){
 if ($plugins_data[$i]["插件名"]==$return){
 $plugins_data[$i]["状态"]="关";
-file_put_contents("plugins_switch.json",$plugins_data);
+file_put_contents("plugins_switch.json",json_encode($plugins_data,JSON_UNESCAPED_UNICODE));
 }
 }
 }while($plugins_data[$i]["状态"]=="开");
@@ -73,7 +73,7 @@ do{
 for ($i=0;$i<count($plugins_data);$i++){
 if ($plugins_data[$i]["插件名"]==$return){
 $plugins_data[$i]["状态"]="开";
-file_put_contents("plugins_switch.json",$plugins_data);
+file_put_contents("plugins_switch.json",json_encode($plugins_data,JSON_UNESCAPED_UNICODE));
 }
 }
 }while($plugins_data[$i]["状态"]=="关");
