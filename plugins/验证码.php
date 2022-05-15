@@ -67,7 +67,7 @@ $Api_data = array(
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-Swoole\Timer::after(35000, function() use($qq){
+Swoole\Timer::after(45000, function() use($qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $data_array = json_decode(file_get_contents("V_group.json"),true);
 for ($i=0;$i<count($data_array);$i++){
@@ -208,7 +208,7 @@ $ws -> push($frame->fd, $data);
   }
 }
 }while($i!=$data_array[$i]["sum"]&&$qq==$data_array[$i]["qq"]);
-Swoole\Timer::after(35000, function() use($qq){
+Swoole\Timer::after(45000, function() use($qq){
 
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 
@@ -261,7 +261,7 @@ echo "协程执行完毕\n";
 );
 
 //30秒后判断
-Swoole\Timer::after(35000, function() use($qq){
+Swoole\Timer::after(45000, function() use($qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $data_array = json_decode(file_get_contents("V_group.json"),true);
 for ($i=0;$i<count($data_array);$i++){
