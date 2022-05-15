@@ -1,8 +1,8 @@
 <?php
-use PHProbot\Api;
 //图文合成库
 use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
+use PHProbot\Api;
 if ($msg == "插件列表"){
 $plugins_data = json_decode(file_get_contents("plugins_switch.json"),true);
 for ($i=0;$i<count($plugins_data);$i++){
@@ -36,5 +36,54 @@ $Api_data = array(
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
 unlink("plugins_list.txt");
+}
+$return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"关闭","data"=>$msg]);
+if ($return!=null){
+if (strstr("关闭",$msg){
+$plugins_data = json_decode(file_get_contents("plugins_switch.json"),true);
+do{
+for ($i=0;$i<count($plugins_data);$i++){
+if ($plugins_data[$i]["插件名"]==$return){
+$plugins_data[$i]["状态"]="关";
+file_put_contents("plugins_switch.json",$plugins_data);
+}
+}
+}while($plugins_data[$i]["状态"]!="开");
+
+$Api_data = array(
+"qun"=>$qun,
+"qq"=>$qq,
+"msg"=>"已关闭".$return,
+"S_type"=>$msg_type,
+"msg_id"=>$msg_id
+);
+$data=PHProbot\Api::send($Api_data);
+$ws -> push($frame->fd, $data);
+}
+
+}
+$return1=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"开启","data"=>$msg]);
+if ($return1!=null){
+if (strstr("开启",$msg){
+$plugins_data = json_decode(file_get_contents("plugins_switch.json"),true);
+do{
+for ($i=0;$i<count($plugins_data);$i++){
+if ($plugins_data[$i]["插件名"]==$return){
+$plugins_data[$i]["状态"]="开";
+file_put_contents("plugins_switch.json",$plugins_data);
+}
+}
+}while($plugins_data[$i]["状态"]!="关");
+
+$Api_data = array(
+"qun"=>$qun,
+"qq"=>$qq,
+"msg"=>"已开启".$return,
+"S_type"=>$msg_type,
+"msg_id"=>$msg_id
+);
+$data=PHProbot\Api::send($Api_data);
+$ws -> push($frame->fd, $data);
+}
 }
 ?>
