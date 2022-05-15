@@ -31,14 +31,15 @@ $result=($add1+$add2);
 if (file_exists("V_group.json")==false){
 $data_array = array();
 $data_array[] = array(
-"qq"=>$qq,
-"qun"=>$qun,
-//答案
-"result"=>$result,
-//是否正在验证
-"ing"=>true,
-//时间
-"time"=>$time
+"sum"=>0,
+    "qq"=>$qq,
+    "qun"=>$qun,
+    //答案
+    "result"=>$result,
+    //是否正在验证
+    "ing"=>true,
+    //时间
+    "time"=>$time
 );
 file_put_contents("V_group.json",json_encode($data_array));
 //生成图片的文本
@@ -82,11 +83,14 @@ file_put_contents("V_group.json",json_encode($data_array));
 }
 }
 });
+
 }else{
   $data_array=json_decode(file_get_contents("V_group.json"),true);
+  do{
   for ($i=0;$i<count($data_array);$i++){
-  if ($data_array[$i]["qq"]==$qq){
+  if ($data_array[$i]["qq"]==$qq&&$data_array[$i]["sum"]==$i){
   $data_array[$i]=[
+    "sum"=>$i,
     "qq"=>$qq,
     "qun"=>$qun,
     //答案
@@ -142,7 +146,6 @@ $Api_data = array(
 $data=PHProbot\Api::send($Api_data);
 
 $ws -> push($frame->fd, $data);
-
 }else{
 $data_array=json_decode(file_get_contents("V_group.json"),true);
   $data_array[]=[
@@ -203,6 +206,7 @@ $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
   }
 }
+}while($i!=$data_array[$i]["sum"]&&$qq==$data_array[$i]["qq"]);
 Swoole\Timer::after(35000, function() use($qq){
 
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
