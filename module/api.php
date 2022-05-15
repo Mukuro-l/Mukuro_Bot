@@ -38,7 +38,7 @@ namespace PHProbot;
 //发送消息
 class Api{
 
-function send($Api_data){
+public static function send($Api_data){
 if (isset($Api_data)==true){
 if (is_array($Api_data)==true){
     if ($Api_data["S_type"] == "group"){
@@ -104,7 +104,7 @@ if (is_array($Api_data)==true){
 }
 }
 
-function MC($option=[],$msg){
+public static function MC($option=[],$msg){
 if (isset($option)==true){
 if (is_array($option) == true){
 $quantity = count($option);
@@ -118,7 +118,7 @@ return true;
 
 }
 //即为Message search
-function MsgS($MsgS_Data){
+public static function MsgS($MsgS_Data){
 if (isset($MsgS_Data)==true){
 if (is_array($MsgS_Data) == true){
 $msg=$MsgS_Data["msg"];
@@ -137,7 +137,7 @@ return false;
 }
 
 //光学字符识别OCR 直接传入CQ码即可
-function OCR($return){
+public static function OCR($return){
 if ($return!=null){
 $file=explode("[CQ:image,file=",$return);
 if (strstr($file[1],"subType")==true){
@@ -160,7 +160,7 @@ return file_get_contents("./Ocr/".$time."ocr.txt");
 
 }
 //即为Get friends
-function GF(){
+public static function GF(){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $url = "http://127.0.0.1:".$BOT_Config["http_port"]."/get_friend_list";
 $Data = json_decode(file_get_contents($url),true);
@@ -171,18 +171,11 @@ file_put_contents("GF.txt",$list,FILE_APPEND);
 return file_get_contents("GF.txt");
 
 }
-function DF($user_id){
+public static function DF($user_id){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $url = "http://127.0.0.1:".$BOT_Config["http_port"]."/delete_friend?friend_id=".$user_id;
 file_get_contents($url);
 return "已删除好友".$user_id;
-
-}
-function Doc(){
-if (is_dir("Doc")!=true){
-mkdir("Doc");
-
-}
 
 }
 
@@ -191,7 +184,7 @@ mkdir("Doc");
 //即为Group tube 群管
 class GT{
 //Super user group
-function ban($set_array){
+public static function ban($set_array){
 if (isset($set_array)==true){
 if (is_array($set_array)==true){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
