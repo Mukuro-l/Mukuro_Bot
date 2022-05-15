@@ -29,7 +29,7 @@
 
 define("PHP_robot","版权归coldeggs所有2021-2022。");
 
-define("E_mail","g2744602949@outlook.com");
+define("E_mail","phprobot@sina.com");
 /*
 机器人配置模块
 Robot configuration module
@@ -46,7 +46,7 @@ include './module/config.php';
 屏蔽错误
 Masking error
 */
-//error_reporting($BOT_Config["Error_level"]);
+error_reporting($BOT_Config["Error_level"]);
 
 //ws正向服务器
 
@@ -192,13 +192,49 @@ if (is_dir("vendor")){
 echo "缺少必要的库，请阅读README.md文件\n";
 exit;
 }
-//这里会载入plugins文件夹下的所有插件
+//这里会载入plugins文件夹下的所有插件 115版本增加是否载入
 $list = glob('./plugins/*.php');
-foreach($list as $file){
-$file=explode('/',$file)['2'];
-include './plugins/'.$file;
-}
+if (file_exists("plugins_switch.json")==false){
+$plugins_array=array();
+for ($i=0;$i<count($list);$i++){
+$file=explode('/',$list[$i])[2];
 
+$plugins_array[]=array(
+"插件名"=>$file,
+"状态"=>"开"
+);
+}
+$plugins_list = json_encode($plugins_array,JSON_UNESCAPED_UNICODE);
+file_put_contents("plugins_switch.json",$plugins_list);
+}else{
+
+for ($i=0;$i<count($list);$i++){
+$file_array = json_decode(file_get_contents("plugins_switch.json"),true);
+$file_list=$file_array[$i]["插件名"];
+
+//echo "+++++++++++\n插件名：".$file."\n状态：".$file_array[$i]["状态"]."\n";
+//echo "以下为载入状态\n+++++++++++";
+if ($file_array[$i]["状态"]=="开"){
+//echo "\n".$file."成功载入\n";
+include './plugins/'.$file_list;
+}
+}
+if (count($list)>count($file_array)){
+$plugins_array[]=array(
+"插件名"=>$file,
+"状态"=>"开"
+);
+}else if(count($list)<count($file_array)){
+for ($i=0;$i<count($list);$i++){
+$file_array = json_decode(file_get_contents("plugins_switch.json"),true);
+$file_list=$file_array[$i]["插件名"];
+if ($file!=$file_list){
+array_splice($file_array, $i, 1);
+file_put_contents("plugins_switch.json",json_encode($file_array,JSON_UNESCAPED_UNICODE));
+}
+}
+}
+}
 //定时器逻辑
 if ($BOT_Config["_tick"] == true){
 if (file_exists("tick_config.json")==true){
