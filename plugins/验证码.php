@@ -180,6 +180,7 @@ echo "执行完成\n";
 
 });
 }
+}
 
 if (preg_match("/^[0-9]+$/u", $msg, $return)){
 
