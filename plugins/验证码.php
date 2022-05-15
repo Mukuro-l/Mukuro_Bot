@@ -78,10 +78,8 @@ $url = "http://127.0.0.1:".$BOT_Config["http_port"]."/send_group_msg?group_id=".
 file_get_contents($url);
 $data_array[$i]["ing"]=false;
 file_put_contents("V_group.json",json_encode($data_array));
-echo "执行完成\n";
 }
 }
-echo "执行完成\n";
 }
 });
 }else{
@@ -167,13 +165,10 @@ $data_array[$i]["ing"]=false;
 
 file_put_contents("V_group.json",json_encode($data_array));
 
-echo "执行完成\n";
 
 }
 
 }
-
-echo "执行完成\n";
 
 }
 
@@ -215,9 +210,8 @@ $url = "http://127.0.0.1:".$BOT_Config["http_port"]."/send_group_msg?group_id=".
 file_get_contents($url);
 $data_array[$i]["ing"]=false;
 file_put_contents("V_group.json",json_encode($data_array));
-echo "执行完成\n";
+
 }
-echo "执行完成\n";
 }
 });
 }
