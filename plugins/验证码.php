@@ -84,7 +84,6 @@ echo "执行完成\n";
 echo "执行完成\n";
 }
 });
-}
 }else{
   $data_array=json_decode(file_get_contents("V_group.json"),true);
   $data_array[]=[
