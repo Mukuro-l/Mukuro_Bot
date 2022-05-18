@@ -1,29 +1,14 @@
 <?php
 
-/* *@qun 获取群QQ
-
-   *@msg 获取消息
-
-   *@qq 获取发送者QQ
-
-   *@petname 获取发送者昵称
-
-   *@atqq 获取艾特QQ
-
-   *@qhost 获取主人QQ
-
-   *@robot 获取机器人QQ
-
+/**
    *@version v1.1.5
 
    *@date 2022.5.7
 
-   *@Nick coldeggs
-
-   *coldeggs机器人2021.08.21
+   *@author coldeggs
    
-   *版权申明
-   Copyright2021-2022 coldeggs.AllRightsReserved
+   *@copyright 2021-2022 coldeggs.AllRightsReserved
+   *coldeggs机器人2021.08.21
 
 */
 
@@ -40,13 +25,20 @@ echo "请在cli模式下运行本程序";
 exit;
 }
 
+if (is_dir("vendor")){
+@include_once "./vendor/autoload.php";
+}else{
+echo "缺少必要的库，请阅读README.md文件\n";
+exit;
+}
+
 include './module/config.php';
 
 /*
 屏蔽错误
 Masking error
 */
-//error_reporting($BOT_Config["Error_level"]);
+error_reporting($BOT_Config["Error_level"]);
 
 //ws正向服务器
 
@@ -58,6 +50,7 @@ use Swoole\Timer;
 //协程容器
 use Swoole\Coroutine;
 use function Swoole\Coroutine\run;
+
 
 //监听WebSocket连接打开事件
 
@@ -173,7 +166,7 @@ if (!empty($Data['group_id'])){
 
 @$cheqq=$Data['operator_id']?:$_GET['cheqq'];//撤回操作qq
 
-@$msgid=$Data['message_id']?:$_GET['msgid'];//消息id
+@$msg_id=$Data['message_id']?:$_GET['msgid'];//消息id
 
 @$real_msgid=$Data['real_id']?:$_GET['real_msgid'];//获取真实信息id
 
@@ -186,12 +179,7 @@ if (!empty($Data['group_id'])){
 include_once './module/api.php';//机器人各类api模块
 include './module/config.php';//配置
 //载入
-if (is_dir("vendor")){
-@include_once "./vendor/autoload.php";
-}else{
-echo "缺少必要的库，请阅读README.md文件\n";
-exit;
-}
+
 //这里会载入plugins文件夹下的所有插件 115版本增加是否载入
 $list = glob('./plugins/*.php');
 if (file_exists("plugins_switch.json")==false){
@@ -207,31 +195,15 @@ $plugins_array[]=array(
 $plugins_list = json_encode($plugins_array,JSON_UNESCAPED_UNICODE);
 file_put_contents("plugins_switch.json",$plugins_list);
 }else{
-
 for ($i=0;$i<count($list);$i++){
 $file_array = json_decode(file_get_contents("plugins_switch.json"),true);
-$file_list=$file_array[$i]["插件名"];
+$file=$file_array[$i]["插件名"];
 
 //echo "+++++++++++\n插件名：".$file."\n状态：".$file_array[$i]["状态"]."\n";
 //echo "以下为载入状态\n+++++++++++";
 if ($file_array[$i]["状态"]=="开"){
 //echo "\n".$file."成功载入\n";
-include './plugins/'.$file_list;
-}
-}
-if (count($list)>count($file_array)){
-$plugins_array[]=array(
-"插件名"=>$file,
-"状态"=>"开"
-);
-}else if(count($list)<count($file_array)){
-for ($i=0;$i<count($list);$i++){
-$file_array = json_decode(file_get_contents("plugins_switch.json"),true);
-$file_list=$file_array[$i]["插件名"];
-if ($file!=$file_list){
-array_splice($file_array, $i, 1);
-file_put_contents("plugins_switch.json",json_encode($file_array,JSON_UNESCAPED_UNICODE));
-}
+include './plugins/'.$file;
 }
 }
 }
