@@ -46,5 +46,4 @@ if (!empty($send_msg)){
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
 }
-}
 ?>
