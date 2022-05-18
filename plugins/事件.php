@@ -24,7 +24,7 @@ $send_msg="群管理员变动\r\n类型：减少\r\nQQ：".$qq."\r\n时间：".d
 
 if ($get_qun_eve == "group_ban"){
 if ($get_tishi_api == "ban"){
-$send_msg="群事件通知\r\n类型：禁言\r\n被执行人：".$qq."\r\n时间：".date("Y-m-d H:i:s");
+$send_msg="群事件通知\r\n类型：禁言\r\n被执行人：".$qq."\r\n被禁言时间：".$Data["duration"]."\r\n时间：".date("Y-m-d H:i:s");
 }
 if ($get_tishi_api == "lift_ban"){
 $send_msg="群事件通知\r\n类型：解除禁言\r\n被执行人：".$qq."\r\n时间：".date("Y-m-d H:i:s");
