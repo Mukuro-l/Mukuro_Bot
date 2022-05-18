@@ -9,7 +9,7 @@ for ($i=0;$i<count($plugins_data);$i++){
 //插件名
 $plugins_data[$i]["插件名"];
 $plugins_data[$i]["状态"];
-$plugins_list="插件：".$plugins_data[$i]["插件名"]."状态：".$plugins_data[$i]["状态"]."\r\n";
+$plugins_list="插件：".$plugins_data[$i]["插件名"]." 状态：".$plugins_data[$i]["状态"]."\r\n";
 file_put_contents("plugins_list.txt",$plugins_list,FILE_APPEND);
 }
 file_put_contents("plugins_list.txt","PS：开启|关闭+插件名 即可管理插件",FILE_APPEND);
