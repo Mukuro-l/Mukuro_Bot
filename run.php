@@ -91,7 +91,7 @@ print_r($Data);
 
 //if (is_dir("Data")!=true){
 
-mkdir('./Data');
+/*mkdir('./Data');
 
 mkdir('./Data/Log');
 
@@ -106,6 +106,7 @@ mkdir('./Data/Log/Group');
 mkdir('./Data/Log/User/'.date('Y-m-d',time()));
 
 mkdir('./Data/Log/Group/'.date('Y-m-d',time()));
+
 
 //}
 
@@ -127,6 +128,7 @@ if (!empty($Data['group_id'])){
 @file_put_contents('./Data/Log/Other/'.date('Y-m-d',time()).'.txt',$Data, FILE_APPEND);
 
 }
+*/
 
 //api字段们//
 
@@ -216,7 +218,7 @@ if (file_exists("tick_config.json")==true){
 //该变量返回值为定时器ID
 @$the_tick=Swoole\Timer::tick(2000, function(){
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
-if (count($tick_data[date("H:i:s")])>1){
+if (count($tick_data[date("H:i:s")])>0){
 $Barrier=Barrier::make();
 for ($i=0;$i<count($tick_data[date("H:i:s")]);$i++){
 if ($tick_data[date("H:i:s")]!=null){
