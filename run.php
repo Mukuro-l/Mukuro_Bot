@@ -215,7 +215,6 @@ if (file_exists("tick_config.json")==true){
 
 //该变量返回值为定时器ID
 @$the_tick=Swoole\Timer::tick(2000, function(){
-run(function(){
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
 if (count($tick_data[date("H:i:s")])>1){
 $Barrier=Barrier::make();
@@ -249,7 +248,6 @@ file_put_contents("tick_config.json",$data);
 });
 Barrier::wait($Barrier);
 }
-});
 
 });
 }
