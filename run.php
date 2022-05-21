@@ -50,7 +50,7 @@ use Swoole\Timer;
 //协程容器
 use Swoole\Coroutine;
 use function Swoole\Coroutine\run;
-
+echo "PHProbot WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
 
 //监听WebSocket连接打开事件
 
@@ -87,7 +87,7 @@ print_r($Data);
 
 //创建日志文件夹用来存放群组及私聊消息
 
-if (is_dir("Data")!=true){
+//if (is_dir("Data")!=true){
 
 mkdir('./Data');
 
@@ -105,7 +105,7 @@ mkdir('./Data/Log/User/'.date('Y-m-d',time()));
 
 mkdir('./Data/Log/Group/'.date('Y-m-d',time()));
 
-}
+//}
 
 	
 
@@ -210,9 +210,10 @@ include './plugins/'.$file;
 //定时器逻辑
 if ($BOT_Config["_tick"] == true){
 if (file_exists("tick_config.json")==true){
-go(function(){
+
 //该变量返回值为定时器ID
 @$the_tick=Swoole\Timer::tick(2000, function(){
+run(function()use($the_tick){
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
 for ($i=0;$i<count($tick_data);$i++){
 if ($tick_data[$i]["time"]===date("H:i:s")){
@@ -225,6 +226,20 @@ Swoole\Timer::clear($the_tick);
 }
 }
 }
+go(function()use($the_tick){
+$tick_data=json_decode(file_get_contents("tick_config.json"),true);
+for ($i=0;$i<count($tick_data);$i++){
+if ($tick_data[$i]["time"]===date("H:i:s")){
+if ($tick_data[$i]["tick"]!=0){
+file_get_contents("http://127.0.0.1:".$tick_data[$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$i]["qun"]."&message=[".urlencode($tick_data[$i]["msg"])."]");
+$tick_data[$i]["tick"]=$tick_data[$i]["tick"]-1;
+$data =json_encode($tick_data,JSON_UNESCAPED_UNICODE);
+file_put_contents("tick_config.json",$data);
+Swoole\Timer::clear($the_tick);
+}
+}
+}
+});
 });
 });
 }
