@@ -2,15 +2,14 @@
 /*
 *验证码插件
 */
-
-//PHProbot的api
-use PHProbot\Api;
 //图文合成库
 use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
 //协程容器
 use Swoole\Coroutine;
 use function Swoole\Coroutine\run;
+//PHProbot的api
+use PHProbot\Api;
 
 if ($msg == "生成"){
 //这里会有PHP通知，原因不明
@@ -61,13 +60,13 @@ $ws -> push($frame->fd, $data);
 $Api_data = array(
 "qun"=>$qun,
 "qq"=>$qq,
-"msg"=>"[CQ:at,qq=".$qq."]请在30秒之内完成验证，直接发数字即可，不需要艾特。",
+"msg"=>"[CQ:at,qq=".$qq."]请在30秒之内完成验证，直接发答案即可，不需要艾特。",
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-Swoole\Timer::after(45000, function() use($qq){
+Swoole\Timer::after(35000, function() use($qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $data_array = json_decode(file_get_contents("V_group.json"),true);
 for ($i=0;$i<count($data_array);$i++){
@@ -208,7 +207,7 @@ $ws -> push($frame->fd, $data);
   }
 }
 }while($i!=$data_array[$i]["sum"]&&$qq==$data_array[$i]["qq"]);
-Swoole\Timer::after(45000, function() use($qq){
+Swoole\Timer::after(35000, function() use($qq){
 
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 
@@ -238,7 +237,7 @@ file_put_contents("V_group.json",json_encode($data_array));
 }
 }
 
-if (preg_match("/^[0-9]+$/u", $msg, $return)){
+if (preg_match("/^[0-9]+$/u", $msg, $return)||preg_match("/[\x{4e00}-\x{9fa5}]+/u", $msg, $return)){
 
 //创建协程判断
 go(function()use($msg,$qq){
@@ -261,7 +260,7 @@ echo "协程执行完毕\n";
 );
 
 //30秒后判断
-Swoole\Timer::after(45000, function() use($qq){
+Swoole\Timer::after(35000, function() use($qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $data_array = json_decode(file_get_contents("V_group.json"),true);
 for ($i=0;$i<count($data_array);$i++){
