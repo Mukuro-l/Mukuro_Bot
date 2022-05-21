@@ -213,7 +213,6 @@ if (file_exists("tick_config.json")==true){
 
 //该变量返回值为定时器ID
 @$the_tick=Swoole\Timer::tick(2000, function(){
-run(function()use($the_tick){
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
 for ($i=0;$i<count($tick_data);$i++){
 if ($tick_data[$i]["time"]===date("H:i:s")){
@@ -222,7 +221,6 @@ file_get_contents("http://127.0.0.1:".$tick_data[$i]["http_port"]."/send_group_m
 $tick_data[$i]["tick"]=$tick_data[$i]["tick"]-1;
 $data =json_encode($tick_data,JSON_UNESCAPED_UNICODE);
 file_put_contents("tick_config.json",$data);
-Swoole\Timer::clear($the_tick);
 }
 }
 }
@@ -235,11 +233,9 @@ file_get_contents("http://127.0.0.1:".$tick_data[$i]["http_port"]."/send_group_m
 $tick_data[$i]["tick"]=$tick_data[$i]["tick"]-1;
 $data =json_encode($tick_data,JSON_UNESCAPED_UNICODE);
 file_put_contents("tick_config.json",$data);
-Swoole\Timer::clear($the_tick);
 }
 }
 }
-});
 });
 });
 }
