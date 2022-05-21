@@ -213,7 +213,7 @@ if (file_exists("tick_config.json")==true){
 
 //该变量返回值为定时器ID
 @$the_tick=Swoole\Timer::tick(2000, function(){
-$tick_data=json_decode(file_get_contents("tick_config.json"),true);
+/*$tick_data=json_decode(file_get_contents("tick_config.json"),true);
 for ($i=0;$i<count($tick_data);$i++){
 if ($tick_data[$i]["time"]===date("H:i:s")){
 if ($tick_data[$i]["tick"]!=0){
@@ -224,13 +224,15 @@ file_put_contents("tick_config.json",$data);
 }
 }
 }
-go(function()use($the_tick){
+*/
+go(function(){
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
 for ($i=0;$i<count($tick_data);$i++){
-if ($tick_data[$i]["time"]===date("H:i:s")){
-if ($tick_data[$i]["tick"]!=0){
-file_get_contents("http://127.0.0.1:".$tick_data[$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$i]["qun"]."&message=[".urlencode($tick_data[$i]["msg"])."]");
-$tick_data[$i]["tick"]=$tick_data[$i]["tick"]-1;
+if ($tick_data[date("H:i:s")]!=null){
+$time=date("H:i:s");
+if ($tick_data[$time][$i]["tick"]!=0){
+file_get_contents("http://127.0.0.1:".$tick_data[$time][$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$time][$i]["qun"]."&message=[".urlencode($tick_data[$time][$i]["msg"])."]");
+$tick_data[$time][$i]["tick"]=$tick_data[$time][$i]["tick"]-1;
 $data =json_encode($tick_data,JSON_UNESCAPED_UNICODE);
 file_put_contents("tick_config.json",$data);
 }
