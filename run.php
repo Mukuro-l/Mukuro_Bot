@@ -237,9 +237,9 @@ $tick_data[$time][$i]["tick"]=$tick_data[$time][$i]["tick"]-1;
 $data =json_encode($tick_data,JSON_UNESCAPED_UNICODE);
 file_put_contents("tick_config.json",$data);
 }
-}
-}
 });
+}
+}
 });
 }
 }
