@@ -227,7 +227,7 @@ file_put_contents("tick_config.json",$data);
 */
 
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
-for ($i=0;$i<count($tick_data);$i++){
+for ($i=0;$i<count($tick_data[date("H:i:s")]);$i++){
 if ($tick_data[date("H:i:s")]!=null){
 $time=date("H:i:s");
 if ($tick_data[$time][$i]["tick"]!=0){
