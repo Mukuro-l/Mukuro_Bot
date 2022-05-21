@@ -225,11 +225,12 @@ file_put_contents("tick_config.json",$data);
 }
 }
 */
-go(function(){
+
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
 for ($i=0;$i<count($tick_data);$i++){
 if ($tick_data[date("H:i:s")]!=null){
 $time=date("H:i:s");
+go(function()use($time,$i,$tick_data){
 if ($tick_data[$time][$i]["tick"]!=0){
 file_get_contents("http://127.0.0.1:".$tick_data[$time][$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$time][$i]["qun"]."&message=[".urlencode($tick_data[$time][$i]["msg"])."]");
 $tick_data[$time][$i]["tick"]=$tick_data[$time][$i]["tick"]-1;
