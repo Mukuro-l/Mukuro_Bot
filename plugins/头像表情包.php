@@ -18,12 +18,10 @@ $QQ=$QQ[0];
 $data = shell_exec("python3 /".$dir[1]."/Meme-with-QQavatar/tool.py ".$Command." ".$QQ);
 $return=explode(", ",$data);
 $array=[];
-for ($i=0;$i<count($return);$i++){
 $return=explode(", ",$data);
-$return=explode("Meme-with-QQavatar/result/",$return[$i]);
+$return=explode("Meme-with-QQavatar/result/",$return[0]);
 $return=explode("'",$return[1]);
 $array[]=$return[0];
-}
 
 $link="../Meme-with-QQavatar/result/".$array[0];
 file_put_contents("../gocq/data/images/".$qq.".jpg",file_get_contents($link));
