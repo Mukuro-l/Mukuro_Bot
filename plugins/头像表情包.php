@@ -14,7 +14,7 @@ $A_result=true;
 }
 if ($A_result==true){
 $QQ=explode("]",$QQ[1]);
-$QQ=$QQ[0]
+$QQ=$QQ[0];
 $data = shell_exec("python3 /".$dir[1]."/Meme-with-QQavatar/tool.py ".$Command." ".$QQ);
 $return=explode(", ",$data);
 $array=[];
