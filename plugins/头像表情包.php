@@ -1,6 +1,6 @@
 <?php
 $Api= new PHProbot\Api;
-function Emoji_pack($msg,$qq){
+function Emoji_pack($msg=null,$qq=null){
 $dir=__FILE__;
 $dir=explode("/",$dir);
 $A_result=false;
@@ -30,6 +30,7 @@ return "[CQ:image,file=".$qq.".jpg]";
 }
 }
 }
+if ($msg!=null&&$qq!=null){
 $Api_data = array(
 "qun"=>$qun,
 "qq"=>$qq,
@@ -40,5 +41,6 @@ $Api_data = array(
 if ($Api_data["msg"]!=null){
 $data=$Api->send($Api_data);
 $ws -> push($frame->fd, $data);
+}
 }
 ?>
