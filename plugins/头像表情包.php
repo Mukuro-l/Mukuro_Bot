@@ -4,7 +4,7 @@ $dir=__FILE__;
 $dir=explode("/",$dir);
 $A_result=false;
 $testCommand = ["丢","仰望大佬","打拳","打","摸头","摸鱼","摸","敲","赞","旋转","吃","吞","咬","快逃","色色","舔","拍","爬","推","踢","捂脸","踩","脆弱"];
-$QQ=explode(" [CQ:at,qq=",$msg);
+$QQ=explode("[CQ:at,qq=",$msg);
 if ($QQ!=null){
 $Command=$QQ[0];
 for ($i=0;$i<count($testCommand);$i++){
