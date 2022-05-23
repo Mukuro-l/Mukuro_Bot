@@ -24,8 +24,8 @@ $return=explode("Meme-with-QQavatar/result/",$return[$i]);
 $return=explode("'",$return[1]);
 $array[]=$return[0];
 }
-for ($i=0;$i<count($array);$i++){
-$link="../Meme-with-QQavatar/result/".$array[$i];
+
+$link="../Meme-with-QQavatar/result/".$array[0];
 file_put_contents("../gocq/data/images/".$qq.".jpg",file_get_contents($link));
 $Api_data = array(
 "qun"=>$qun,
@@ -36,6 +36,5 @@ $Api_data = array(
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-}
 }
 }
