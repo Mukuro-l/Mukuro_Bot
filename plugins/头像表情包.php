@@ -1,5 +1,5 @@
 <?php
-use PHProbot\Api;
+$Api= new PHProbot\Api;
 $dir=__FILE__;
 $dir=explode("/",$dir);
 $A_result=false;
@@ -34,7 +34,7 @@ $Api_data = array(
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
-$data=PHProbot\Api::send($Api_data);
+$data=$Api->send($Api_data);
 $ws -> push($frame->fd, $data);
 }
 }
