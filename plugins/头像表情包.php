@@ -1,5 +1,6 @@
 <?php
 $Api= new PHProbot\Api;
+if (!function_exists("Emoji_pack")){
 function Emoji_pack($msg=null,$qq=null){
 $dir=__FILE__;
 $dir=explode("/",$dir);
@@ -27,6 +28,7 @@ $array[]=$return[0];
 $link="../Meme-with-QQavatar/result/".$array[0];
 file_put_contents("../gocq/data/images/".$qq.".jpg",file_get_contents($link));
 return "[CQ:image,file=".$qq.".jpg]";
+}
 }
 }
 }
