@@ -26,7 +26,7 @@ exit;
 }
 
 if (is_dir("vendor")){
-@include_once "./vendor/autoload.php";
+include_once "./vendor/autoload.php";
 }else{
 echo "缺少必要的库，请阅读README.md文件\n";
 exit;
@@ -52,6 +52,8 @@ use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use function Swoole\Coroutine\run;
 use Swoole\Coroutine;
+use Hahadu\ImageFactory\Config\Config;
+use Hahadu\ImageFactory\Kernel\Factory;
 echo "PHProbot WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
 
 //监听WebSocket连接打开事件
@@ -82,53 +84,6 @@ if (@$Data['meta_event_type'] != 'heartbeat'){
 print_r($Data);
 }
 }
-
-
-
-//该代码借鉴于https://github.com/hanximeng/BOT_API/blob/main/index.php
-
-//创建日志文件夹用来存放群组及私聊消息
-
-//if (is_dir("Data")!=true){
-
-/*mkdir('./Data');
-
-mkdir('./Data/Log');
-
-mkdir('./Data/Cron/');
-
-mkdir('./Data/Log/User');
-
-mkdir('./Data/Log/Other');
-
-mkdir('./Data/Log/Group');
-
-mkdir('./Data/Log/User/'.date('Y-m-d',time()));
-
-mkdir('./Data/Log/Group/'.date('Y-m-d',time()));
-
-
-//}
-
-	
-
-//判断类型并存入对应日志目录//
-
-if (!empty($Data['group_id'])){
-
-@file_put_contents('./Data/Log/Group/'.date('Y-m-d',time()).'/'.$Data['group_id'].'.txt',$Data, FILE_APPEND);
-
-}elseif(!empty($Data['user_id'])){
-
-@file_put_contents('./Data/Log/User/'.date('Y-m-d',time()).'/'.$Data['user_id'].'.txt',$Data, FILE_APPEND);
-
-}else if(@$Data['meta_event_type'] !== 'heartbeat'){
-
-	//排除心跳事件
-@file_put_contents('./Data/Log/Other/'.date('Y-m-d',time()).'.txt',$Data, FILE_APPEND);
-
-}
-*/
 
 //api字段们//
 
@@ -181,6 +136,8 @@ if (!empty($Data['group_id'])){
 //事件监控字段//
 
 include_once './module/api.php';//机器人各类api模块
+
+
 include './module/config.php';//配置
 //载入
 
@@ -207,7 +164,7 @@ $file=$file_array[$i]["插件名"];
 //echo "以下为载入状态\n+++++++++++";
 if ($file_array[$i]["状态"]=="开"){
 //echo "\n".$file."成功载入\n";
-include './plugins/'.$file;
+include_once './plugins/'.$file;
 }
 }
 }
@@ -227,6 +184,7 @@ if ($tick_data[$time][$i]["tick"]!=0){
 
 file_get_contents("http://127.0.0.1:".$tick_data[$time][$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$time][$i]["qun"]."&message=[".urlencode($tick_data[$time][$i]["msg"])."]");
 $tick_data[$time][$i]["tick"]=$tick_data[$time][$i]["tick"]-1;
+$tick_data[$time][$i]["First_time"]=$tick_data[$time][$i]["First_time"]+1;
 $data =json_encode($tick_data,JSON_UNESCAPED_UNICODE);
 file_put_contents("tick_config.json",$data);
 
@@ -236,14 +194,17 @@ file_put_contents("tick_config.json",$data);
 Coroutine::create(function()use($time){
 $tick_data=json_decode(file_get_contents("tick_config.json"),true);
 for ($i=0;$i<count($tick_data[$time]);$i++){
+if ($tick_data[$time][$i]["First_time"]<1){
 if ($tick_data[$time]!=null){
 if ($tick_data[$time][$i]["tick"]!=0){
 
 file_get_contents("http://127.0.0.1:".$tick_data[$time][$i]["http_port"]."/send_group_msg?group_id=".$tick_data[$time][$i]["qun"]."&message=[".urlencode($tick_data[$time][$i]["msg"])."]");
 $tick_data[$time][$i]["tick"]=$tick_data[$time][$i]["tick"]-1;
+$tick_data[$time][$i]["First_time"]=$tick_data[$time][$i]["First_time"]+1;
 $data =json_encode($tick_data,JSON_UNESCAPED_UNICODE);
 file_put_contents("tick_config.json",$data);
 
+}
 }
 }
 }
