@@ -41,8 +41,8 @@ $data=file_get_contents($array[1]);
 $array = explode('data-src="',$data);
 $array=explode('"',$array[2+(count($array)-5)]);
 $data=file_get_contents($array[0]);
-file_put_contents(date("Y-m-d").".jpg",$data);
-copy(date("Y-m-d").".jpg","../gocq/data/images/".date("Y-m-d").".jpg");
+file_put_contents(date("Ymd").".jpg",$data);
+copy(date("Ymd").".jpg","../gocq/data/images/".date("Ymd").".jpg");
 echo "OK\n";
 }
 
@@ -55,7 +55,7 @@ Barrier::wait($data);
 $Api_data = array(
 "qun"=>$qun,
 "qq"=>$qq,
-"msg"=>"[CQ:image,file=".date("Y-m-d").".jpg]",
+"msg"=>"[CQ:image,file=".date("Ymd").".jpg]",
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
