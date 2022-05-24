@@ -17,7 +17,7 @@ $Emoji_package_array=[];
 for ($i=0;$i<$sum;$i++){
 $text=$data["data"][$i]["name"];
 if (strstr($text,$return)==true){
-$list=($i+1).".名称：".$text."\r\n链接：https://www.v2fy.com/asset/0i/ChineseBQB/".urlencode($data["data"][$i]["category"])."/".urlencode($text).'\r\n';
+$list=($i+1).".名称：".$text."\r\n链接：https://www.v2fy.com/asset/0i/ChineseBQB/".urlencode($data["data"][$i]["category"])."/".urlencode($text)."\r\n";
 $Emoji_package_array[]=$list;
 
 file_put_contents($qq."bqb_list.json",json_encode($Emoji_package_array,JSON_UNESCAPED_UNICODE));
@@ -51,7 +51,7 @@ $Api_data = array(
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-
+sleep(3);
 do{
 $return1=preg_match("/^[0-9]+$/u", $msg, $return);
 }while($return1==false);
