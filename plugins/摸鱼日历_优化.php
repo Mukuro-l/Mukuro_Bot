@@ -16,7 +16,7 @@ use PHProbot\Api;
 
 if ($msg=="摸鱼日历"){
 //如果需要使用Timer 请注意run和Timer都属于协程
-run(function(){
+run(function()use(){
 $data=Barrier::make();
 //创建协程通道
 $channel = new Channel(1);
@@ -41,7 +41,7 @@ $array = explode('data-src="',$data);
 $array=explode('"',$array[2+(count($array)-5)]);
 $data=file_get_contents($array[0]);
 file_put_contents("./images/".date("Y-m-d").".jpg",$data);
-file_put_contents("../gocq/data/images/".date("Y-m-d").".jpg",file_get_contents("./images/".date("Y-m-d").".jpg"));
+copy("./images/".date("Y-m-d").".jpg","../gocq/data/images/".date("Y-m-d").".jpg");
 }
 
 
