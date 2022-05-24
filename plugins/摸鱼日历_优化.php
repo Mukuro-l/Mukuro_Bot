@@ -41,8 +41,8 @@ $data=file_get_contents($array[1]);
 $array = explode('data-src="',$data);
 $array=explode('"',$array[2+(count($array)-5)]);
 $data=file_get_contents($array[0]);
-file_put_contents("./images/".$rand.".jpg",$data);
-file_put_contents("../gocq/data/images/".$rand.".jpg",file_get_contents("./images/".$rand.".jpg"));
+file_put_contents("./images/摸鱼.jpg",$data);
+file_put_contents("../gocq/data/images/摸鱼.jpg",file_get_contents("./images/摸鱼.jpg"));
 }
 
 
@@ -50,11 +50,11 @@ file_put_contents("../gocq/data/images/".$rand.".jpg",file_get_contents("./image
 //挂起
 Barrier::wait($data);
 });
-sleep(3);
+
 $Api_data = array(
 "qun"=>$qun,
 "qq"=>$qq,
-"msg"=>"[CQ:image,file=".$rand.".jpg]",
+"msg"=>"[CQ:image,file=摸鱼.jpg]",
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
