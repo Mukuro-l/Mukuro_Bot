@@ -13,9 +13,11 @@ use Swoole\Timer;
 use Swoole\Coroutine\Channel;
 use PHProbot\Api;
 
+
 if ($msg=="摸鱼日历"){
 //如果需要使用Timer 请注意run和Timer都属于协程
-run(function()use($qq){
+$rand=rand(1,10000);
+run(function()use($rand){
 $data=Barrier::make();
 //创建协程通道
 $channel = new Channel(1);
@@ -32,14 +34,14 @@ $channel->push($array);
 );
 
 
-Coroutine::create(function()use($channel,$qq){
+Coroutine::create(function()use($channel,$rand){
 //读取数据
 $array=$channel->pop();
 $data=file_get_contents($array[1]);
 $array = explode('data-src="',$data);
 $array=explode('"',$array[2+(count($array)-5)]);
 $data=file_get_contents($array[0]);
-file_put_contents("../gocq/data/images/".$qq.".jpg",$data);
+file_put_contents("../gocq/data/images/".$rand.".jpg",$data);
 }
 
 
@@ -47,10 +49,11 @@ file_put_contents("../gocq/data/images/".$qq.".jpg",$data);
 //挂起
 Barrier::wait($data);
 });
+sleep(3);
 $Api_data = array(
 "qun"=>$qun,
 "qq"=>$qq,
-"msg"=>"[CQ:image,file=".$qq.".jpg]",
+"msg"=>"[CQ:image,file=".$rand.".jpg]",
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
