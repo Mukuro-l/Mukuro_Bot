@@ -51,26 +51,8 @@ $Api_data = array(
 );
 $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
-sleep(3);
-do{
-$return1=preg_match("/^[0-9]+$/u", $msg, $return);
-}while($return1==false);
-if ($return1==true){
-$Api_data = array(
-"qun"=>$qun,
-"qq"=>$qq,
-"msg"=>$Emoji_package_array[$return[0]-1],
-"S_type"=>$msg_type,
-"msg_id"=>$msg_id
-);
-$data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
-unlink($qq."bqb_list.txt");
-unlink($qq."bqb_list.json");
-}
 
-unlink($qq."bqb_list.txt");
-unlink($qq."bqb_list.json");
+
 }else{
 $Api_data = array(
 "qun"=>$qun,
@@ -102,4 +84,22 @@ $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
 }
 }
+
+
+$return1=preg_match("/^[0-9]+$/u", $msg, $return);
+if ($return1==true){
+$Emoji_package_array=json_decode(file_get_contents($qq."bqb_list.json"),true);
+$Api_data = array(
+"qun"=>$qun,
+"qq"=>$qq,
+"msg"=>$Emoji_package_array[$return[0]-1],
+"S_type"=>$msg_type,
+"msg_id"=>$msg_id
+);
+$data=PHProbot\Api::send($Api_data);
+$ws -> push($frame->fd, $data);
+unlink($qq."bqb_list.txt");
+unlink($qq."bqb_list.json");
+}
+
 ?>
