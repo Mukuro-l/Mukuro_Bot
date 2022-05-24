@@ -3,7 +3,8 @@
 * GitHub中国表情包库搜索
 */
 use PHProbot\Api;
-
+use Hahadu\ImageFactory\Config\Config;
+use Hahadu\ImageFactory\Kernel\Factory;
 
 
 $return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"表情包","data"=>$msg]);
