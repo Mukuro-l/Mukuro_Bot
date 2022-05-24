@@ -40,8 +40,8 @@ $data=file_get_contents($array[1]);
 $array = explode('data-src="',$data);
 $array=explode('"',$array[2+(count($array)-5)]);
 $data=file_get_contents($array[0]);
-file_put_contents("./images/".date("Y-m-d").".jpg",$data);
-copy("./images/".date("Y-m-d").".jpg","../gocq/data/images/".date("Y-m-d").".jpg");
+file_put_contents(date("Y-m-d").".jpg",$data);
+copy(date("Y-m-d").".jpg","../gocq/data/images/".date("Y-m-d").".jpg");
 }
 
 
