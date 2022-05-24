@@ -5,12 +5,13 @@
   *QQ 1940826077
   *对图片变化做了优化
 */
-use Swoole\Coroutine\Barrier;
+/*use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use function Swoole\Coroutine\run;
 use Swoole\Coroutine;
 use Swoole\Timer;
 use Swoole\Coroutine\Channel;
+*/
 use PHProbot\Api;
 
 
@@ -42,6 +43,7 @@ $array=explode('"',$array[2+(count($array)-5)]);
 $data=file_get_contents($array[0]);
 file_put_contents(date("Y-m-d").".jpg",$data);
 copy(date("Y-m-d").".jpg","../gocq/data/images/".date("Y-m-d").".jpg");
+echo "OK\n";
 }
 
 
