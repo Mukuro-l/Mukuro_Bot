@@ -41,7 +41,8 @@ $data=file_get_contents($array[1]);
 $array = explode('data-src="',$data);
 $array=explode('"',$array[2+(count($array)-5)]);
 $data=file_get_contents($array[0]);
-file_put_contents("../gocq/data/images/".$rand.".jpg",$data);
+file_put_contents("./images/".$rand.".jpg",$data);
+file_put_contents("../gocq/data/images/".$rand.".jpg",file_get_contents("./images/".$rand.".jpg"));
 }
 
 
