@@ -5,13 +5,13 @@
   *QQ 1940826077
   *对图片变化做了优化
 */
-/*use Swoole\Coroutine\Barrier;
+use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use function Swoole\Coroutine\run;
 use Swoole\Coroutine;
 use Swoole\Timer;
 use Swoole\Coroutine\Channel;
-*/
+
 use PHProbot\Api;
 
 
