@@ -16,7 +16,7 @@ use PHProbot\Api;
 
 if ($msg=="摸鱼日历"){
 //如果需要使用Timer 请注意run和Timer都属于协程
-run(function()use(){
+run(function(){
 $data=Barrier::make();
 //创建协程通道
 $channel = new Channel(1);
