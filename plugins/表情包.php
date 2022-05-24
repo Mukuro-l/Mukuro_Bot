@@ -17,7 +17,7 @@ $Emoji_package_array=[];
 for ($i=0;$i<$sum;$i++){
 $text=$data["data"][$i]["name"];
 if (strstr($text,$return)==true){
-$list=($i+1).".名称：".$text."\r\n链接：https://www.v2fy.com/asset/0i/ChineseBQB/".urlencode($data["data"][$i]["category"])."/".urlencode($text)."\r\n";
+$list="名称：".$text."\r\n链接：https://www.v2fy.com/asset/0i/ChineseBQB/".urlencode($data["data"][$i]["category"])."/".urlencode($text)."\r\n";
 $Emoji_package_array[]=$list;
 
 file_put_contents($qq."bqb_list.json",json_encode($Emoji_package_array,JSON_UNESCAPED_UNICODE));
@@ -26,7 +26,7 @@ file_put_contents($qq."bqb_list.json",json_encode($Emoji_package_array,JSON_UNES
 if (file_exists($qq."bqb_list.json")==true){
 $Emoji_package_array=json_decode(file_get_contents($qq."bqb_list.json"),true);
 for ($i=0;$i<count($Emoji_package_array);$i++){
-$Expression_data=$Emoji_package_array[$i];
+$Expression_data=$i+1.".".$Emoji_package_array[$i];
 file_put_contents($qq."bqb_list.txt",$Expression_data,FILE_APPEND);
 }
 $config->setSavePath="../gocq/data/images/";
@@ -88,6 +88,7 @@ $ws -> push($frame->fd, $data);
 
 $return1=preg_match("/^[0-9]+$/u", $msg, $return);
 if ($return1==true){
+if (file_exists($qq."bqb_list.json")==true){
 $Emoji_package_array=json_decode(file_get_contents($qq."bqb_list.json"),true);
 $Api_data = array(
 "qun"=>$qun,
@@ -100,6 +101,7 @@ $data=PHProbot\Api::send($Api_data);
 $ws -> push($frame->fd, $data);
 unlink($qq."bqb_list.txt");
 unlink($qq."bqb_list.json");
+}
 }
 
 ?>
