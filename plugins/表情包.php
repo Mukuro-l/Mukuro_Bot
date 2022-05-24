@@ -26,7 +26,7 @@ file_put_contents($qq."bqb_list.json",json_encode($Emoji_package_array,JSON_UNES
 if (file_exists($qq."bqb_list.json")==true){
 $Emoji_package_array=json_decode(file_get_contents($qq."bqb_list.json"),true);
 for ($i=0;$i<count($Emoji_package_array);$i++){
-$Expression_data=$i+1.".".$Emoji_package_array[$i];
+$Expression_data=($i+1).".".$Emoji_package_array[$i];
 file_put_contents($qq."bqb_list.txt",$Expression_data,FILE_APPEND);
 }
 $config->setSavePath="../gocq/data/images/";
