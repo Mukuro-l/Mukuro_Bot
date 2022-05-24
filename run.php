@@ -26,7 +26,7 @@ exit;
 }
 
 if (is_dir("vendor")){
-include_once "./vendor/autoload.php";
+include "./vendor/autoload.php";
 }else{
 echo "缺少必要的库，请阅读README.md文件\n";
 exit;
@@ -164,7 +164,7 @@ $file=$file_array[$i]["插件名"];
 //echo "以下为载入状态\n+++++++++++";
 if ($file_array[$i]["状态"]=="开"){
 //echo "\n".$file."成功载入\n";
-include_once './plugins/'.$file;
+include './plugins/'.$file;
 }
 }
 }
