@@ -16,8 +16,7 @@ use PHProbot\Api;
 
 if ($msg=="摸鱼日历"){
 //如果需要使用Timer 请注意run和Timer都属于协程
-$rand=rand(1,10000);
-run(function()use($rand){
+run(function()use(){
 $data=Barrier::make();
 //创建协程通道
 $channel = new Channel(1);
@@ -34,15 +33,15 @@ $channel->push($array);
 );
 
 
-Coroutine::create(function()use($channel,$rand){
+Coroutine::create(function()use($channel){
 //读取数据
 $array=$channel->pop();
 $data=file_get_contents($array[1]);
 $array = explode('data-src="',$data);
 $array=explode('"',$array[2+(count($array)-5)]);
 $data=file_get_contents($array[0]);
-file_put_contents("./images/摸鱼.jpg",$data);
-file_put_contents("../gocq/data/images/摸鱼.jpg",file_get_contents("./images/摸鱼.jpg"));
+file_put_contents("./images/".date("Y-m-d").".jpg",$data);
+file_put_contents("../gocq/data/images/".date("Y-m-d").".jpg",file_get_contents("./images/".date("Y-m-d").".jpg"));
 }
 
 
@@ -54,7 +53,7 @@ Barrier::wait($data);
 $Api_data = array(
 "qun"=>$qun,
 "qq"=>$qq,
-"msg"=>"[CQ:image,file=摸鱼.jpg]",
+"msg"=>"[CQ:image,file=".date("Y-m-d").".jpg]",
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
