@@ -27,7 +27,8 @@ return "[CQ:image,file=".$qq.".jpg]";
 if (!function_exists("To_image")){
 function To_image($text,$qq){
 if (!empty($text)){
-$config->setSavePath="../gocq/data/images/";
+$config = new Config();
+$config->setSavePath="images/";
 Factory::setOptions($config);
 $option=[
 'background'=>'#f5f5dc',
