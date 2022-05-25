@@ -145,7 +145,7 @@ print_r($Data);
 //事件监控字段//
 
 class image{
-if (!function_exists("To_wimage")){
+
 //带水印
 public function To_wimage($file,$qq){
 if (!empty($file)){
@@ -162,9 +162,7 @@ unlink($text_water_mark);
 return "[CQ:image,file=".$qq.".jpg]";
 }
 }
-}
 
-if (!function_exists("To_image")){
 public function To_image($text,$qq){
 
 if (!empty($text)){
@@ -179,7 +177,6 @@ $text_mark_url = Factory::text_to_image()->text_create_image($text,$option);
 $file=$text_mark_url;
 
 return To_wimage($file,$qq);
-}
 }
 }
 }
