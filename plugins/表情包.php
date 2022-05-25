@@ -50,7 +50,7 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
+
 
 
 }else{
@@ -62,7 +62,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 }else{
 
@@ -81,7 +80,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 }
 
@@ -98,7 +96,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 unlink($qq."bqb_list.txt");
 unlink($qq."bqb_list.json");
 }
