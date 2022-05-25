@@ -147,6 +147,8 @@ if (!function_exists("To_wimage")){
 //带水印
 function To_wimage($file,$qq){
 include "./vendor/autoload.php";
+use Hahadu\ImageFactory\Config\Config;
+use Hahadu\ImageFactory\Kernel\Factory;
 if (!empty($file)){
 $image = $file;
 $config = new Config();
@@ -166,6 +168,8 @@ return "[CQ:image,file=".$qq.".jpg]";
 if (!function_exists("To_image")){
 function To_image($text,$qq){
 include "./vendor/autoload.php";
+use Hahadu\ImageFactory\Config\Config;
+use Hahadu\ImageFactory\Kernel\Factory;
 if (!empty($text)){
 $option=[
 'background'=>'#f5f5dc',
