@@ -21,7 +21,7 @@ $Api_data = array(
 //QQ号
 "qq"=>$qq,
 //msg为设置发送消息
-"msg"=>To_image($text,$qq),
+"msg"=>"[CQ:image,file=".$qq.".jpg]",
 //发送消息类型 $msg_type为消息类型，还可设置为[群聊，私聊]
 "S_type"=>$msg_type,
 //消息ID
