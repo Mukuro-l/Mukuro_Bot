@@ -14,7 +14,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }else{
 //判断是否有配置文件
 if (file_exists("tick_config.json")!=true){
@@ -38,7 +37,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }else{
 $tick_array = json_decode(file_get_contents("tick_config.json"),true);
 if ($tick_array[$tickdata[1]]!=null){
@@ -61,7 +59,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }else{
 $tick_array[$tickdata[1]][] = [
 "qq"=>$tickdata[2],
@@ -82,7 +79,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 }
 }
