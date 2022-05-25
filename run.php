@@ -149,7 +149,6 @@ print_r($Data);
 include './module/config.php';//配置
 //载入
 
-
 //这里会载入plugins文件夹下的所有插件 115版本增加是否载入
 $list = glob('./plugins/*.php');
 if (file_exists("plugins_switch.json")==false){
@@ -217,7 +216,7 @@ $option=[
 ];
 $text_mark_url = Factory::text_to_image()->text_create_image($text,$option);
 $file=$text_mark_url;
-
+sleep(1);
 $image = $file;
 $config = new Config();
 $config->setSavePath = 'images/';
