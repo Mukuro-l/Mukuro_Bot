@@ -184,6 +184,18 @@ file_put_contents("plugins_switch.json",$plugins_list);
 
 }
 
+
+//===============分割============
+
+for ($i=0;$i<count($list);$i++){
+
+$file=$file_array[$i]["插件名"];
+
+//echo "+++++++++++\n插件名：".$file."\n状态：".$file_array[$i]["状态"]."\n";
+//echo "以下为载入状态\n+++++++++++";
+if ($file_array[$i]["状态"]=="开"){
+//echo "\n".$file."成功载入\n";
+include './plugins/'.$file;
 if (!function_exists("To_wimage")){
 //带水印
 function To_wimage($file,$qq){
@@ -223,17 +235,7 @@ return To_wimage($file,$qq);
 }
 }
 }
-//===============分割============
 
-for ($i=0;$i<count($list);$i++){
-
-$file=$file_array[$i]["插件名"];
-
-//echo "+++++++++++\n插件名：".$file."\n状态：".$file_array[$i]["状态"]."\n";
-//echo "以下为载入状态\n+++++++++++";
-if ($file_array[$i]["状态"]=="开"){
-//echo "\n".$file."成功载入\n";
-include './plugins/'.$file;
 }
 }
 }
