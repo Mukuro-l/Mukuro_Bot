@@ -42,7 +42,6 @@ $Api_data = array(
 );
 if ($Api_data["msg"]!=null){
 $data=$Api->send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 }
 ?>
