@@ -25,7 +25,8 @@ $Api_data = array(
 //发送消息类型 $msg_type为消息类型，还可设置为[群聊，私聊]
 "S_type"=>$msg_type,
 //消息ID
-"msg_id"=>$msg_id
+"msg_id"=>$msg_id,
+  "image"=>true
 );
 
 //调用消息类 send函数，在115版本以前不支持
