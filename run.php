@@ -148,6 +148,7 @@ print_r($Data);
 
 include './module/config.php';//配置
 //载入
+include_once './module/image.php';
 
 //这里会载入plugins文件夹下的所有插件 115版本增加是否载入
 $list = glob('./plugins/*.php');
