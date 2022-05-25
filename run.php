@@ -61,6 +61,7 @@ echo $Welcome_to_use;
 //监听WebSocket消息事件
 
 $ws->on('Message', function ($ws, $frame) {
+
 include './module/config.php';
 include_once './module/api.php';
 //定时器
@@ -146,6 +147,7 @@ print_r($Data);
 
 //带水印
 function To_wimage($file,$qq){
+include "./vendor/autoload.php";
 if (!empty($file)){
 $image = $file;
 $config = new Config();
@@ -163,9 +165,8 @@ return "[CQ:image,file=".$qq.".jpg]";
 
 
 function To_image($text,$qq){
+include "./vendor/autoload.php";
 if (!empty($text)){
-$config->setSavePath="../gocq/data/images/";
-Factory::setOptions($config);
 $option=[
 'background'=>'#f5f5dc',
 'fill_color'=>'#000000',
