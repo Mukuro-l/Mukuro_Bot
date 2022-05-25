@@ -216,18 +216,17 @@ $option=[
 ];
 $text_mark_url = Factory::text_to_image()->text_create_image($text,$option);
 $file=$text_mark_url;
-sleep(1);
+
 $image = $file;
-$config = new Config();
-$config->setSavePath = 'images/';
 $config->waterMarkText = 'PHProbot'; //设置水印文字，支持\n换行符
 $config->TextStyle = [
 'font_size' => 50, //字体大小
 ];
 Factory::setOptions($config);
 $text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
-copy($text_water_mark,"../gocq/data/images/".$qq.".jpg");
-unlink($text_water_mark);
+rename($text_water_mark,$qq.".jpg");
+copy($qq.".jpg","../gocq/data/images/".$qq.".jpg");
+unlink($qq.".jpg");
 }
 $ws -> push($frame->fd, $data);
 }
