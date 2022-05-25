@@ -45,7 +45,17 @@ Masking error
 //创建WebSocket Server对象，监听端口
 
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
-
+include_once './module/api.php';
+//定时器
+use Swoole\Timer;
+//协程容器
+use Swoole\Coroutine\Barrier;
+use Swoole\Coroutine\System;
+use function Swoole\Coroutine\run;
+use Swoole\Coroutine;
+use PHProbot\Api;
+use Hahadu\ImageFactory\Config\Config;
+use Hahadu\ImageFactory\Kernel\Factory;
 echo "PHProbot WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
 
 //监听WebSocket连接打开事件
@@ -64,17 +74,6 @@ $ws->on('Message', function ($ws, $frame) {
 
 include './module/config.php';
 include_once './module/api.php';
-//定时器
-use Swoole\Timer;
-//协程容器
-use Swoole\Coroutine\Barrier;
-use Swoole\Coroutine\System;
-use function Swoole\Coroutine\run;
-use Swoole\Coroutine;
-
-use PHProbot\Api;
-use Hahadu\ImageFactory\Config\Config;
-use Hahadu\ImageFactory\Kernel\Factory;
 
 
 //fd为客户端标识, $ws调用push函数发送(第二个参数为消息内容)
@@ -147,7 +146,7 @@ print_r($Data);
 
 //带水印
 function To_wimage($file,$qq){
-include "./vendor/autoload.php";
+
 if (!empty($file)){
 $image = $file;
 $config = new Config();
@@ -165,7 +164,7 @@ return "[CQ:image,file=".$qq.".jpg]";
 
 
 function To_image($text,$qq){
-include "./vendor/autoload.php";
+
 if (!empty($text)){
 $option=[
 'background'=>'#f5f5dc',
