@@ -12,6 +12,7 @@ if ($msg == "test"){
 
 //多选
 if (PHProbot\Api::MC($option=["你好","测试"],$msg)==true){
+$image= new image();
 $text="你好";
 //设置数据组
 $Api_data = array(
@@ -20,7 +21,7 @@ $Api_data = array(
 //QQ号
 "qq"=>$qq,
 //msg为设置发送消息
-"msg"=>To_image($text,$qq),
+"msg"=>$image->To_image($text,$qq),
 //发送消息类型 $msg_type为消息类型，还可设置为[群聊，私聊]
 "S_type"=>$msg_type,
 //消息ID
