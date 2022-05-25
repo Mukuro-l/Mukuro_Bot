@@ -27,7 +27,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 unlink("GF.txt");
 }
 ?>
