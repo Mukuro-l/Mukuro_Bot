@@ -201,6 +201,39 @@ include './plugins/'.$file;
 }
 }
 }
+
+if (isset($Api_data)==true){
+if (is_array($Api_data)==true){
+if ($Api_data["image"]==true){
+$config = new Config();
+$config->setSavePath="images/";
+Factory::setOptions($config);
+$option=[
+'background'=>'#f5f5dc',
+'fill_color'=>'#000000',
+'font_size'=>'20',
+'filename'=>$qq,
+'format'=>'jpg',
+];
+$text_mark_url = Factory::text_to_image()->text_create_image($text,$option);
+$file=$text_mark_url;
+
+$image = $file;
+$config = new Config();
+$config->setSavePath = 'images/';
+$config->waterMarkText = 'PHProbot'; //设置水印文字，支持\n换行符
+$config->TextStyle = [
+'font_size' => 50, //字体大小
+];
+Factory::setOptions($config);
+$text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
+copy($text_water_mark,"../gocq/data/images/".$qq.".jpg");
+unlink($text_water_mark);
+}
+$ws -> push($frame->fd, $data);
+}
+}
+
 //定时器逻辑
 if ($BOT_Config["_tick"] == true){
 if (file_exists("tick_config.json")==true){
