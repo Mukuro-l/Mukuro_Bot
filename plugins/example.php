@@ -30,8 +30,6 @@ $Api_data = array(
 
 //调用消息类 send函数，在115版本以前不支持
 $data=PHProbot\Api::send($Api_data);
-//提交给go-cqhttp
-$ws -> push($frame->fd, $data);
 }
 
 ?>
