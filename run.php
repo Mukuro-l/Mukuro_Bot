@@ -56,6 +56,7 @@ use Swoole\Coroutine;
 use PHProbot\Api;
 use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
+
 echo "PHProbot WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
 
 //监听WebSocket连接打开事件
@@ -68,9 +69,13 @@ echo $Welcome_to_use;
 
 });
 
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+echo "已连接Redis数据库\n"
+
 //监听WebSocket消息事件
 
-$ws->on('Message', function ($ws, $frame) {
+$ws->on('Message', function ($ws, $frame) use($redis) {
 
 include './module/config.php';
 include_once './module/api.php';
