@@ -146,7 +146,7 @@ print_r($Data);
 if (!function_exists("To_wimage")){
 //带水印
 function To_wimage($file,$qq){
-
+include "./vendor/autoload.php";
 if (!empty($file)){
 $image = $file;
 $config = new Config();
@@ -165,7 +165,7 @@ return "[CQ:image,file=".$qq.".jpg]";
 
 if (!function_exists("To_image")){
 function To_image($text,$qq){
-
+include "./vendor/autoload.php";
 if (!empty($text)){
 $option=[
 'background'=>'#f5f5dc',
