@@ -55,7 +55,7 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
+
 
 $Api_data = array(
 "qun"=>$qun,
@@ -65,7 +65,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 Swoole\Timer::after(35000, function() use($qq){
 $BOT_Config =json_decode(file_get_contents("config.json"),true);
 $data_array = json_decode(file_get_contents("V_group.json"),true);
@@ -126,7 +125,6 @@ $Api_data = array(
 
 $data=PHProbot\Api::send($Api_data);
 
-$ws -> push($frame->fd, $data);
 
 $Api_data = array(
 
@@ -144,7 +142,6 @@ $Api_data = array(
 
 $data=PHProbot\Api::send($Api_data);
 
-$ws -> push($frame->fd, $data);
 }else{
 $data_array=json_decode(file_get_contents("V_group.json"),true);
   $data_array[]=[
@@ -185,7 +182,6 @@ $Api_data = array(
 
 $data=PHProbot\Api::send($Api_data);
 
-$ws -> push($frame->fd, $data);
 
 $Api_data = array(
 
@@ -202,8 +198,6 @@ $Api_data = array(
 );
 
 $data=PHProbot\Api::send($Api_data);
-
-$ws -> push($frame->fd, $data);
   }
 }
 }while($i!=$data_array[$i]["sum"]&&$qq==$data_array[$i]["qq"]);
