@@ -15,11 +15,10 @@ echo "执行协程".Coroutine::getcid()."完毕\n";
 $Api_data = array(
 "qun"=>$qun,
 "qq"=>$qq,
-"msg"=>"[CQ:image,file=".$qq.".jpg,type=flash]",
+"msg"=>"[CQ:image,file=".$qq.".jpg,type=show,id=40000]",
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 ?>
