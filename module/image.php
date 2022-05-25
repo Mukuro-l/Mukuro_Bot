@@ -1,4 +1,5 @@
 <?php
+include "./vendor/autoload.php";
 use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
 
@@ -13,7 +14,8 @@ $config->waterMarkText = 'PHProbot'; //设置水印文字，支持\n换行符
 $config->TextStyle = [
 'font_size' => 50, //字体大小
 ];
-Factory::setOptions($config);$text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
+Factory::setOptions($config);
+$text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
 copy($text_water_mark,"../gocq/data/images/".$qq.".jpg");
 unlink($text_water_mark);
 return "[CQ:image,file=".$qq.".jpg]";
