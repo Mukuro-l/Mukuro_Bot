@@ -5,10 +5,8 @@ use PHProbot\GT;
 $return=PHProbot\Api::MsgS($MsgS_Data=["msg"=>"禁言","data"=>$msg]);
 //禁言#群号#QQ号#时间
 if ($return!=null){
-echo "测试";
 $return_data=explode("#",$return);
 if (count($return_data)==4){
-echo "测试";
 $set_array = [
 "qun"=>$return_data[1],
 //执行人
@@ -27,11 +25,9 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 }
 if (count($return_data)==3){
-echo "测试";
 $set_array = [
 "qun"=>$qun,
 //执行人
@@ -50,7 +46,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 }
 
@@ -86,7 +81,6 @@ $Api_data = array(
 );
 }
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 }
 }
