@@ -26,7 +26,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }else{
 file_put_contents($qq."song.txt","语音#".$return[1]);
 
@@ -60,7 +59,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 Swoole\Timer::after(15000, function() use($qq){
 if (file_exists($qq."song_list.txt")==true){
 unlink($qq."song_list.txt");
