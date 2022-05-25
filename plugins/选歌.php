@@ -58,7 +58,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 unlink($qq."song_list.txt");
 }else{
 $song=file_get_contents($qq."song.txt");
@@ -89,7 +88,6 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 
 unlink($qq."song_list.txt");
 
