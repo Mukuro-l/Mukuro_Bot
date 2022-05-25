@@ -35,6 +35,7 @@ $send_msg="群事件通知\r\n类型：解除禁言\r\n被执行人：".$qq."\r\
 
 }
 }
+if (!empty($send_msg)){
 $Api_data = array(
 "qun"=>$qun,
 "qq"=>$qq,
@@ -42,8 +43,8 @@ $Api_data = array(
 "S_type"=>"群聊",
 "msg_id"=>$msg_id
 );
+}
 if (!empty($send_msg)){
 $data=PHProbot\Api::send($Api_data);
-$ws -> push($frame->fd, $data);
 }
 ?>
