@@ -45,15 +45,7 @@ Masking error
 //创建WebSocket Server对象，监听端口
 
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
-//定时器
-use Swoole\Timer;
-//协程容器
-use Swoole\Coroutine\Barrier;
-use Swoole\Coroutine\System;
-use function Swoole\Coroutine\run;
-use Swoole\Coroutine;
-use Hahadu\ImageFactory\Config\Config;
-use Hahadu\ImageFactory\Kernel\Factory;
+
 echo "PHProbot WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
 
 //监听WebSocket连接打开事件
@@ -70,6 +62,19 @@ echo $Welcome_to_use;
 
 $ws->on('Message', function ($ws, $frame) {
 include './module/config.php';
+include_once './module/api.php';
+//定时器
+use Swoole\Timer;
+//协程容器
+use Swoole\Coroutine\Barrier;
+use Swoole\Coroutine\System;
+use function Swoole\Coroutine\run;
+use Swoole\Coroutine;
+
+use PHProbot\Api;
+use Hahadu\ImageFactory\Config\Config;
+use Hahadu\ImageFactory\Kernel\Factory;
+
 
 //fd为客户端标识, $ws调用push函数发送(第二个参数为消息内容)
 
@@ -84,6 +89,48 @@ if (@$Data['meta_event_type'] != 'heartbeat'){
 print_r($Data);
 }
 }
+
+if (!function_exists("To_wimage")){
+//带水印
+function To_wimage($file,$qq){
+if (!empty($file)){
+$image = $file;
+$config = new Config();
+$config->setSavePath = 'images/';
+$config->waterMarkText = 'PHProbot'; //设置水印文字，支持\n换行符
+$config->TextStyle = [
+'font_size' => 50, //字体大小
+];
+Factory::setOptions($config);$text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
+copy($text_water_mark,"../gocq/data/images/".$qq.".jpg");
+unlink($text_water_mark);
+return "[CQ:image,file=".$qq.".jpg]";
+}
+}
+
+}
+
+if (!function_exists("To_image")){
+function To_image($text,$qq){
+if (!empty($text)){
+$config->setSavePath="../gocq/data/images/";
+Factory::setOptions($config);
+$option=[
+'background'=>'#f5f5dc',
+'fill_color'=>'#000000',
+'font_size'=>'20',
+'filename'=>$qq,
+'format'=>'jpg',
+];
+$text_mark_url = Factory::text_to_image()->text_create_image($text,$option);
+$file=$text_mark_url;
+
+return To_wimage($file,$qq);
+}
+}
+}
+
+//=============预定义函数==========
 
 //api字段们//
 
@@ -135,7 +182,7 @@ print_r($Data);
 
 //事件监控字段//
 
-include_once './module/api.php';//机器人各类api模块
+
 
 
 include './module/config.php';//配置
@@ -156,8 +203,29 @@ $plugins_array[]=array(
 $plugins_list = json_encode($plugins_array,JSON_UNESCAPED_UNICODE);
 file_put_contents("plugins_switch.json",$plugins_list);
 }else{
-for ($i=0;$i<count($list);$i++){
 $file_array = json_decode(file_get_contents("plugins_switch.json"),true);
+//判断是否增加
+if (count($list)>count($file_array)){
+$add=(count($list)-count($file_array));
+for ($i=0;$i<count($list);$i++){
+$file=explode('/',$list[$i])[2];
+
+if ($file_array[$i]["插件名"]!=$file){
+$file_array[count($file_array)+$add]=[
+"插件名"=>$file,
+"状态"=>"关"
+];
+$plugins_list = json_encode($plugins_array,JSON_UNESCAPED_UNICODE);
+file_put_contents("plugins_switch.json",$plugins_list);
+}
+}
+
+}
+
+//===============分割============
+
+for ($i=0;$i<count($list);$i++){
+
 $file=$file_array[$i]["插件名"];
 
 //echo "+++++++++++\n插件名：".$file."\n状态：".$file_array[$i]["状态"]."\n";
