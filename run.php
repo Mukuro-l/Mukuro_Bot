@@ -143,10 +143,11 @@ print_r($Data);
 @$chuo_userid=$Data['target_id']?:$_GET['chuo_userid'];//被戳qq
 
 //事件监控字段//
+
+class image{
 if (!function_exists("To_wimage")){
 //带水印
-function To_wimage($file,$qq){
-$factory = new Factory();
+public function To_wimage($file,$qq){
 if (!empty($file)){
 $image = $file;
 $config = new Config();
@@ -155,7 +156,7 @@ $config->waterMarkText = 'PHProbot'; //设置水印文字，支持\n换行符
 $config->TextStyle = [
 'font_size' => 50, //字体大小
 ];
-$factory->setOptions($config);$text_water_mark = $factory->text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
+Factory::setOptions($config);$text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
 copy($text_water_mark,"../gocq/data/images/".$qq.".jpg");
 unlink($text_water_mark);
 return "[CQ:image,file=".$qq.".jpg]";
@@ -164,8 +165,8 @@ return "[CQ:image,file=".$qq.".jpg]";
 }
 
 if (!function_exists("To_image")){
-function To_image($text,$qq){
-$factory = new Factory();
+public function To_image($text,$qq){
+
 if (!empty($text)){
 $option=[
 'background'=>'#f5f5dc',
@@ -174,14 +175,14 @@ $option=[
 'filename'=>$qq,
 'format'=>'jpg',
 ];
-$text_mark_url = $factory->text_to_image()->text_create_image($text,$option);
+$text_mark_url = Factory::text_to_image()->text_create_image($text,$option);
 $file=$text_mark_url;
 
 return To_wimage($file,$qq);
 }
 }
 }
-
+}
 include './module/config.php';//配置
 //载入
 
