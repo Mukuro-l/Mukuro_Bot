@@ -215,7 +215,7 @@ $option=[
 'format'=>'jpg',
 ];
 $text_mark_url = Factory::text_to_image()->text_create_image($text,$option);
-$file=$text_mark_url;
+$file="./images/".$qq.".jpg";
 
 $image = $file;
 $config->waterMarkText = 'PHProbot'; //设置水印文字，支持\n换行符
@@ -224,9 +224,9 @@ $config->TextStyle = [
 ];
 Factory::setOptions($config);
 $text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
-rename($text_water_mark,$qq.".jpg");
-copy($qq.".jpg","../gocq/data/images/".$qq.".jpg");
-unlink($qq.".jpg");
+rename($text_water_mark,$file);
+copy($file,"../gocq/data/images/".$qq.".jpg");
+
 }
 $ws -> push($frame->fd, $data);
 }
