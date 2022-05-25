@@ -143,7 +143,7 @@ print_r($Data);
 @$chuo_userid=$Data['target_id']?:$_GET['chuo_userid'];//被戳qq
 
 //事件监控字段//
-
+if (!function_exists("To_wimage")){
 //带水印
 function To_wimage($file,$qq){
 
@@ -161,8 +161,9 @@ unlink($text_water_mark);
 return "[CQ:image,file=".$qq.".jpg]";
 }
 }
+}
 
-
+if (!function_exists("To_image")){
 function To_image($text,$qq){
 
 if (!empty($text)){
@@ -179,7 +180,7 @@ $file=$text_mark_url;
 return To_wimage($file,$qq);
 }
 }
-
+}
 
 include './module/config.php';//配置
 //载入
