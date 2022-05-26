@@ -69,13 +69,10 @@ echo $Welcome_to_use;
 
 });
 
-$redis = new Redis();
-$redis->connect('127.0.0.1', 6379);
-echo "已连接Redis数据库\n";
 
 //监听WebSocket消息事件
 
-$ws->on('Message', function ($ws, $frame) use($redis) {
+$ws->on('Message', function ($ws, $frame){
 
 include './module/config.php';
 include_once './module/api.php';
@@ -234,6 +231,67 @@ copy($file,"../gocq/data/images/".$qq.".jpg");
 
 }
 $ws -> push($frame->fd, $data);
+}
+}
+
+/*
+$redis_data=[
+//设置key
+"data_name"=>"数据",
+//设置数据
+"data"=>123456,
+//是否获取数据
+"get"=>false
+];
+*/
+
+function bot_redis($redis_data=[]){
+if (!empty($redis_data)){
+if (is_array($redis_data)){
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+echo "已连接Redis数据库\n";
+//删除
+//$redis->del("test");
+/*
+$redis_data=[
+//设置key
+"data_name"=>"数据",
+//设置数据
+"data"=>123456,
+//QQ
+"qq"=>$qq,
+//是否获取数据
+"get"=>false
+];
+*/
+$array2=[
+"data","qq"
+];
+/*for ($i=0;$i<count($array);$i++){
+$redis->rpush("test",$array[$i]);
+}
+$redis->lset('test',1,'PHP');
+*/
+//设置数组
+$redis->hmset($redis_data["data_name"],$redis_data);
+//$return=$redis->lrange("test",0,-1);
+//获取数组
+$return=$redis->hmget($redis_data["data_name"],$array2);
+print_r($return);
+}
+}
+}
+
+
+if (isset($redis_data)==true){
+if (is_array($redis_data)){
+if ($redis_data["data"]==null or $redis_data["get"]==null){
+$redis_return=$redis->get($redis_data["data_name"]);
+}else if(!empty($redis_data["data"]) and !empty($redis_data["data_name"])){
+bot_redis($redis_data);
+
+}
 }
 }
 
