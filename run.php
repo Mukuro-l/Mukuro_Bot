@@ -244,7 +244,7 @@ $redis_data=[
 "get"=>false
 ];
 */
-
+if (!function_exists("bot_redis")){
 function bot_redis($redis_data=[]){
 if (!empty($redis_data)){
 if (is_array($redis_data)){
@@ -282,7 +282,7 @@ print_r($return);
 }
 }
 }
-
+}
 
 if (isset($redis_data)==true){
 if (is_array($redis_data)){
