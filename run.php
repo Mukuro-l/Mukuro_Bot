@@ -70,8 +70,8 @@ echo $Welcome_to_use;
 });
 
 $redis = new Redis();
-//$redis->connect('127.0.0.1', 6379);
-//echo "已连接Redis数据库\n";
+$redis->connect('127.0.0.1', 6379);
+echo "已连接Redis数据库\n";
 
 //监听WebSocket消息事件
 
