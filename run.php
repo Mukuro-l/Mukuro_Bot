@@ -205,22 +205,7 @@ include './plugins/'.$file;
 
 if (isset($Api_data)==true){
 if (is_array($Api_data)==true&&$Api_data["msg"]!=null){
-if (@$Api_data["image"]==true){
-$config = new Config();
-$config->setSavePath="images/";
-Factory::setOptions($config);
-$option=[
-'background'=>'#f5f5dc',
-'fill_color'=>'#000000',
-'font_size'=>'20',
-'filename'=>$qq,
-'format'=>'jpg',
-];
-$text_mark_url = Factory::text_to_image()->text_create_image($Api_data["text"],$option);
 
-copy("./images/".$qq.".jpg","../gocq/data/images/".$qq.".jpg");
-
-}
 $ws -> push($frame->fd, $Return_data);
 }
 }
