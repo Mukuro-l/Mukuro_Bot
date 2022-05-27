@@ -13,6 +13,6 @@ $Api_data = array(
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 }
 ?>
