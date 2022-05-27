@@ -46,16 +46,7 @@ Masking error
 
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
 include_once './module/api.php';
-//定时器
-use Swoole\Timer;
-//协程容器
-use Swoole\Coroutine\Barrier;
-use Swoole\Coroutine\System;
-use function Swoole\Coroutine\run;
-use Swoole\Coroutine;
-use PHProbot\Api;
-use Hahadu\ImageFactory\Config\Config;
-use Hahadu\ImageFactory\Kernel\Factory;
+
 
 echo "PHProbot WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
 
@@ -73,7 +64,16 @@ echo $Welcome_to_use;
 //监听WebSocket消息事件
 
 $ws->on('Message', function ($ws, $frame){
-
+//定时器
+use Swoole\Timer;
+//协程容器
+use Swoole\Coroutine\Barrier;
+use Swoole\Coroutine\System;
+use function Swoole\Coroutine\run;
+use Swoole\Coroutine;
+use PHProbot\Api;
+use Hahadu\ImageFactory\Config\Config;
+use Hahadu\ImageFactory\Kernel\Factory;
 include './module/config.php';
 include_once './module/api.php';
 
