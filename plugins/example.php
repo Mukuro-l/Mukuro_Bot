@@ -14,7 +14,7 @@ if ($msg == "test"){
 //多选
 if (PHProbot\Api::MC($option=["你好","测试"],$msg)==true){
 //数据库
-$redis_data=[
+/*$redis_data=[
 //设置key
 "data_name"=>"PHProbot_test",
 //设置数据
@@ -24,6 +24,7 @@ $redis_data=[
 //是否获取数据
 "get"=>false
 ];
+*/
 //设置数据组
 $Api_data = [
 //群号
