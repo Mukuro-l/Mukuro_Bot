@@ -54,7 +54,7 @@ $Api_data = array(
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 
 
 $Api_data = array(
@@ -123,7 +123,7 @@ $Api_data = array(
 
 );
 
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 
 
 $Api_data = array(
@@ -140,7 +140,7 @@ $Api_data = array(
 
 );
 
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 
 }else{
 $data_array=json_decode(file_get_contents("V_group.json"),true);
@@ -180,7 +180,7 @@ $Api_data = array(
 
 );
 
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 
 
 $Api_data = array(
@@ -197,7 +197,7 @@ $Api_data = array(
 
 );
 
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
   }
 }
 }while($i!=$data_array[$i]["sum"]&&$qq==$data_array[$i]["qq"]);
