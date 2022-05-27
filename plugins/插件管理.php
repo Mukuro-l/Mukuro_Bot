@@ -1,6 +1,6 @@
 <?php
 //图文合成库
-//use Hahadu\ImageFactory\Config\Config;
+use Hahadu\ImageFactory\Config\Config;
 use Hahadu\ImageFactory\Kernel\Factory;
 use PHProbot\Api;
 if ($msg == "插件列表"){
@@ -33,7 +33,7 @@ $Api_data = array(
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 unlink("plugins_list.txt");
 }
 
@@ -60,7 +60,7 @@ $Api_data = array(
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 }
 }
 
@@ -88,7 +88,7 @@ $Api_data = array(
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 }
 }
 }
