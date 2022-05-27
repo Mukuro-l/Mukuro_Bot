@@ -287,8 +287,11 @@ print_r($return);
 if (isset($redis_data)==true){
 if (is_array($redis_data)){
 if ($redis_data["data"]==null or $redis_data["get"]==null){
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
 $redis_return=$redis->get($redis_data["data_name"]);
 }else if(!empty($redis_data["data"]) and !empty($redis_data["data_name"])){
+
 bot_redis($redis_data);
 
 }
