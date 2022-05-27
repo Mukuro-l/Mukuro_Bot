@@ -57,7 +57,7 @@ $Api_data = array(
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 unlink($qq."song_list.txt");
 }else{
 $song=file_get_contents($qq."song.txt");
@@ -87,7 +87,7 @@ $Api_data = array(
 "S_type"=>$msg_type,
 "msg_id"=>$msg_id
 );
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 
 unlink($qq."song_list.txt");
 
