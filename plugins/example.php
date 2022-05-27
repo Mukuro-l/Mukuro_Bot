@@ -13,6 +13,7 @@ if ($msg == "test"){
 
 //多选
 if (PHProbot\Api::MC($option=["你好","测试"],$msg)==true){
+//数据库
 $redis_data=[
 //设置key
 "data_name"=>"PHProbot_test",
@@ -24,7 +25,7 @@ $redis_data=[
 "get"=>false
 ];
 //设置数据组
-$Api_data = array(
+$Api_data = [
 //群号
 "qun"=>$qun,
 //QQ号
@@ -34,11 +35,10 @@ $Api_data = array(
 //发送消息类型 $msg_type为消息类型，还可设置为[群聊，私聊]
 "S_type"=>$msg_type,
 //消息ID
-"msg_id"=>$msg_id
-);
-
-//调用消息类 send函数，在115版本以前不支持
-$data=PHProbot\Api::send($Api_data);
+"msg_id"=>$msg_id,
+//是否将内容转为图片
+"image"=>true
+];
 }
 
 ?>
