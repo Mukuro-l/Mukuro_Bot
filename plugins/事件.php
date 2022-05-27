@@ -45,6 +45,6 @@ $Api_data = array(
 );
 }
 if (!empty($send_msg)){
-$data=PHProbot\Api::send($Api_data);
+$Return_data=PHProbot\Api::send($Api_data);
 }
 ?>
