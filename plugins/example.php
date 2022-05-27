@@ -40,6 +40,7 @@ $Api_data = [
 //是否将内容转为图片
 "image"=>true
 ];
+$Return_data=PHProbot\Api::send($Api_data);
 }
 
 ?>
