@@ -32,13 +32,15 @@ $Api_data = [
 //QQ号
 "qq"=>$qq,
 //msg为设置发送消息
-"msg"=>"Redis数据库测试",
+"msg"=>"[CQ:image,file=".$qq.".jpg]",
 //发送消息类型 $msg_type为消息类型，还可设置为[群聊，私聊]
 "S_type"=>$msg_type,
 //消息ID
 "msg_id"=>$msg_id,
 //是否将内容转为图片
-"image"=>true
+"image"=>true,
+//设置转换图片的文字
+"text"=>"数据库测试"
 ];
 $Return_data=PHProbot\Api::send($Api_data);
 }
