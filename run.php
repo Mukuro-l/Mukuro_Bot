@@ -221,8 +221,6 @@ $text_mark_url = Factory::text_to_image()->text_create_image($Api_data["msg"],$o
 copy("./images/".$qq.".jpg","../gocq/data/images/".$qq.".jpg");
 
 }
-$PHProbot_Api_= new Api();
-$Return_data=$PHProbot_Api_ -> send($Api_data);
 $ws -> push($frame->fd, $Return_data);
 }
 }
