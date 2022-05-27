@@ -216,7 +216,7 @@ $option=[
 'filename'=>$qq,
 'format'=>'jpg',
 ];
-$text_mark_url = Factory::text_to_image()->text_create_image($Api_data["msg"],$option);
+$text_mark_url = Factory::text_to_image()->text_create_image($Api_data["text"],$option);
 
 copy("./images/".$qq.".jpg","../gocq/data/images/".$qq.".jpg");
 
