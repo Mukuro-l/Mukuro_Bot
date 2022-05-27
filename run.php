@@ -216,18 +216,9 @@ $option=[
 'filename'=>$qq,
 'format'=>'jpg',
 ];
-$text_mark_url = Factory::text_to_image()->text_create_image($text,$option);
-$file="./images/".$qq.".jpg";
+$text_mark_url = Factory::text_to_image()->text_create_image($Api_data["msg"],$option);
 
-$image = $file;
-$config->waterMarkText = 'PHProbot'; //设置水印文字，支持\n换行符
-$config->TextStyle = [
-'font_size' => 50, //字体大小
-];
-Factory::setOptions($config);
-$text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
-rename($text_water_mark,$file);
-copy($file,"../gocq/data/images/".$qq.".jpg");
+copy("./images/".$qq.".jpg","../gocq/data/images/".$qq.".jpg");
 
 }
 $ws -> push($frame->fd, $data);
@@ -244,8 +235,6 @@ $redis_data=[
 "get"=>false
 ];
 */
-if (!function_exists("bot_redis")){
-function bot_redis($redis_data=[]){
 if (!empty($redis_data)){
 if (is_array($redis_data)){
 $redis = new Redis();
@@ -279,8 +268,6 @@ $redis->hmset($redis_data["data_name"],$redis_data);
 //获取数组
 $return=$redis->hmget($redis_data["data_name"],$array2);
 print_r($return);
-}
-}
 }
 }
 
