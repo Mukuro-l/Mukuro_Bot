@@ -205,7 +205,7 @@ include './plugins/'.$file;
 
 if (isset($Api_data)==true){
 if (is_array($Api_data)==true&&$Api_data["msg"]!=null){
-if ($Api_data["image"]==true){
+if (@$Api_data["image"]==true){
 $config = new Config();
 $config->setSavePath="images/";
 Factory::setOptions($config);
@@ -221,7 +221,7 @@ $text_mark_url = Factory::text_to_image()->text_create_image($Api_data["msg"],$o
 copy("./images/".$qq.".jpg","../gocq/data/images/".$qq.".jpg");
 
 }
-$ws -> push($frame->fd, $data);
+$ws -> push($frame->fd, PHProbot\Api::send($Api_data));
 }
 }
 
@@ -257,14 +257,8 @@ $redis_data=[
 $array2=[
 "data","qq"
 ];
-/*for ($i=0;$i<count($array);$i++){
-$redis->rpush("test",$array[$i]);
-}
-$redis->lset('test',1,'PHP');
-*/
 //设置数组
 $redis->hmset($redis_data["data_name"],$redis_data);
-//$return=$redis->lrange("test",0,-1);
 //获取数组
 $return=$redis->hmget($redis_data["data_name"],$array2);
 print_r($return);
@@ -278,8 +272,6 @@ $redis = new Redis();
 $redis->connect('127.0.0.1', 6379);
 $redis_return=$redis->get($redis_data["data_name"]);
 }else if(!empty($redis_data["data"]) and !empty($redis_data["data_name"])){
-$redis = new Redis();
-$redis->connect('127.0.0.1', 6379);
 bot_redis($redis_data);
 
 }
