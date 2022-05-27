@@ -41,7 +41,7 @@ $Api_data = array(
 "msg_id"=>$msg_id
 );
 if ($Api_data["msg"]!=null){
-$data=$Api->send($Api_data);
+$Return_data=$Api->send($Api_data);
 }
 }
 ?>
