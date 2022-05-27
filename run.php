@@ -291,7 +291,8 @@ $redis = new Redis();
 $redis->connect('127.0.0.1', 6379);
 $redis_return=$redis->get($redis_data["data_name"]);
 }else if(!empty($redis_data["data"]) and !empty($redis_data["data_name"])){
-
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
 bot_redis($redis_data);
 
 }
