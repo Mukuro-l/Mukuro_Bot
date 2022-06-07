@@ -12,7 +12,7 @@ $return=$this->MsgS(["msg"=>"点歌","data"=>$this->msg]);
 if ($return!=null){
 var_dump($return);
 
-$str="http://43.154.119.191:3000/search?keywords=$return";
+$str="https://autumnfish.cn/search?keywords=$return";
 
 $str=$this->Curl($str);
 
