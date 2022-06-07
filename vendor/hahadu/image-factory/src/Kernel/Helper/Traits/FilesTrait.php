@@ -9,27 +9,32 @@
  *  +----------------------------------------------------------------------
  *  | Author: hahadu <582167246@qq.com>
  *  +----------------------------------------------------------------------
- *  | Date: 2020/10/30 下午12:14
+ *  | Date: 2020/10/30 下午12:12
  *  +----------------------------------------------------------------------
- *  | Description:   StringTrait
+ *  | Description:   FilesHelper
  *  +----------------------------------------------------------------------
  **/
 
 namespace Hahadu\ImageFactory\Kernel\Helper\Traits;
 
 
-use Hahadu\Helper\StringHelper;
+use Hahadu\Helper\FilesHelper;
 
-trait StringTrait
+trait FilesTrait
 {
-    public function check_chines($string){
-        return StringHelper::check_chines($string);
+    public function mkdir($dirname){
+        return FilesHelper::mkdir($dirname);
     }
-    public function re_substr($string, $start=0, $length=10, $suffix=true, $charset="utf-8"){
-        return StringHelper::re_substr($string,$start,$length,$suffix,$charset);
+    public function dir_files_list($dir, $pattern="*"){
+        return FilesHelper::dir_files_list($dir, $pattern);
     }
-    public function get_chines($text){
-        return StringHelper::get_chines($text);
+    public function get_save_path($save_path=''){
+        if(null!=$save_path){
+            $this->save_path = $save_path;
+        }
+        $this->mkdir($this->save_path);
+        return $this->save_path;
     }
+
 
 }
