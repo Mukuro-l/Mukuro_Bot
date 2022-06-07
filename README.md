@@ -47,6 +47,7 @@ use PHProbot\Module\Api;
 class Text{
 //引用Api特性
 use Api;
+//方法名请遵从plugins_类名 的格式
 function plugins_Text(){
 if ($this->msg == "测试"){
 //返回调用send函数结果，支持array
