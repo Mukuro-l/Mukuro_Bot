@@ -1,51 +1,27 @@
 {
-
     "name": "hahadu/image-factory",
-
     "description": "imagick",
-
     "type": "library",
-
     "require": {
-
         "php": ">=7.0",
-
         "ext-imagick": "*",
-
         "ext-mbstring": "*",
-
         "ext-bcmath": "*",
-
         "ext-json": "*",
-
         "hahadu/helper-function": ">=0.7"
-
     },
 
     "license": "Apache-2.0",
-
     "authors": [
-
         {
-
             "name": "hahadu",
-
             "email": "582167246@qq.com"
-
         }
-
     ],
-
     "autoload": {
-
         "psr-4": {
-
             "Hahadu\\ImageFactory\\": "src/"
-
         }
-
     },
-
         "minimum-stability": "dev"
-
 }
