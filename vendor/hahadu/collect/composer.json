@@ -1,0 +1,31 @@
+{
+  "name": "hahadu/collect",
+  "description": "collection array",
+  "type": "think-extend",
+  "keywords": [
+    "framework",
+    "thinkphp",
+    "admin"
+  ],
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "hahadu",
+      "email": "582167246@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Hahadu\\Collect\\": "src/"
+    },
+    "files": [
+      "src/function.php"
+    ]
+
+  },
+  "minimum-stability": "dev"
+}
