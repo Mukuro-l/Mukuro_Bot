@@ -1,1 +1,33 @@
-1
+{
+    "name": "hahadu/helper-function",
+    "description": "一些常用的助手函数打包",
+    "type": "library",
+    "require": {
+        "php": ">=5.6",
+        "ext-curl": "*",
+        "ext-iconv": "*",
+        "ext-dom": "*",
+        "ext-zip": "*",
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
+        "ext-json": "*",
+        "hahadu/collect": "*"
+    },
+    "require-dev": {
+        "php": ">=5.6"
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "hahadu",
+            "email": "582167246@qq.com"
+        }
+    ],
+    "autoload": {
+        "files": ["src/function.php"],
+        "psr-4": {
+            "Hahadu\\Helper\\": "src/"
+        }
+    },
+        "minimum-stability": "dev"
+}
