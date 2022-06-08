@@ -55,7 +55,8 @@ $ws->on('Message', function ($ws, $frame) use ($database,$BOT_Config) {
 			print_r($Data);
 		}
 	}
-	if (@$Data['meta_event_type'] !== 'heartbeat'&&@$Data['meta_event_type'] !=='lifecycle') {
+	if (@$Data['meta_event_type'] !== 'heartbeat'||@$Data['meta_event_type'] !=='lifecycle') {
+	if (@$Data['status']===null){
 $Barrier = Barrier::make();
 go(function () use($Data,$ws,$frame,$database,$BOT_Config){
 	include_once './Module/Api.php';
@@ -101,9 +102,10 @@ if ($file_array[$i]["状态"]=="开"){
 					$Plugins_test = new $Plugins_name($Data,$database,$BOT_Config);
 					$Plugins_return =  $Plugins_test->$Plugins_name_function();
 					//$Plugins_test -> __destruct();
-					if (@$Plugins_return != null) {
+if (isset($Plugins_return)){
 					$ws->push($frame->fd, $Plugins_return);
 					}
+					
 					}
 				}
 			
@@ -112,6 +114,7 @@ if ($file_array[$i]["状态"]=="开"){
 });
 Barrier::wait($Barrier);
 
+}
 }	
 	
 
