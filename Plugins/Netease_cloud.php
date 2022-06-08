@@ -11,12 +11,12 @@ function plugins_Netease_cloud(){
 $return=$this->MsgS(["msg"=>"点歌","data"=>$this->msg]);
 if ($return!=null){
 
-$url="https://autumnfish.cn/search?keywords=".urlencode($return);
+$url="http://127.0.0.1/api/key.php?keywords=".urlencode($return);
 
 $song_data=json_decode(file_get_contents($url),true);
 $result=$song_data['result'];
 $song_list=$result['songs'];//歌曲列表
-$list_data=$song_list[$return_list[0]-1];//选歌
+$list_data=$song_list[0];//选歌
 $song_id = $list_data["id"];
 
 if ($song_id==null){
@@ -28,7 +28,7 @@ file_put_contents($this->qq."song.txt","点歌#".$return);
 
 for ($i=0;$i<20;$i++){
 
-$list = ($i+1).".<".$str[$i]['name'].">--".$str[$i]['artists'][0]['name']."\r\n";
+$list = ($i+1).".<".$song_list[$i]['name'].">--".$song_list[$i]['artists'][0]['name']."\r\n";
 
 file_put_contents($this->qq."song_list.txt",$list,FILE_APPEND);
 
@@ -49,5 +49,8 @@ return $this->send("[CQ:image,file=".$this->qq.".jpg]");
 
 
 }
+
+public function __destruct() {
+	}
 }
 ?>
