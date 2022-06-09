@@ -32,7 +32,7 @@
 # 解压gocq  
 ```tar -xzf go-cqhttp_linux_amd64.tar.gz```  
 - 打开上级目录```cd -```  
-# 克隆PHProbot  
+# 克隆Mukuro_Bot  
 ```git clone https://github.com/2744602949/Mukuro_Bot.git```  
 # 配置PHProbot  
 - 打开[Module]文件夹  
