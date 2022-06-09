@@ -112,18 +112,7 @@ if ($file_array[$i]["状态"]=="开"){
                 $Doc_data ="    Mukuro  --".$Plugins_name."插件帮助\r\n名字：[".$Doc_name[1]."]\r\n详情：[".$Doc_doc[1]."]\r\n指令：[".$Doc_comment[1]."]\r\n返回：[".$Doc_return[1]."]";
                 file_put_contents("./Doc/".$Plugins_name."/".$Plugins_name.".doc",$Doc_data);
 				}
-				if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")){
-for ($i=0;$i<count($list);$i++){
-
-$Menu_doc=explode('.',$file_array[$i]["插件名"])[0];
-$doc_data=file_get_contents("./Doc/".$Menu_doc.$Menu_doc.".doc");
-$doc_name = explode("[",$doc_data);
-$doc_name = explode("]",$doc_name[1]);
-
-file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc",($i+1).$doc_name[0]."\r\n",FILE_APPEND);
-}
-
-				}
+				
 					$Plugins_name_function = "plugins_" . $Plugins_name;
 					$Plugins_test = new $Plugins_name($Data,$database,$BOT_Config);
 					$Plugins_return =  $Plugins_test->$Plugins_name_function();
@@ -131,6 +120,16 @@ file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc",($i+1).$doc_name[0]."\r\n",FI
 if (isset($Plugins_return)){
 					$ws->push($frame->fd, $Plugins_return);
 					}
+					if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")){
+for ($i=0;$i<count($list);$i++){
+$Menu_doc=explode('.',$file_array[$i]["插件名"]);
+$doc_data=file_get_contents("./Doc/".$Menu_doc[0]."/".$Menu_doc[0].".doc");
+$doc_name = explode("]",$doc_data);
+$doc_name = explode("[",$doc_name[0]);
+
+file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc",($i+1).$doc_name[1]."\r\n",FILE_APPEND);
+}
+				}
 					
 					}
 				}
