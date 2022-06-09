@@ -6,7 +6,7 @@
  *@copyright 2021-2022 coldeggs.AllRightsReserved
  *coldeggs机器人2021.08.21
  */
-define("PHP_robot", "版权归coldeggs所有2021-2022。");
+define("Mukuro", "版权归coldeggs所有2021-2022。");
 define("E_mail", "phprobot@sina.com");
 
 if (is_dir("vendor")){
@@ -33,13 +33,14 @@ use Swoole\Coroutine\System;
 use function Swoole\Coroutine\run;
 use Swoole\Coroutine;
 
-echo "PHProbot WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
+echo "Mukuro WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
 //监听WebSocket连接打开事件
 $ws->on('Open', function ($ws, $request) {
 	include './Module/Config.php';
 	echo "go-cqhttp已连接\n";
-	$Welcome_to_use = "PHProbot已成功启动\n欢迎使用PHProbot\n当前版本：" . $BOT_Config["SDK"] . "\n项目地址：https://github.com/2744602949/PHProbot\nQQ邮箱：coldeggs@qq.com\nOutlook邮箱：g2744602949@outlook.com\n";
+	$Welcome_to_use = "Mukuro已成功启动\n欢迎使用Mukuro\n当前版本：" . $BOT_Config["SDK"] . "\n项目地址：https://github.com/2744602949/Mukuro_Bot\nQQ邮箱：coldeggs@qq.com\nOutlook邮箱：g2744602949@outlook.com\n";
 	echo $Welcome_to_use;
+	unlink("./Doc/Mukuro_Menu_Doc/Menu.doc");
 });
 
 //监听WebSocket消息事件
@@ -98,6 +99,31 @@ if ($file_array[$i]["状态"]=="开"){
 				$Plugins_name = explode('.', $file);
 				$Plugins_name = $Plugins_name[0];
 				@include_once './Plugins/' . $file;
+				if (!is_dir("./Doc/".$Plugins_name)){
+				mkdir("./Doc/".$Plugins_name);
+				$Doc = new ReflectionClass($Plugins_name);
+                $Doc=$Doc->getDocComment();
+                $Doc_doc_ = explode("*",$Doc);
+                //名字会出现在菜单上
+                $Doc_name = explode("@name",$Doc_doc_[3]);
+                $Doc_doc = explode("@doc",$Doc_doc_[4]);
+                $Doc_comment = explode("@comment",$Doc_doc_[5]);
+                $Doc_return = explode("@return",$Doc_doc_[6]);
+                $Doc_data ="    Mukuro  --".$Plugins_name."插件帮助\r\n名字：[".$Doc_name[1]."]\r\n详情：[".$Doc_doc[1]."]\r\n指令：[".$Doc_comment[1]."]\r\n返回：[".$Doc_return[1]."]";
+                file_put_contents("./Doc/".$Plugins_name."/".$Plugins_name.".doc",$Doc_data);
+				}
+				if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")){
+for ($i=0;$i<count($list);$i++){
+
+$Menu_doc=explode('.',$file_array[$i]["插件名"])[0];
+$doc_data=file_get_contents("./Doc/".$Menu_doc.$Menu_doc.".doc");
+$doc_name = explode("[",$doc_data);
+$doc_name = explode("]",$doc_name[1]);
+
+file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc",($i+1).$doc_name[0]."\r\n",FILE_APPEND);
+}
+
+				}
 					$Plugins_name_function = "plugins_" . $Plugins_name;
 					$Plugins_test = new $Plugins_name($Data,$database,$BOT_Config);
 					$Plugins_return =  $Plugins_test->$Plugins_name_function();
