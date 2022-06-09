@@ -1,5 +1,5 @@
 # 请注意：main分支存在未发布的功能及特性，稳定性未知。建议使用发行版。  
-# [PHProbot使用手册] by coldeggs  
+# [Mukuro_Bot使用手册] by coldeggs  
 ## 引用hahadu/image-factory  
 你好！  欢迎阅读本程序的使用文档  
 运行环境：
@@ -16,6 +16,8 @@
 - [x] Swoole Timer  
 - [x] 图文合成  
 - [x] 并发协程  
+- [x] 自动文档  
+- [x] 自动生成菜单  
 
 # 安装PHP  
 - apt安装  
@@ -31,12 +33,12 @@
 ```tar -xzf go-cqhttp_linux_amd64.tar.gz```  
 - 打开上级目录```cd -```  
 # 克隆PHProbot  
-```git clone https://github.com/2744602949/PHProbot.git```  
+```git clone https://github.com/2744602949/Mukuro_Bot.git```  
 # 配置PHProbot  
-- 打开[module]文件夹  
-- 在config.php文件内配置  
+- 打开[Module]文件夹  
+- 在Config.php文件内配置  
 # 启动  
-- 需先配置完毕，直接在PHProbot根目录```php run.php```即可  
+- 需先配置完毕，直接在Mukuro_Bot根目录```php run.php```即可  
 # 一键部署脚本  
 - 正在路上……
 ## 开发  
