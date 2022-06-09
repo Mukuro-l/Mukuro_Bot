@@ -1,5 +1,5 @@
 <?php
-namespace PHProbot\Module;
+namespace Mukuro\Module;
 
 if (!class_exists("Api")) {
 	trait Api {
@@ -52,8 +52,7 @@ if (!class_exists("Api")) {
 		
 		
 		
-		public function send($set_msg="PHProbot提示：未设置要发送的消息。" ) {
-		if (isset($set_msg) == true) {
+		public function send(string|array $set_msg="Mukuro要告诉官人，官人没有让六儿发送任何消息哦•᷄ࡇ•᷅" ) {
 		    if ($this->msg_type == "group") {
 		$url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
 						$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
@@ -66,8 +65,7 @@ if (!class_exists("Api")) {
 						echo "bot发送消息：[" . $set_msg . "]\n";
 						return $url;
 		}
-		}
-			if (isset($set_msg) == true) {
+		
 				if (is_array($set_msg) == true) {
 					if ($set_msg["S_type"] == "group") {
 						$url = array("action" => "send_group_msg", "params" => array("group_id" => $set_msg["qun"], "message" => $set_msg["msg"]));
@@ -100,25 +98,20 @@ if (!class_exists("Api")) {
 						echo "bot转发消息：[" . $set_msg["msg"] . "]\n";
 						return $url;
 					}
-				}
 			}
 		}
-		public function MC(array $option, string $msg) {
-			if (isset($option) == true) {
-				if (is_array($option) == true) {
+		public function MC(array $option, string $msg):bool {
+				
 					$quantity = count($option);
 					for ($i = 0;$i < $quantity;$i++) {
 						if ($msg == $option[$i]) {
 							return true;
 						}
 					}
-				}
-			}
+			
 		}
 		//即为Message search
-		public function MsgS(array $MsgS_Data) {
-			if (isset($MsgS_Data) == true) {
-				if (is_array($MsgS_Data) == true) {
+		public function MsgS(array $MsgS_Data):string | bool {
 					$msg = $MsgS_Data["msg"];
 					if (strstr($MsgS_Data["data"], $msg) == true) {
 						if (preg_match("/^$msg ?(.*)\$/", $MsgS_Data["data"], $return)) {
@@ -129,12 +122,11 @@ if (!class_exists("Api")) {
 					} else {
 						return false;
 					}
-				}
-			}
+				
+			
 		}
 		//光学字符识别OCR 直接传入CQ码即可
-		public function OCR(string $return) {
-			if ($return != null) {
+		public function OCR(string $return):string {
 				$file = explode("[CQ:image,file=", $return);
 				if (strstr($file[1], "subType") == true) {
 					$data = explode(',', $file[1]);
@@ -151,10 +143,10 @@ if (!class_exists("Api")) {
 					file_put_contents("./Ocr/" . $time . "ocr.txt", $list, FILE_APPEND);
 				}
 				return file_get_contents("./Ocr/" . $time . "ocr.txt");
-			}
+			
 		}
 		//即为Get friends
-		public function GF() {
+		public function GF():string {
 			$BOT_Config = json_decode(file_get_contents("config.json"), true);
 			$url = "http://127.0.0.1:" . $BOT_Config["http_port"] . "/get_friend_list";
 			$Data = json_decode(file_get_contents($url), true);
@@ -164,6 +156,7 @@ if (!class_exists("Api")) {
 			}
 			return file_get_contents("GF.txt");
 		}
+		
 		public function DF($user_id) {
 			$BOT_Config = json_decode(file_get_contents("config.json"), true);
 			$url = "http://127.0.0.1:" . $BOT_Config["http_port"] . "/delete_friend?friend_id=" . $user_id;
@@ -295,7 +288,7 @@ if (!class_exists("Api")) {
 if (!class_exists("Redis_set")) {
 
 trait Redis_{
-public function Redis_set($array=[],$GET=false){
+public function Redis_set(array $array,bool $GET=false){
 if (isset($array)) {
 
 	if (!empty($array)) {
