@@ -42,7 +42,7 @@
 ## 开发  
 ```
 <?php
-use PHProbot\Module\Api;
+use Mukuro\Module\Api;
 //类名需与文件名一致
 /**
 *@name 菜单
