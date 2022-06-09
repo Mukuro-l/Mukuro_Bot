@@ -46,6 +46,7 @@
 <?php
 use Mukuro\Module\Api;
 //类名需与文件名一致
+
 /**
 *@name 菜单
 *@doc Mukuro 的菜单插件
