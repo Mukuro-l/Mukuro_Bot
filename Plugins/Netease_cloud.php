@@ -1,7 +1,9 @@
 <?php
-use PHProbot\Module\Api;
+use Mukuro\Module\Api;
 
 /**
+*@name 网易云点歌
+*@doc 一个网易云点歌插件
 *@comment 点歌
 *@return image
 */

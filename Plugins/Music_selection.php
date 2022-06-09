@@ -1,8 +1,10 @@
 <?php
-use PHProbot\Module\Api;
+use Mukuro\Module\Api;
 
 /**
-*@comment 选歌
+*@name 选歌
+*@doc 一个选歌插件，发送数字选歌
+*@comment 数字
 *@return image
 */
 class Music_selection{

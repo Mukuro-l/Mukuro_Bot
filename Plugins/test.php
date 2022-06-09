@@ -1,5 +1,5 @@
 <?php
-use PHProbot\Module\Api;
+use Mukuro\Module\Api;
 class test {
 	use Api;
 public	function plugins_test() {
