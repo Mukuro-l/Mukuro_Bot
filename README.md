@@ -44,6 +44,12 @@
 <?php
 use PHProbot\Module\Api;
 //类名需与文件名一致
+/**
+*@name 菜单
+*@doc Mukuro 的菜单插件
+*@comment 菜单
+*@return image
+*/
 class Text{
 //引用Api特性
 use Api;
