@@ -136,7 +136,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦" ]];
 				}
 				if ($Data['message_type']==="private"){
-				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦"];
+				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦"]];
 				
 				}
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
