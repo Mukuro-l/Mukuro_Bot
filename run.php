@@ -118,9 +118,10 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				$Jiezhu_Plugins=explode('.',$file_array[$i]["插件名"]);
 				if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc")){
 				$menu_data=file_get_contents("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc");
-				$Doc_doc_ = explode("*", $menu_data);
-				$Doc_name = explode("@name", $Doc_doc_[3]);
-				if (trim($Doc_name[1])===$Jiezhu[1]){
+				$doc_name = explode("]", $menu_data);
+									$doc_name = explode("[", $doc_name[0]);
+			
+				if (trim($doc_name[1])==$Jiezhu[1]){
 				$menu_data_code=Text_Images_one($menu_data,$Data['user_id']);
 				if ($Data['message_type']==="group"){
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>$menu_data_code ]];
