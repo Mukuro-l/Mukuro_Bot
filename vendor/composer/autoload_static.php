@@ -12,6 +12,10 @@ class ComposerStaticInit932391c818e08f9e27eb5ce56973e5f3
     );
 
     public static $prefixLengthsPsr4 = array (
+        'L' => 
+        array (
+            'Laofu\\Image\\' => 12,
+        ),
         'H' => 
         array (
             'Hahadu\\ImageFactory\\' => 20,
@@ -21,6 +25,10 @@ class ComposerStaticInit932391c818e08f9e27eb5ce56973e5f3
     );
 
     public static $prefixDirsPsr4 = array (
+        'Laofu\\Image\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laofu110/poster/src',
+        ),
         'Hahadu\\ImageFactory\\' => 
         array (
             0 => __DIR__ . '/..' . '/hahadu/image-factory/src',

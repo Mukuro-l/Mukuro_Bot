@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Laofu\\Image\\' => array($vendorDir . '/laofu110/poster/src'),
     'Hahadu\\ImageFactory\\' => array($vendorDir . '/hahadu/image-factory/src'),
     'Hahadu\\Helper\\' => array($vendorDir . '/hahadu/helper-function/src'),
     'Hahadu\\Collect\\' => array($vendorDir . '/hahadu/collect/src'),

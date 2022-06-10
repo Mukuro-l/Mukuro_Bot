@@ -140,5 +140,43 @@
             }
         ],
         "description": "imagick"
+    },
+    {
+        "name": "laofu110/poster",
+        "version": "1.01",
+        "version_normalized": "1.01.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/laofu110/phpPoster.git",
+            "reference": "b32933e6f45c424175f22240a6d517ece8df4cdb"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/laofu110/phpPoster/zipball/b32933e6f45c424175f22240a6d517ece8df4cdb",
+            "reference": "b32933e6f45c424175f22240a6d517ece8df4cdb",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "time": "2020-08-31T06:49:25+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Laofu\\Image\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "小百雨",
+                "email": "549566440@qq.com"
+            }
+        ],
+        "description": "php生成海报工具"
     }
 ]
