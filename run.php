@@ -108,9 +108,41 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 					$Jiezhu_data["status"]=$Jiezhu[1];
 					file_put_contents("./Group/".$Data['group_id']."/config.json",json_encode($Jiezhu_data, JSON_UNESCAPED_UNICODE));
 					
-					$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>"官人～六儿把群[".$Data['group_id']."]".$instruction."了哟😘" ]];
+					$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>"官人～六儿把群[".$Data['group_id']."]".$instruction."｜д•´)!!" ]];
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				$ws->push($frame->fd, $submit_data);
+				}
+				//获取帮助
+				$file_array
+				for ($i=0;$i<count($file_array);$i++){
+				$Jiezhu_Plugins=explode('.',$file_array[$i]["插件名"]);
+				if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc")){
+				$menu_data=file_get_contents("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc");
+				$Doc_doc_ = explode("*", $menu_data);
+				$Doc_name = explode("@name", $Doc_doc_[3]);
+				if (trim($Doc_name[1])===$Jiezhu[1]){
+				$menu_data_code=Text_Images_one($menu_data,$Data['user_id']);
+				if ($Data['message_type']==="group"){
+				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>$menu_data_code ]];
+				}
+				if ($Data['message_type']==="private"){
+				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] "message" =>$menu_data_code ]];
+				
+				}
+				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$ws->push($frame->fd, $submit_data);
+				}
+				}else{
+				if ($Data['message_type']==="group"){
+				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦" ]];
+				}
+				if ($Data['message_type']==="private"){
+				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] "message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦"];
+				
+				}
+				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$ws->push($frame->fd, $submit_data);
+				}
 				}
 				}
 				}
@@ -132,7 +164,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 								$Doc_doc = explode("@doc", $Doc_doc_[4]);
 								$Doc_comment = explode("@comment", $Doc_doc_[5]);
 								$Doc_return = explode("@return", $Doc_doc_[6]);
-								$Doc_data = "    Mukuro  --" . $Plugins_name . "插件帮助\r\n名字：[" . $Doc_name[1] . "]\r\n详情：[" . $Doc_doc[1] . "]\r\n指令：[" . $Doc_comment[1] . "]\r\n返回：[" . $Doc_return[1] . "]";
+								$Doc_data = "    Mukuro  --" . $Plugins_name . "插件帮助\r\n名字：[" . trim($Doc_name[1]) . "]\r\n详情：[" . trim($Doc_doc[1]) . "]\r\n指令：[" . trim($Doc_comment[1]) . "]\r\n返回：[" . trim($Doc_return[1]) . "]";
 								file_put_contents("./Doc/" . $Plugins_name . "/" . $Plugins_name . ".doc", $Doc_data);
 							}
 							$Plugins_name_function = "plugins_" . $Plugins_name;
