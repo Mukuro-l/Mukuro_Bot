@@ -113,6 +113,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				$ws->push($frame->fd, $submit_data);
 				}
 				//获取帮助
+				if ($Jiezhu[1] != "开" || $Jiezhu[1] != "闭" ){
 				for ($i=0;$i<count($file_array);$i++){
 				$Jiezhu_Plugins=explode('.',$file_array[$i]["插件名"]);
 				if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc")){
@@ -141,6 +142,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				}
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				$ws->push($frame->fd, $submit_data);
+				}
 				}
 				}
 				}
