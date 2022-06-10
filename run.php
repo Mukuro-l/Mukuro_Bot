@@ -125,7 +125,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>$menu_data_code ]];
 				}
 				if ($Data['message_type']==="private"){
-				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] "message" =>$menu_data_code ]];
+				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>$menu_data_code ]];
 				
 				}
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
