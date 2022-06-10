@@ -1,13 +1,15 @@
 # 请注意：main分支存在未发布的功能及特性，稳定性未知。建议使用发行版。  
 # [Mukuro_Bot使用手册] by coldeggs  
 ## 引用hahadu/image-factory  
+## 2022.06.10
+
 你好！  欢迎阅读本程序的使用文档  
 运行环境：
 - Linux （建议Ubuntu发行版）
 - PHP8
 - swoole4.8
 - 国内IP的服务器
-- 仅在Ubuntu20.4，PHP7.4环境通过测试  
+- 仅在Ubuntu20.4，PHP7.4-8.1环境通过测试  
 - 通过amd\arm平台测试  
 - 在termux proot容器开发|测试
 
@@ -37,8 +39,8 @@ TODO：
 ```tar -xzf go-cqhttp_linux_amd64.tar.gz```  
 - 打开上级目录```cd -```  
 # 克隆Mukuro_Bot  
-```git clone https://github.com/2744602949/Mukuro_Bot.git```  
-# 配置PHProbot  
+```git clone https://github.com/Mukuro-l/Mukuro_Bot.git```  
+# 配置Mukuro_Bot  
 - 打开[Module]文件夹  
 - 在Config.php文件内配置  
 # 启动  
