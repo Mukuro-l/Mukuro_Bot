@@ -55,7 +55,7 @@ function Text_Images(string $text, int $qq):
 	function Text_Images_one(string $text, int $qq):string{
 	$config =[
     'bg' => './images/background.png',//背景图片路径
-    'format'=>'png',//支持jpg、png、gif
+    'format'=>'jpg',//支持jpg、png、gif
     'quality'=>75,//压缩质量（0-100），输出格式为jpg时比较明显
     'text' => [
         [
@@ -80,8 +80,8 @@ function Text_Images(string $text, int $qq):
     ]
 ];
 $Poster=new \Laofu\Image\Poster($config);
-$img=$Poster->make($qq.".png");//当$filename=''时，会返回图片数据流，可以结合response直接输出到浏览器
-copy("./images/" . $qq . ".png", "../gocq/data/images/" . $qq . ".jpg");
+$img=$Poster->make("./images/".$qq.".jpg");//当$filename=''时，会返回图片数据流，可以结合response直接输出到浏览器
+copy("./images/" . $qq . ".jpg", "../gocq/data/images/" . $qq . ".jpg");
 if(!$img){
     $err=$Poster->errMsg;
 }
