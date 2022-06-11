@@ -85,7 +85,7 @@ $img=$Poster->make("./images/".$qq.".jpg");//当$filename=''时，会返回图�
 $image = './images/'.$qq.'.jpg';
         $config = new Config();
         $config->setSavePath = 'images/';
-        $config->waterMarkText = 'Mukuro_Bot\n'.'操作者：'.$qq; //设置水印文字，支持\n换行符
+        $config->waterMarkText = 'Mukuro_Bot'; //设置水印文字，支持\n换行符
         $config->TextStyle = [
         //支持的配置项
             'font_size' => 20, //字体大小
