@@ -25,7 +25,7 @@ function Text_Images(string $text, int $qq):
 		$src_h = $height;
 		list($src_w, $src_h) = getimagesize($src_path);
 		//如果水印图片本身带透明色，则使用imagecopy方法
-		imagecopy($dst, $src, 310, 130, 0, 0, $src_w, $src_h);
+		imagecopy($dst, $src, $width, $height, 0, 0, $src_w, $src_h);
 		//输出图片
 		list($src_w, $src_h, $dst_type) = getimagesize($dst_path);
 		switch ($dst_type) {
@@ -52,26 +52,26 @@ function Text_Images(string $text, int $qq):
 			$Mukuro_doc = $Mukuro_doc_First . $data;
 			return Text_Images($Mukuro_doc, $qq);
 		}
-	function Text_Images_one(string $text, int $qq):string{
+	function Text_Images_one(string $text, int $qq,string $path='./images/Mukuro_background.png'):string{
 	$config =[
-    'bg' => './images/background.png',//背景图片路径
+    'bg' => $path,//背景图片路径
     'format'=>'jpg',//支持jpg、png、gif
     'quality'=>75,//压缩质量（0-100），输出格式为jpg时比较明显
     'text' => [
         [
             'text' => $text,
-            'left' => 242, 
-            'top' => 166,
+            'left' => 100, 
+            'top' => 100,
             'fontSize' =>28,
-            'fontColor' => '68,68,68',
+            'fontColor' => '248,248,255',
             'angle' => 0,//旋转角度
         ],
     ],
     'image' =>[
         [
             'url' => './images/xx.png',//支持图片数据流、网络地址、本地路径
-            'left' => 110,
-            'top' => 120,
+            'left' => 0,
+            'top' => 0,
             'width' => 110,
             'height' => 110,
             'radius' => 50,
@@ -81,7 +81,24 @@ function Text_Images(string $text, int $qq):
 ];
 $Poster=new \Laofu\Image\Poster($config);
 $img=$Poster->make("./images/".$qq.".jpg");//当$filename=''时，会返回图片数据流，可以结合response直接输出到浏览器
-copy("./images/" . $qq . ".jpg", "../gocq/data/images/" . $qq . ".jpg");
+
+$image = './images/'.$qq.'.jpg';
+        $config = new Config();
+        $config->setSavePath = 'images/';
+        $config->waterMarkText = 'Mukuro_Bot\n'.'操作者：'.$qq; //设置水印文字，支持\n换行符
+        $config->TextStyle = [
+        //支持的配置项
+            'font_size' => 20, //字体大小
+            'font_weight' => 500, //字体粗细
+            'fill_color' => '#000000',//字体颜色，支持标准色值，
+            'under_color' => '#F8F8FF',//背景颜色，支持标准色值
+            'fill_opacity' => '0.5', //浮点数0-1，透明度，这里设置透明度会覆盖fill_color中的透明度
+            'stroke_width' =>0.1, //描边
+        ];
+        Factory::setOptions($config);
+        $text_water_mark = Factory::text_to_image()->text_water_mark($image,$x='right',$y='down',$option=[]);
+
+copy('.'.$text_water_mark, "../gocq/data/images/" . $qq . ".jpg");
 if(!$img){
     $err=$Poster->errMsg;
 }
