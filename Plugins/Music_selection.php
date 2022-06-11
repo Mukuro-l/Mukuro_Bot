@@ -19,7 +19,7 @@ $data_one = explode("#",$song);
 $data1 = $data_one[0];
 if ($data1 == "语音"){
 $data2 = $data_one[1];
-$url="https://autumnfish.cn/search?keywords=".urlencode($data2);
+$url="http://43.154.119.191/api/key.php?keywords=".urlencode($data2);
 $song_data=json_decode(file_get_contents($url),true);
 $result=$song_data['result'];
 $song_list=$result['songs'];//歌曲列表
@@ -37,7 +37,7 @@ $data_one = explode("#",$song);
 $data1 = $data_one[0];
 $data2 = $data_one[1];
 
-$url="https://autumnfish.cn/search?keywords=".urlencode($data2);
+$url="http://43.154.119.191/api/key.php?keywords=".urlencode($data2);
 $song_data=json_decode(file_get_contents($url),true);
 $result=$song_data['result'];
 $song_list=$result['songs'];//歌曲列表
