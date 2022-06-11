@@ -13,7 +13,7 @@ function plugins_Netease_cloud(){
 $return=$this->MsgS(["msg"=>"点歌","data"=>$this->msg]);
 if ($return!=null){
 
-$url="http://127.0.0.1/api/key.php?keywords=".urlencode($return);
+$url="http://43.154.119.191/api/key.php?keywords=".urlencode($return);
 
 $song_data=json_decode(file_get_contents($url),true);
 $result=$song_data['result'];
