@@ -119,7 +119,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc")){
 				$menu_data=file_get_contents("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc");
 				$doc_name = explode("]", $menu_data);
-									$doc_name = explode("[", $doc_name[0]);
+				$doc_name = explode("[", $doc_name[0]);
 			
 				if (trim($doc_name[1])==$Jiezhu[1]){
 				$menu_data_code=Text_Images_one($menu_data,$Data['user_id']);
@@ -148,10 +148,11 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				}
 				}
 				}
-					
+					//这里会对群的全局状态做出判断，但如果插件状态为关，也不会载入
 					if (json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"),true)["status"] === "开" || $Data['group_id'] === null){
 					for ($i = 0;$i < count($list);$i++) {
 						$file = $file_array[$i]["插件名"];
+						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
 							$Plugins_name = explode('.', $file);
 							$Plugins_name = $Plugins_name[0];
@@ -160,7 +161,12 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 								mkdir("./Doc/" . $Plugins_name);
 								$Doc = new ReflectionClass($Plugins_name);
 								$Doc = $Doc->getDocComment();
+								try{
 								$Doc_doc_ = explode("*", $Doc);
+								if (empty($Doc_doc[1])){
+								throw new Exception("官人！Mukuro检测到插件".$Plugins_name."出现异常！异常为：未获取到类的注释\r\nMukuro已自动关闭此异常插件\r\n");
+								
+								}
 								//名字会出现在菜单上
 								$Doc_name = explode("@name", $Doc_doc_[3]);
 								$Doc_doc = explode("@doc", $Doc_doc_[4]);
@@ -168,6 +174,17 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 								$Doc_return = explode("@return", $Doc_doc_[6]);
 								$Doc_data = "    Mukuro  --" . $Plugins_name . "插件帮助\r\n名字：[" . trim($Doc_name[1]) . "]\r\n详情：[" . trim($Doc_doc[1]) . "]\r\n指令：[" . trim($Doc_comment[1]) . "]\r\n返回：[" . trim($Doc_return[1]) . "]";
 								file_put_contents("./Doc/" . $Plugins_name . "/" . $Plugins_name . ".doc", $Doc_data);
+							}catch(Exception $e){
+							echo $e->getMessage();
+							//处理异常
+							for ($i=0;$i<count($file_array);$i++){
+							if ($file_array[$i]["插件名"] === $Plugins_name){
+							$file_array[$i]["状态"]="关";
+							$Plugins_list = json_encode($Plugins_array, JSON_UNESCAPED_UNICODE);
+					file_put_contents("Plugins_switch.json", $Plugins_list);
+							}
+							}
+							}
 							}
 							$Plugins_name_function = "plugins_" . $Plugins_name;
 							$Plugins_test = new $Plugins_name($Data, $database, $BOT_Config);
@@ -198,6 +215,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 		if (file_exists("tick_config.json") == true) {
 			//该变量返回值为定时器ID
 			@$the_tick = Swoole\Timer::tick(2000, function () {
+			//读取配置，并会创建一个协程屏障
 				$tick_data = json_decode(file_get_contents("tick_config.json"), true);
 				if (count($tick_data[date("H:i:s") ]) > 0) {
 					$Barrier = Barrier::make();
@@ -213,6 +231,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 							}
 						}
 					}
+					//再次创建一个协程
 					Coroutine::create(function () use ($time) {
 						$tick_data = json_decode(file_get_contents("tick_config.json"), true);
 						for ($i = 0;$i < count($tick_data[$time]);$i++) {
@@ -229,6 +248,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 							}
 						}
 					});
+					//挂起
 					Barrier::wait($Barrier);
 				}
 			});
