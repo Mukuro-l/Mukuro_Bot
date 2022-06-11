@@ -167,4 +167,12 @@ $img=$Poster->make("./images/".$qq.".jpg");
         copy('./images/'.  $qq . ".jpg", "../gocq/data/images/" . $qq . ".jpg");
 		return "[CQ:image,file=".$qq.".jpg]";
 	}
+	
+	function Auto_doc(int $qq):
+		bool {
+			$Mukuro_doc_First = "<---六儿的小功能--->\r\n";
+			$data = file_get_contents("./Doc/Mukuro_Menu_Doc/Menu.doc");
+			$Mukuro_doc = $Mukuro_doc_First . $data;
+			return Text_Images($Mukuro_doc, $qq);
+		}
 	//Text_Images_one("作了茧的蚕，是不会看到茧壳以外的世界的",1940826077);
