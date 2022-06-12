@@ -96,8 +96,9 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 					
 					}
 					
-					if ($BOT_Config["qhost"] === $Data['user_id']){
+					//封解主的动作
 					if (preg_match("/^封解主· ?(.*)\$/", $Data['message'], $Jiezhu)) {
+					if ($BOT_Config["qhost"] === $Data['user_id']){
 					if ($Jiezhu[1] === "开" || $Jiezhu[1] === "闭" ){
 					if ($Jiezhu[1] === "开"){
 					$instruction = "打开了哟";
@@ -112,6 +113,8 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				$ws->push($frame->fd, $submit_data);
 				}
+				}else{
+				
 				//获取帮助
 				if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭" ){
 				for ($i=0;$i<count($file_array);$i++){
