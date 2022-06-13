@@ -116,6 +116,12 @@ class image_blur{
 function Text_Images(string $text, int $qq):
 	string {
 	
+	$size=intval(floor(strlen($text)/3));
+	if ($size > 28){
+	$text_size = $size/28;
+	}else{
+	$text_size = 28;
+	}
 		$config =[
 		
     'bg' => "./images/Mukuro_background.png",//背景图片路径
@@ -126,7 +132,7 @@ function Text_Images(string $text, int $qq):
             'text' => $text,
             'left' => 100, 
             'top' => 100,
-            'fontSize' =>28,
+            'fontSize' =>$text_size,
             'fontColor' => '248,248,255',
             'angle' => 0,//旋转角度
         ],
