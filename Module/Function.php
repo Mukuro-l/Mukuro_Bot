@@ -116,7 +116,7 @@ class image_blur{
 function Text_Images(string $text, int $qq):
 	string {
 	$size=intval(floor(strlen($text)/3));
-	if ($size > 28){
+	if (($size - 28)>120){
 	$text_size = ($size/28)+3;
 	}else{
 	$text_size = 28;
