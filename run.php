@@ -113,7 +113,8 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				$ws->push($frame->fd, $submit_data);
 				}
-				}else if ($BOT_Config["qhost"] === $Data['user_id'] || $BOT_Config["qhost"] != $Data['user_id']){
+				}
+				if ($BOT_Config["qhost"] === $Data['user_id'] || $BOT_Config["qhost"] != $Data['user_id']){
 				
 				//获取帮助
 				if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭" ){
