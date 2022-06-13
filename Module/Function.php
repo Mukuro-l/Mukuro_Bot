@@ -115,10 +115,9 @@ class image_blur{
 //设置图片水印
 function Text_Images(string $text, int $qq):
 	string {
-	
 	$size=intval(floor(strlen($text)/3));
 	if ($size > 28){
-	$text_size = $size/28;
+	$text_size = ($size/28)+3;
 	}else{
 	$text_size = 28;
 	}
