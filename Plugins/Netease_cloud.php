@@ -29,7 +29,7 @@ class Netease_cloud {
 				file_put_contents($this->qq . "song_list.txt", $list . "PS：10秒内有效", FILE_APPEND);
 				$text = file_get_contents($this->qq . "song_list.txt", "r");
 				$qq = $this->qq;
-				Swoole\Timer::after(10000, function () use ($qq) {
+				Swoole\Timer::after(15000, function () use ($qq) {
 					if (file_exists($qq . "song_list.txt") == true) {
 						unlink($qq . "song_list.txt");
 					}
