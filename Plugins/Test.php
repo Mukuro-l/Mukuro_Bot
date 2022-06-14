@@ -1,8 +1,8 @@
 <?php
 use Mukuro\Module\Api;
-class test {
+class Test {
 	use Api;
-public	function plugins_test() {
+public	function plugins_Test() {
 		if ($this->msg == "测试") {
 			return $this->send("测试成功");
 		}
