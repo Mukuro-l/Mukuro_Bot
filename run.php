@@ -167,7 +167,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 								$Doc = $Doc->getDocComment();
 								try{
 								$Doc_doc_ = explode("*", $Doc);
-								if (empty($Doc_doc[1])){
+								if (empty($Doc_doc_[1])){
 								throw new Exception("官人！Mukuro检测到插件".$Plugins_name."出现异常！异常为：未获取到类的注释\r\nMukuro已自动关闭此异常插件\r\n");
 								
 								}
