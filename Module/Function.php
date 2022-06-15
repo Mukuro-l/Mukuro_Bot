@@ -156,7 +156,7 @@ $image->text("QQ:".$qq, 240, 136, function($font) {
 });
 
 
-$image->text(file_get_contents("list.txt"), 540, 470, function($font) {
+$image->text(file_get_contents($text), 540, 470, function($font) {
     $font->file('./Data/Font/msyh.ttf');
     $font->size(60);
     $font->color('#000000');
