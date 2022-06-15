@@ -127,7 +127,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				$doc_name = explode("[", $doc_name[0]);
 			
 				if (trim($doc_name[1])==$Jiezhu[1]){
-				$menu_data_code=Text_Images($menu_data,$Data['user_id']);
+				$menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc",$Data['user_id']);
 				if ($Data['message_type']==="group"){
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>$menu_data_code ]];
 				}
