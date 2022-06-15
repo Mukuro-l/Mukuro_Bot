@@ -136,7 +136,7 @@ $image->text(date("Y-m-d H:i:s"), 240, 10, function($font) {
     $font->angle(0);
 });
 
-$image->text("version:"$BOT_Config["SDK"], 240, 73, function($font) {
+$image->text("version:".$BOT_Config["SDK"], 240, 73, function($font) {
     $font->file('./Data/Font/msyh.ttf');
     $font->size(50);
     $font->color('#000000');
