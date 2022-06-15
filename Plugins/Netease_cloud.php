@@ -24,22 +24,20 @@ class Netease_cloud {
 				file_put_contents($this->qq . "song.txt", "点歌#" . $return);
 				for ($i = 0;$i < 20;$i++) {
 					$list = ($i + 1) . ".<" . $song_list[$i]['name'] . ">--" . $song_list[$i]['artists'][0]['name'] . "\r\n";
-					file_put_contents($this->qq . "song_list.txt", $list, FILE_APPEND);
+					file_put_contents("./Data/Text/".$this->qq . "song_list.txt", $list, FILE_APPEND);
 				}
-				file_put_contents($this->qq . "song_list.txt", $list . "PS：10秒内有效", FILE_APPEND);
-				$text = file_get_contents($this->qq . "song_list.txt", "r");
+				file_put_contents("./Data/Text/".$this->qq . "song_list.txt", $list . "PS：10秒内有效", FILE_APPEND);
+			
 				$qq = $this->qq;
-				Swoole\Timer::after(15000, function () use ($qq) {
+				Swoole\Timer::after(10000, function () use ($qq) {
 					if (file_exists($qq . "song_list.txt") == true) {
-						unlink($qq . "song_list.txt");
+						unlink("./Data/Text/".$this->qq . "song_list.txt");
 					}
 				});
-				Text_Images($text, $qq);
+				Text_Images("./Data/Text/".$this->qq . "song_list.txt", $qq);
 				return $this->send("[CQ:image,file=" . $this->qq . ".jpg]");
 			}
 		}
-	}
-	public function __destruct() {
 	}
 }
 ?>
