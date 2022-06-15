@@ -88,8 +88,8 @@ Image::configure(['driver' => 'imagick']);
 //半屏可容下
 //1382400/3969=348个字
 
-$number=String_File_size($file);
-$tall=count(file($file))-20;
+$number=String_File_size($text);
+$tall=count(file($text))-20;
 if ($number>17&&$number!==17){
 $number = $number-17;
 $number = $number*63;
