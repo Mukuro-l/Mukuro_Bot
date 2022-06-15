@@ -187,6 +187,6 @@ $image -> save('./images/'.  $qq . ".jpg");
 			$Mukuro_doc_First = "<---六儿的小功能--->\r\n";
 			$data = file_get_contents("./Doc/Mukuro_Menu_Doc/Menu.doc");
 			$Mukuro_doc = $Mukuro_doc_First . $data;
-			file_put_contents("./Data/Text/".$qq.".txt");
+			file_put_contents("./Data/Text/".$qq.".txt",$Mukuro_doc);
 			return Text_Images("./Data/Text/".$qq.".txt", $qq);
 		}
