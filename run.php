@@ -11,7 +11,8 @@ define("E_mail", "phprobot@sina.com");
 if (is_dir("vendor")) {
 	include "./vendor/autoload.php";
 } else {
-	echo "缺少必要的库，请阅读README.md文件\n";
+	echo "缺少必要的库，请执行：composer require intervention/image\n";
+	
 	exit;
 }
 include './Module/Config.php';
