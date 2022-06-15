@@ -171,7 +171,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 								if (empty($Doc_doc_[3])){
 								throw new Exception("官人！Mukuro检测到插件".$Plugins_name."出现异常！异常为：未获取到类的注释\r\nMukuro已自动关闭此异常插件\r\n");
 								
-								}
+								}else{
 								//名字会出现在菜单上
 								$Doc_name = explode("@name", $Doc_doc_[3]);
 								$Doc_doc = explode("@doc", $Doc_doc_[4]);
@@ -179,6 +179,8 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 								$Doc_return = explode("@return", $Doc_doc_[6]);
 								$Doc_data = "    Mukuro  --" . $Plugins_name . "插件帮助\r\n名字：[" . trim($Doc_name[1]) . "]\r\n详情：[" . trim($Doc_doc[1]) . "]\r\n指令：[" . trim($Doc_comment[1]) . "]\r\n返回：[" . trim($Doc_return[1]) . "]";
 								file_put_contents("./Doc/" . $Plugins_name . "/" . $Plugins_name . ".doc", $Doc_data);
+								}
+									
 							}catch(Exception $e){
 							echo $e->getMessage();
 							//处理异常
