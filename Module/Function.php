@@ -35,7 +35,6 @@ $result[] = $total[count($total)-1];
 
 }while(count($result)!==1);
 
-print_r($result);
 //关闭文件
 fclose($text);
 
@@ -129,7 +128,7 @@ $image->line(1440, 540, 480, 540, function ($draw) {
 */
 //添加文字
 $image->text(date("Y-m-d H:i:s"), 240, 10, function($font) {
-    $font->file('msyh.ttf');
+    $font->file('./Data/Font/msyh.ttf');
     $font->size(50);
     $font->color('#000000');
     $font->align('left');
@@ -138,7 +137,7 @@ $image->text(date("Y-m-d H:i:s"), 240, 10, function($font) {
 });
 
 $image->text("version:"$BOT_Config["SDK"], 240, 73, function($font) {
-    $font->file('msyh.ttf');
+    $font->file('./Data/Font/msyh.ttf');
     $font->size(50);
     $font->color('#000000');
     $font->align('left');
@@ -147,7 +146,7 @@ $image->text("version:"$BOT_Config["SDK"], 240, 73, function($font) {
 });
 
 $image->text("QQ:".$qq, 240, 136, function($font) {
-    $font->file('msyh.ttf');
+    $font->file('./Data/Font/msyh.ttf');
     $font->size(50);
     $font->color('#000000');
     $font->align('left');
@@ -157,7 +156,7 @@ $image->text("QQ:".$qq, 240, 136, function($font) {
 
 
 $image->text(file_get_contents("list.txt"), 540, 470, function($font) {
-    $font->file('msyh.ttf');
+    $font->file('./Data/Font/msyh.ttf');
     $font->size(60);
     $font->color('#000000');
     $font->align('center');
@@ -166,7 +165,7 @@ $image->text(file_get_contents("list.txt"), 540, 470, function($font) {
 });
 
 $image->text("Mukuro-v".$BOT_Config["SDK"],$number, $tall, function($font) {
-    $font->file('msyh.ttf');
+    $font->file('./Data/Font/msyh.ttf');
     $font->size(50);
     $font->color('#FFD700');
     $font->align('right');
