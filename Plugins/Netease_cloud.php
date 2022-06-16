@@ -30,8 +30,8 @@ class Netease_cloud {
 			
 				$qq = $this->qq;
 				Swoole\Timer::after(10000, function () use ($qq) {
-					if (file_exists($qq . "song_list.txt") == true) {
-						unlink("./Data/Text/".$this->qq . "song_list.txt");
+					if (file_exists("./Data/Text/".$qq . "song_list.txt") == true) {
+						unlink("./Data/Text/".$qq . "song_list.txt");
 					}
 				});
 				Text_Images("./Data/Text/".$this->qq . "song_list.txt", $qq);
