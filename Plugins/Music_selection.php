@@ -27,8 +27,9 @@ class Music_selection {
 					$url = "http://music.163.com/song/media/outer/url?id=" . $song_id . ".mp3";
 					$url_data = file_get_contents($url);
 					file_put_contents("../gocq/data/voices/" . $song_id . ".mp3", $url_data);
-					return $this->send("[CQ:record,file=" . $song_id . ".mp3]");
 					unlink("./Data/Text/".$this->qq . "song_list.txt");
+					return $this->send("[CQ:record,file=" . $song_id . ".mp3]");
+					
 				} else {
 					$song = file_get_contents("./Data/Text/".$qq."song.txt");
 					$data_one = explode("#", $song);
@@ -40,7 +41,8 @@ class Music_selection {
 					$song_list = $result['songs']; //歌曲列表
 					$list_data = $song_list[$return_list[0] - 1]; //选歌
 					$song_id = $list_data["id"];
-					
+					unlink("./Data/Text/".$this->qq . "song_list.txt");
+					unlink("./Data/Text/".$qq."song.txt");
 					return $this->send("[CQ:music,type=163,id=" . $song_id . "]");
 					
 				}
