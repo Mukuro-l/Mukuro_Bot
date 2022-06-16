@@ -40,9 +40,9 @@ class Music_selection {
 					$song_list = $result['songs']; //歌曲列表
 					$list_data = $song_list[$return_list[0] - 1]; //选歌
 					$song_id = $list_data["id"];
+					
 					return $this->send("[CQ:music,type=163,id=" . $song_id . "]");
-					unlink("./Data/Text/".$this->qq . "song_list.txt");
-					unlink("./Data/Text/".$qq."song.txt");
+					
 				}
 			}
 		}
