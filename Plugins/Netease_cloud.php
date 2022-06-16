@@ -21,7 +21,7 @@ class Netease_cloud {
 			if ($song_id == null) {
 				return $this->send("获取失败");
 			} else {
-				file_put_contents($this->qq . "song.txt", "点歌#" . $return);
+				file_put_contents("./Data/Text/".$this->qq . "song.txt", "点歌#" . $return);
 				for ($i = 0;$i < 20;$i++) {
 					$list = ($i + 1) . ".<" . $song_list[$i]['name'] . ">--" . $song_list[$i]['artists'][0]['name'] . "\r\n";
 					file_put_contents("./Data/Text/".$this->qq . "song_list.txt", $list, FILE_APPEND);
