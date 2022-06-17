@@ -160,7 +160,7 @@ $image->text(file_get_contents($text), 540, 470, function($font) {
     $font->file('./Data/Font/msyh.ttf');
     $font->size(60);
     $font->color('#000000');
-    $font->align('center');
+    $font->align('left');
     $font->valign('top');
     $font->angle(0);
 });
