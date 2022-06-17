@@ -1,6 +1,6 @@
 # 请注意：main分支存在未发布的功能及特性，稳定性未知。建议使用发行版。  
 # [Mukuro_Bot使用手册] by coldeggs  
-## 引用hahadu/image-factory  
+## 引用Intervention\Image  
 ## 2022.06.10
 
 你好！  欢迎阅读本程序的使用文档  
@@ -43,6 +43,7 @@ TODO：
 # 配置Mukuro_Bot  
 - 打开[Module]文件夹  
 - 在Config.php文件内配置  
+- 在根目录执行：```unzip vendor.zip```
 # 启动  
 - 需先配置完毕，直接在Mukuro_Bot根目录```php run.php```即可  
 # 一键部署脚本  
