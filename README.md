@@ -1,5 +1,5 @@
 # 请注意：main分支存在未发布的功能及特性，稳定性未知。建议使用发行版。  
-# [Mukuro_Bot使用手册] by coldeggs  
+# [Mukuro_Bot使用手册] by Mukuro-l  
 ## 引用Intervention\Image  
 ## 2022.06.10
 
@@ -13,7 +13,10 @@
 - 通过amd\arm平台测试  
 - 在termux proot容器开发|测试
 
-已实现：
+<details>
+<summary>已实现</summary>
+<pre><code>  
+
 - [x] Swoole WebSocket Server  
 - [x] Swoole Timer  
 - [x] 图文合成  
@@ -21,10 +24,14 @@
 - [x] 自动文档  
 - [x] 自动生成菜单  
 
+</code></pre>
+</details>
+
+
 TODO：
 - [ ] 被动技能
 - [ ] 群管理
-
+***
 # 安装PHP  
 - apt安装  
 ```apt install php```  
@@ -43,13 +50,14 @@ TODO：
 # 配置Mukuro_Bot  
 - 打开[Module]文件夹  
 - 在Config.php文件内配置  
-- 在根目录执行：```unzip vendor.zip```
+- 返回根目录，**在根目录执行：```unzip vendor.zip```**
 # 启动  
 - 需先配置完毕，直接在Mukuro_Bot根目录```php run.php```即可  
 # 一键部署脚本  
 - 正在路上……
+***
 ## 开发  
-```
+```php
 <?php
 use Mukuro\Module\Api;
 //类名需与文件名一致
