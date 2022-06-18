@@ -61,6 +61,69 @@ return '\r\n可能被转义，或者没有\r\n！';
 }
 
 
+function radius_img(string $imgpath, int $radius = 420) {
+	$ext     = pathinfo($imgpath);
+	$src_img = null;
+	switch ($ext['extension']) {
+	case "jpg":
+		$src_img = imagecreatefromjpeg($imgpath);
+		break;
+	case "png":
+		$src_img = imagecreatefrompng($imgpath);
+		break;
+	}
+	
+	
+	$wh = getimagesize($imgpath);
+	$w  = $wh[0];
+	$h  = $wh[1];
+	// $radius = $radius == 0 ? (min($w, $h) / 2) : $radius;
+	$img = imagecreatetruecolor($w, $h);
+	//这一句一定要有
+	imagesavealpha($img, true);
+	//拾取一个完全透明的颜色,最后一个参数127为全透明
+	$bg = imagecolorallocatealpha($img, 255, 255, 255, 127);
+	imagefill($img, 0, 0, $bg);
+	$r = $radius; //圆 角半径
+	for ($x = 0; $x < $w; $x++) {
+		for ($y = 0; $y < $h; $y++) {
+			$rgbColor = imagecolorat($src_img, $x, $y);
+			if (($x >= $radius && $x <= ($w - $radius)) || ($y >= $radius && $y <= ($h - $radius))) {
+				//不在四角的范围内,直接画
+				imagesetpixel($img, $x, $y, $rgbColor);
+			} else {
+				//在四角的范围内选择画
+				//上左
+				$y_x = $r; //圆心X坐标
+				$y_y = $r; //圆心Y坐标
+				if (((($x - $y_x) * ($x - $y_x) + ($y - $y_y) * ($y - $y_y)) <= ($r * $r))) {
+					imagesetpixel($img, $x, $y, $rgbColor);
+				}
+				//上右
+				$y_x = $w - $r; //圆心X坐标
+				$y_y = $r; //圆心Y坐标
+				if (((($x - $y_x) * ($x - $y_x) + ($y - $y_y) * ($y - $y_y)) <= ($r * $r))) {
+					imagesetpixel($img, $x, $y, $rgbColor);
+				}
+				//下左
+				$y_x = $r; //圆心X坐标
+				$y_y = $h - $r; //圆心Y坐标
+				if (((($x - $y_x) * ($x - $y_x) + ($y - $y_y) * ($y - $y_y)) <= ($r * $r))) {
+					imagesetpixel($img, $x, $y, $rgbColor);
+				}
+				//下右
+				$y_x = $w - $r; //圆心X坐标
+				$y_y = $h - $r; //圆心Y坐标
+				if (((($x - $y_x) * ($x - $y_x) + ($y - $y_y) * ($y - $y_y)) <= ($r * $r))) {
+					imagesetpixel($img, $x, $y, $rgbColor);
+				}
+			}
+		}
+	}
+	
+	imagepng($img,$imgpath);
+}
+
 //设置图片水印
 function Text_Images(string $text, int $qq):
 	string {
@@ -197,12 +260,15 @@ if ($order == "一分钟"){
 Image::configure(['driver' => 'imagick']);
 
 $qq_img_data = file_get_contents("https://q.qlogo.cn/headimg_dl?dst_uin=".$qq."&spec=640");
+file_put_contents("./images/".$qq.".png",$qq_img_data);
 
 $image = Image::make(file_get_contents("./images/一分钟.jpg"));
 
 //242/6=40.33333333
+radius_img("./images/".$qq.".png",420);
 
-$toux = Image::make($qq_img_data);
+
+$toux = Image::make("./images/".$qq.".png");
 
 $toux -> resize(400, 400);
 
