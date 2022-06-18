@@ -265,7 +265,7 @@ file_put_contents("./images/".$qq.".jpg",$qq_img_data);
 $image = Image::make(file_get_contents("./images/一分钟.jpg"));
 
 //242/6=40.33333333
-radius_img("./images/".$qq.".jpg",20);
+radius_img("./images/".$qq.".jpg",400);
 
 
 $toux = Image::make("./images/".$qq.".jpg");
