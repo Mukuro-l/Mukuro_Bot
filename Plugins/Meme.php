@@ -10,7 +10,7 @@ use Mukuro\Module\Api;
 class Meme{
 use Api;
   function plugins_Meme(){
-    $data=$this->MsgS(["msg"=>"一分钟", "data"=>$this->msg])
+    $data=$this->MsgS(["msg"=>"一分钟", "data"=>$this->msg]);
     if ($data!= null){
       if ($data=="自己"){
     return $this->send(HeiHei("一分钟", $this->qq));
