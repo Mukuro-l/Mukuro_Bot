@@ -191,3 +191,33 @@ $image -> save('./images/'.  $qq . ".jpg");
 			file_put_contents("./Data/Text/".$qq.".txt",$Mukuro_doc);
 			return Text_Images("./Data/Text/".$qq.".txt", $qq);
 		}
+
+function Heihei(string $order,int $qq):string{
+if ($order == "一分钟"){
+Image::configure(['driver' => 'imagick']);
+
+$qq_img_data = file_get_contents("https://q.qlogo.cn/headimg_dl?dst_uin=".$qq."&spec=640");
+
+$image = Image::make(file_get_contents("./images/一分钟.jpg"));
+
+//242/6=40.33333333
+
+$toux = Image::make($qq_img_data);
+
+$toux -> resize(400, 400);
+
+$toux -> flip('h');
+
+$toux -> rotate(-25);
+
+$toux -> save("./images/".$qq.".png");
+
+$image -> insert("./images/".$qq.".png",'center',-10,100);
+
+$image -> save("./images/".$qq.".png");
+
+copy("./images/".$qq.".png","../gocq/data/images/".$qq.".png");
+
+return "[CQ:image,file=".$qq.".png]";
+}
+}
