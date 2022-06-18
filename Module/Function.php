@@ -260,15 +260,15 @@ if ($order == "一分钟"){
 Image::configure(['driver' => 'imagick']);
 
 $qq_img_data = file_get_contents("https://q.qlogo.cn/headimg_dl?dst_uin=".$qq."&spec=640");
-file_put_contents("./images/".$qq.".png",$qq_img_data);
+file_put_contents("./images/".$qq.".jpg",$qq_img_data);
 
 $image = Image::make(file_get_contents("./images/一分钟.jpg"));
 
 //242/6=40.33333333
-radius_img("./images/".$qq.".png",420);
+radius_img("./images/".$qq.".jpg",420);
 
 
-$toux = Image::make("./images/".$qq.".png");
+$toux = Image::make("./images/".$qq.".jpg");
 
 $toux -> resize(400, 400);
 
