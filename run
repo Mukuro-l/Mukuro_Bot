@@ -277,7 +277,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 								}
 							}
 						}
-					}
+					});
 				}
 			}
 		}
