@@ -12,7 +12,7 @@ use Mukuro\Module\Api;
 class Tick{
 use Api;
 function plugins_Tick(){
-$return=$this->MsgS($MsgS_Data=["msg"=>"添加定时任务","data"=>$msg]);
+$return=$this->MsgS($MsgS_Data=["msg"=>"添加定时任务","data"=>$this->msg]);
 if ($return!=null){
 $tickdata = explode("#",$return);
 if (count($tickdata)!=6){
