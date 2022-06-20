@@ -19,6 +19,7 @@ if (count($tickdata)!=6){
 return $this->send("请按照要求设置！\r\n格式为[添加定时任务#080010#QQ号#群号#你好#次数（数字）]");
 
 }else{
+$BOT_Config =json_decode(file_get_contents("config.json"),true);
 //判断是否有配置文件
 if (file_exists("tick_config.json")!=true){
 //写入第一次的定时任务
