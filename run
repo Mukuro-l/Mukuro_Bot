@@ -110,7 +110,7 @@ $ws->on('Open', function ($ws, $request) {
 });
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
-    $list = glob('./Plugins/*.php');
+    
 	//fd为客户端标识, $ws调用push函数发送(第二个参数为消息内容)
 	$Data = $frame->data;
 	//json转为PHP数组，必须转为PHP对象
@@ -126,6 +126,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 		
 			$Barrier = Barrier::make();
 			go(function () use ($Data, $ws, $frame, $database, $BOT_Config) {
+			    $list = glob('./Plugins/*.php');
 				include_once './Module/Api.php';
 				include_once './Module/Function.php';
 				//这里会载入Plugins文件夹下的所有插件 115版本增加是否载入
