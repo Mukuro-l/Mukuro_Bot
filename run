@@ -258,9 +258,9 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 			@$the_tick = Swoole\Timer::tick(1000, function () {
 
 				$tick_data = json_decode(file_get_contents("tick_config.json"), true);
-				if (count($tick_data[date("His") ]) > 0) {
-					for ($i = 0;$i < count($tick_data[date("His") ]);$i++) {
-						if ($tick_data[date("His") ] != null) {
+				if (count($tick_data[date("His")-5 ]) > 0) {
+					for ($i = 0;$i < count($tick_data[date("His")-5 ]);$i++) {
+						if ($tick_data[date("His")-5 ] != null) {
 							$time = date("His");
 							Coroutine::create(function () use ($time) {
 							$time = $time - 5;
