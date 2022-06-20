@@ -255,7 +255,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 	if ($BOT_Config["_tick"] == true) {
 		if (file_exists("tick_config.json") == true) {
 			//该变量返回值为定时器ID
-			@$the_tick = Swoole\Timer::tick(2000, function () {
+			@$the_tick = Swoole\Timer::tick(1000, function () {
 			//读取配置，并会创建一个协程屏障
 				$tick_data = json_decode(file_get_contents("tick_config.json"), true);
 				if (count($tick_data[date("H:i:s") ]) > 0) {
