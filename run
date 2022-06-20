@@ -292,5 +292,6 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 	@Swoole\Timer::clear($the_tick);
 	echo "清除定时器\n";
 });
+
 $ws->start();
 ?>
