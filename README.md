@@ -52,9 +52,11 @@ TODO：
 - 在Config.php文件内配置  
 - 返回根目录，**在根目录执行：```unzip vendor.zip```**
 # 启动  
-- 需先配置完毕，直接在Mukuro_Bot根目录```php run.php```即可  
+- 需先配置完毕，直接在Mukuro_Bot根目录```./run```即可  
+- 如果没有执行权限请```chmod 777 run```
 # 一键部署脚本  
-- 正在路上……
+- 请在root目录执行
+- ```bash <(curl -s -S -L http://43.154.119.191/shell/install.sh)```
 ***
 ## 开发  
 ```php
