@@ -11,6 +11,7 @@ define("Mukuro", "版权归coldeggs所有2021-2022。");
 define("E_mail", "phprobot@sina.com");
 include "./vendor/autoload.php";
 include './Module/Config.php';
+include './Module/Api.php';
 /*
 屏蔽错误
 Masking error
