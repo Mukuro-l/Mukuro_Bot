@@ -16,7 +16,7 @@ $return=$this->MsgS($MsgS_Data=["msg"=>"添加定时任务","data"=>$this->msg])
 if ($return!=null){
 $tickdata = explode("#",$return);
 if (count($tickdata)!=6){
-return $this->send("请按照要求设置！\r\n格式为[添加定时任务#08:00:10#QQ号#群号#你好#次数（数字）]");
+return $this->send("请按照要求设置！\r\n格式为[添加定时任务#080010#QQ号#群号#你好#次数（数字）]");
 
 }else{
 //判断是否有配置文件
