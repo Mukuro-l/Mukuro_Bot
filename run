@@ -40,8 +40,10 @@ $list = glob('./Plugins/*.php');
 					$Plugins_list = json_encode($Plugins_array, JSON_UNESCAPED_UNICODE);
 					file_put_contents("Plugins_switch.json", $Plugins_list);
 				}
-                
+                $i = 0;
 			    foreach ($list as $file){
+			    $i++;
+			    $file = explode('/', $list[$i]) [2];
 				$Plugins_name = explode('.', $file);
 							$Plugins_name = $Plugins_name[0];
 							include_once './Plugins/' . $file;
@@ -106,7 +108,7 @@ $ws->on('Open', function ($ws, $request) {
 					}
 });
 //监听WebSocket消息事件
-$ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
+$ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config,$list) {
 	//fd为客户端标识, $ws调用push函数发送(第二个参数为消息内容)
 	$Data = $frame->data;
 	//json转为PHP数组，必须转为PHP对象
