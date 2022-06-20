@@ -223,7 +223,8 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 						$file = $file_array[$i]["插件名"];
 						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
-							
+							$Plugins_name = explode('.', $file);
+							$Plugins_name = $Plugins_name[0];
 							$Plugins_name_function = "plugins_" . $Plugins_name;
 							$Plugins_test = new $Plugins_name($Data, $database, $BOT_Config);
 							$Plugins_return = $Plugins_test->$Plugins_name_function();
