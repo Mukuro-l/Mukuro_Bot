@@ -29,8 +29,7 @@ use function Swoole\Coroutine\run;
 use Swoole\Coroutine;
 echo "Mukuro WebSocket服务器已启动，正在等待go-cqhttp连接……\n";
 //每次启动都会初始化
-if (is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")){
-unlink("./Doc/Mukuro_Menu_Doc/Menu.doc");
+@unlink("./Doc/Mukuro_Menu_Doc/Menu.doc");
 $list = glob('./Plugins/*.php');
 				if (is_file("Plugins_switch.json") == false) {
 					$Plugins_array = array();
@@ -81,7 +80,7 @@ $list = glob('./Plugins/*.php');
 							}
 							}
 							}
-}
+
 
 //监听WebSocket连接打开事件
 $ws->on('Open', function ($ws, $request) {
