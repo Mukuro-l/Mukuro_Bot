@@ -218,6 +218,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				}
 					//这里会对群的全局状态做出判断，但如果插件状态为关，也不会载入
 					if (json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"),true)["status"] === "开" || $Data['group_id'] === null){
+					$file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
 					for ($i = 0;$i < count($list);$i++) {
 						$file = $file_array[$i]["插件名"];
 						//插件状态判断
