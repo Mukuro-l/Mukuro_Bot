@@ -40,7 +40,7 @@ $list = glob('./Plugins/*.php');
 					$Plugins_list = json_encode($Plugins_array, JSON_UNESCAPED_UNICODE);
 					file_put_contents("Plugins_switch.json", $Plugins_list);
 				}
-                $i = 0;
+                $i = -1;
 			    foreach ($list as $file){
 			    $i++;
 			    $file = explode('/', $list[$i]) [2];
@@ -184,6 +184,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				}else{
 				if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭" ){
 				for ($i=0;$i<count($file_array);$i++){
+				
 				$Jiezhu_Plugins=explode('.',$file_array[$i]["插件名"]);
 				if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc")){
 				$menu_data=file_get_contents("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc");
@@ -202,6 +203,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				$ws->push($frame->fd, $submit_data);
 				}
+				continue;
 				}else{
 				if ($Data['message_type']==="group"){
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦" ]];
