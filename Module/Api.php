@@ -1,42 +1,58 @@
 <?php
 namespace Mukuro\Module;
-if (!class_exists("Api")) {
+
+
 	trait Api {
+	    public $ws;
+		public $database;
 		public $qq;
 		public $qun;
 		public $msg;
 		public $msg_id;
 		public $msg_type;
 		public $real_msg;
+		public $real_id;
+		public $msg_seq;
 		public $request_type;
 		public $notice_type;
 		public $post_type;
 		public $sub_type;
-		public function __construct($Data, $database, $BOT_Config) {
+		public $nickname;
+		public $role;
+		public $honor_type;
+		public $comment;
+		public $operator_id;
+		public $target_id;
+		public $super_user;
+		public $http_port;
+		public function __construct($Data, $database, $BOT_Config,$ws) {
+		$this -> ws = $ws;
+		$this -> database = $database;
+	
 			if (is_array($Data)) {
 				if (@$Data['meta_event_type'] != 'heartbeat') {
-					$this->msg = $Data['message'];
-					@$this->real_msg = $Data['raw_message'] ? : $_GET['real_msg']; //真实消息
-					//@$qqinformation=$Data['sender'];
-					//@$qqnick=$qqinformation['nickname']?:$_GET['qqnick'];//昵称
-					@$this->qun = $Data['group_id'] ? : $_GET['qun']; //群号
-					@$this->qq = $Data['user_id'] ? : $_GET['qq']; //qq号
-					//@$qqadmin_get=$qqinformation['role']?:$_GET['qqadmin_get'];//群职位：admin/member
-					//@$get_qqsex=$qqinformation['sex']?:$_GET['get_qqsex'];///male为男，female为女，unknown未知
+					@$this->msg = $Data['message'];
+					@$this->real_msg = $Data['raw_message'];//真实消息
+					@$this->msg_seq = $Data['message_seq'];//message_seq
+					@$this->nickname=$Data['sender']['nickname'];//昵称
+					@$this->qun = $Data['group_id'];//群号
+					@$this->qq = $Data['user_id'];//qq号
+					@$this->role=$Data['sender']['role'];//群职位：admin/member
 					//api字段//
 					//事件监控字段//
-					@$this->notice_type = $Data['notice_type'] ? : $_GET['notice_type']; //事件
-					@$this->post_type = $Data['post_type'] ? : $_GET['post_type']; //获取上报类型
-					@$this->sub_type = $Data['sub_type'] ? : $_GET['sub_type']; //获取提示类型
-					@$this->request_type = $Data['request_type'] ? : $_GET['request_type']; //获取请求类型
-					//@$get_yanz_qun=$Data['comment']?:$_GET['get_yanz_qun'];//获取群验证消息
-					//@$get_cao_qun=$Data['operator_id']?:$_GET['get_cao_qun'];//获取操作者qq
-					//@$qunry=$Data['honor_type']?:$_GET['qunry'];//获取荣耀类型
-					//@$cheqq=$Data['operator_id']?:$_GET['cheqq'];//撤回操作qq
-					@$this->msg_id = $Data['message_id'] ? : $_GET['msgid']; //消息id
-					//@$real_msgid=$Data['real_id']?:$_GET['real_msgid'];//获取真实信息id
-					@$this->msg_type = $Data['message_type'] ? : $_GET['msg_type']; //消息类型
-					//@$chuo_userid=$Data['target_id']?:$_GET['chuo_userid'];//被戳qq
+					@$this->notice_type = $Data['notice_type'];//事件
+					@$this->post_type = $Data['post_type'];//获取上报类型
+					@$this->sub_type = $Data['sub_type']; //获取提示类型
+					@$this->request_type = $Data['request_type']; //获取请求类型
+					@$this->comment = $Data['comment'];//获取群验证消息
+					@$this->operator_id = $Data['operator_id'];//获取操作者qq
+					@$this->honor_type = $Data['honor_type'];//获取荣耀类型
+					@$this->msg_id = $Data['message_id'];//消息id
+					@$this->real_id = $Data['real_id'];//获取真实信息id
+					@$this->msg_type = $Data['message_type']; //消息类型
+					@$this->target_id = $Data['target_id'];//被戳qq
+					@$this->super_user = $BOT_Config['qhost'];//超级用户
+					@$this->http_port = $BOT_Config['http_port'];//http服务器端口
 					if (isset($msg)) {
 						$database->set($this->qq, ["Data" => $msg]);
 						//$database->set($this->qun,
@@ -45,44 +61,50 @@ if (!class_exists("Api")) {
 				}
 			}
 		}
-		public function send(string | array $set_msg = "Mukuro要告诉官人，官人没有让六儿发送任何消息哦•᷄ࡇ•᷅") {
+		public function send(string | array $set_msg = "Mukuro要告诉官人，官人没有让六儿发送任何消息哦•᷄ࡇ•᷅")  {
+            if ($this->post_type == "notice"){
+                $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
+                $submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+                echo "bot发送消息：[" . $set_msg . "]\n";
+                $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
+            }
 			if ($this->msg_type == "group") {
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
-				return $submit_data;
+				 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
 			}
 			if ($this->msg_type == "private") {
 				$url = ["action" => "send_private_msg", "params" => ["user_id" => $this->qq, "message" => $set_msg]];
 				$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
-				return $url;
+				$this->ws->push(intval(file_get_contents("service_id")),$url);
 			}
 			if (is_array($set_msg) == true) {
 				if ($set_msg["S_type"] == "group") {
 					$url = array("action" => "send_group_msg", "params" => array("group_id" => $set_msg["qun"], "message" => $set_msg["msg"]));
 					$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 					echo "bot发送消息：[" . $set_msg["msg"] . "]\n";
-					return $url;
+					$this->ws->push(intval(file_get_contents("service_id")),$url);
 				}
 				if ($set_msg["S_type"] == "private") {
 					$url = array("action" => "send_private_msg", "params" => array("user_id" => $set_msg["qq"], "message" => $set_msg["msg"]));
 					$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 					echo "bot发送消息：[" . $set_msg["msg"] . "]\n";
-					return $url;
+					$this->ws->push(intval(file_get_contents("service_id")),$url);
 				}
 				//指定发送方式
 				if ($set_msg["S_type"] == "私聊") {
 					$url = array("action" => "send_private_msg", "params" => array("user_id" => $set_msg["qq"], "message" => $set_msg["msg"]));
 					$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 					echo "bot发送消息：[" . $set_msg["msg"] . "]\n";
-					return $url;
+				$this->ws->push(intval(file_get_contents("service_id")),$url);
 				}
 				if ($set_msg["S_type"] == "群聊") {
 					$url = array("action" => "send_group_msg", "params" => array("group_id" => $set_msg["qun"], "message" => $set_msg["msg"]));
 					$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 					echo "bot发送消息：[" . $set_msg["msg"] . "]\n";
-					return $url;
+					$this->ws->push(intval(file_get_contents("service_id")),$url);
 				}
 			}
 		}
@@ -133,7 +155,74 @@ if (!class_exists("Api")) {
 							file_put_contents("./Ocr/" . $time . "ocr.txt", $list, FILE_APPEND);
 						}
 						return file_get_contents("./Ocr/" . $time . "ocr.txt");
-					}
+				}
+				private function CQ_filt(string $CQ_code){
+$str = trim($str);
+$str = explode("[CQ:",$str);
+$str_type1 = explode(',',$str[1]);
+$str1 = explode(']',$str_type1[1]);
+$str_type2 = explode(',',$str[2]);
+$str2 = explode(']',$str_type2[1]);
+if ($str1[0] == "image"){
+echo "image类型\n";
+}
+if ($str2[0] == "at"){
+echo "at类型\n";
+}
+print_r($str_type1);
+print_r($str_type2);
+				}
+				    //上下文 $msg即为你想要定位的消息，函数会一直根据这条消息来获取上下文
+				    public function context($send_msg,$msg) :array{
+						$this -> send($send_msg);
+						$url = "http://127.0.0.1:".$this -> http_port."/get_group_msg_history?message_seq=&group_id=".$this -> qun;
+						//获取到的历史记录
+						$json = json_decode(file_get_contents($url),true);
+						//大概有19
+						$sum = count($json["data"]["messages"]);
+						//结果数组
+						$result = [];
+						//结果上下文
+						$context = [];
+						do {
+							unset($result);
+							unset($context);
+							$result = [];
+							$context = [];
+							$json = json_decode(file_get_contents($url),true);
+						for ($i=0;$i<$sum;$i++){
+							//当找到指定QQ号的聊天记录时
+							if ($json["data"]["messages"][$i]["user_id"]==$this->qq){
+								//填入
+								$result[] = $json["data"]["messages"][$i]["message"];
+								}
+								}
+								$sm = 0;
+									foreach ($result as $data){
+										//遍历结果数组
+										$sm++;
+										/*判断是否为需要定位的消息
+										if (isset($this -> msg )){
+											if ($data == $msg ){
+												//跳出循环，则$sm-1即为消息所在位置
+												continue;
+												}
+												}
+												*/
+												}
+								
+										$result_sum = count($result);
+										//需要大于0，不然返回上文
+										
+													$context[] = $result[$sm-3];
+													$context[] = $result[$sm-2];
+													$context[] = $result[$sm-1];
+													if ($context[2] !== $msg && $context[1] !== null){
+													return $context;
+													}
+													}while ($context[2]==$msg);
+										
+	}
 					//即为Get friends
 					public function GF():
 						string {
@@ -247,7 +336,7 @@ if (!class_exists("Api")) {
 							return $ret;
 						}
 						//Super user group
-						public function ban($qq, $time = 600, $array = []) {
+						public function ban(int $qq, int $time = 600, array $array = []) {
 							if (isset($qq)) {
 								$url = array("action" => "set_group_ban", "params" => array("group_id" => $this->qun, "user_id" => $qq, "duration" => $time));
 								$url = json_encode($url, JSON_UNESCAPED_UNICODE);
@@ -269,43 +358,17 @@ if (!class_exists("Api")) {
 						public function __destruct() {
 						}
 					}
-				}
-				if (!class_exists("Redis_set")) {
-					trait Redis_ {
-						public function Redis_set(array $array, bool $GET = false) {
-							if (isset($array)) {
-								if (!empty($array)) {
-									if (is_array($array)) {
-										if ($GET == false) {
-											$redis = new Redis();
-											$redis->connect('127.0.0.1', 6379);
-											echo "已连接Redis数据库\n";
-											//删除
-											//$redis->del("test");
-											/*$redis_data=[
-											//设置key
-											"name"=>"数据",
-											//设置数据
-											"data"=>123456,
-											//QQ
-											"qq"=>
-											];
-											*/
-											$array2 = ["data", "qq"];
-											//设置数组
-											$redis->hmset($redis_data["name"], $redis_data);
-											return true;
-										}
-									}
-								}
-								if ($GET == true) {
-									$redis = new Redis();
-									$redis->connect('127.0.0.1', 6379);
-									$array2 = ["data", "qq"];
-									return $redis->hmget($array["name"], $array2);
-								}
-							}
-						}
-					}
-				}
+				//}
+
+//namespace Mukuro\Module\Run;
+if (!class_exists("CQ")) {
+	#[Attribute]
+	trait CQ {
+		
+	}
+        //获取指令通过Api判断，然后实例化插件交给Api处理
+	function CQ_get(){
+		
+	}
+	}
 ?>

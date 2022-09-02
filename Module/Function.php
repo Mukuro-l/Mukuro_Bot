@@ -1,6 +1,9 @@
 <?php
 include "./vendor/autoload.php";
+include "./Module/GifCreator.php";
 use Intervention\Image\ImageManagerStatic as Image;
+use GuzzleHttp\Client;
+use GifCreator\GifCreator;
 
 /**
 *@author Mukuro-l
@@ -190,9 +193,14 @@ $image->line(1440, 540, 480, 540, function ($draw) {
     $draw->width(20);
 });
 */
+
+$time_array = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+
+$today_time = date("Y-m-d")." ".$time_array[date("w")];
+
 //添加文字
-$image->text(date("Y-m-d H:i:s"), 240, 10, function($font) {
-    $font->file('./Data/Font/msyh.ttf');
+$image->text($today_time.date("H:i:s"), 240, 10, function($font) {
+    $font->file('./Data/Font/cute.TTF');
     $font->size(50);
     $font->color('#000000');
     $font->align('left');
@@ -201,7 +209,7 @@ $image->text(date("Y-m-d H:i:s"), 240, 10, function($font) {
 });
 
 $image->text("version:".$BOT_Config["SDK"], 240, 73, function($font) {
-    $font->file('./Data/Font/msyh.ttf');
+    $font->file('./Data/Font/cute.TTF');
     $font->size(50);
     $font->color('#000000');
     $font->align('left');
@@ -210,7 +218,7 @@ $image->text("version:".$BOT_Config["SDK"], 240, 73, function($font) {
 });
 
 $image->text("QQ:".$qq, 240, 136, function($font) {
-    $font->file('./Data/Font/msyh.ttf');
+    $font->file('./Data/Font/cute.TTF');
     $font->size(50);
     $font->color('#000000');
     $font->align('left');
@@ -220,7 +228,7 @@ $image->text("QQ:".$qq, 240, 136, function($font) {
 
 
 $image->text(file_get_contents($text), 0, 470, function($font) {
-    $font->file('./Data/Font/msyh.ttf');
+    $font->file('./Data/Font/cute.TTF');
     $font->size(60);
     $font->color('#000000');
     $font->align('left');
@@ -229,7 +237,7 @@ $image->text(file_get_contents($text), 0, 470, function($font) {
 });
 
 $image->text("Mukuro-v".$BOT_Config["SDK"],$number, $tall, function($font) {
-    $font->file('./Data/Font/msyh.ttf');
+    $font->file('./Data/Font/cute.TTF');
     $font->size(50);
     $font->color('#FFD700');
     $font->align('right');
@@ -286,4 +294,35 @@ copy("./images/".$qq.".png","../gocq/data/images/".$qq.".png");
 
 return "[CQ:image,file=".$qq.".png]";
 }
+}
+//自定义合成图片
+function To_Image(int $_x=1280, int $_y=1280, int $x=1280/2,int $y=1280/2, string $img_data, string $path="./images/" ){
+$image = Image::canvas($_x, $_y, '#E6E6FA');
+
+
+}
+//GuzzleHttp Curl封装
+function Curl(string $Url){
+//创建客户端
+$client = new Client([
+    'base_uri' => 'http://httpbin.org',
+    'timeout'  => 2.0,
+]);
+}
+
+
+/**
+*@doc 合成gif动图
+*@date 2022.6.24
+*/
+//frames需要数据流数组
+function To_Gif(array $frames, int $qq){
+//按照顺序设置一个包含每帧毫秒时间的数组
+$durations = [40, 40, 40, 40];
+$gc = new GifCreator();
+//设置循环，遵守数组元素数量
+$gc->create($frames, $durations, count($frames));
+//注意，这只会返回一个数据流
+$gifBinary = $gc->getGif();
+
 }
