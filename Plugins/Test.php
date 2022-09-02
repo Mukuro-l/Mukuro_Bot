@@ -8,13 +8,13 @@ use Mukuro\Module\Api;
 *@return text
 */
 class Test {
-	use Api;
+use Api;
 public	function plugins_Test() {
 		if ($this->msg == "测试") {
-			return $this->send("测试成功");
+			$this->send("测试成功");
+			sleep(2);
+			$this->send("欢迎使用本框架");
 		}
-	}
-	public function __destruct() {
 	}
 }
 ?>
