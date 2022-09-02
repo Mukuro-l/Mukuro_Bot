@@ -1,7 +1,6 @@
 # 请注意：main分支存在未发布的功能及特性，稳定性未知。建议使用发行版。  
 # [Mukuro_Bot使用手册] by Mukuro-l  
 ## 引用Intervention\Image  
-## 2022.06.10
 
 你好！  欢迎阅读本程序的使用文档  
 运行环境：
@@ -9,7 +8,7 @@
 - PHP8
 - swoole4.8
 - 国内IP的服务器
-- 仅在Ubuntu20.4，PHP7.4-8.1环境通过测试  
+- 仅在Ubuntu22.04，PHP8.1环境通过测试  
 - 通过amd\arm平台测试  
 - 在termux proot容器开发|测试
 
@@ -56,7 +55,7 @@ TODO：
 - 如果没有执行权限请```chmod 777 run```
 # 一键部署脚本  
 - 请在root目录执行
-- ```bash <(curl -s -S -L http://43.154.119.191/shell/install.sh)```
+- ~~```bash <(curl -s -S -L http://43.154.119.191/shell/install.sh)```~~
 ***
 ## 开发  
 ```php
