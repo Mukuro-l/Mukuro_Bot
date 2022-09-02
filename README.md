@@ -1,6 +1,14 @@
 # 请注意：main分支存在未发布的功能及特性，稳定性未知。建议使用发行版。  
 # [Mukuro_Bot使用手册] by Mukuro-l  
 ## 引用Intervention\Image  
+***
+> 版本更新需知  
+1. 在新版之后插件返回执行结果时
+不再需要return，直接调用send方法。
+且send方法支持循环调用（但没有延时）。
+2. 新支持的context方法能够获取触发者的下一条聊天信息。  
+3. 如果你的PHP没有安装所需的图像处理模块，请安装。
+***
 
 你好！  欢迎阅读本程序的使用文档  
 运行环境：
@@ -51,12 +59,13 @@ TODO：
 - 在Config.php文件内配置  
 - 返回根目录，**在根目录执行：```unzip vendor.zip```**
 # 启动  
-- 需先配置完毕，直接在Mukuro_Bot根目录```./run```即可  
-- 如果没有执行权限请```chmod 777 run```
+- 需先配置完毕，直接在Mukuro_Bot根目录```php run.php```即可  
+- ~~如果没有执行权限请```chmod 777 run```~~
 # 一键部署脚本  
 - 请在root目录执行
 - ~~```bash <(curl -s -S -L http://43.154.119.191/shell/install.sh)```~~
 ***
+
 ## 开发  
 ```php
 <?php
@@ -76,7 +85,7 @@ use Api;
 function plugins_Text(){
 if ($this->msg == "测试"){
 //返回调用send函数结果，支持array
-return $this->send("OK");
+$this->send("OK");
 }
 }
 }
