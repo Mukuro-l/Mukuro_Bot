@@ -1,9 +1,9 @@
 #!/usr/bin/php
 <?php
 /**
- *@version v1.1.6 beta2
- *@date 2022.6.20
- *@author coldeggs
+ *@version v1.1.6
+ *@date 2022.9.3
+ *@author Mukuro-l
  *@copyright 2021-2022 Mukuro-l.AllRightsReserved
  *@start/begin with/in 2021.08.21
  */
@@ -14,6 +14,7 @@ use Swoole\Coroutine;
 
 //外部文件载入
 include './Module/Config.php';
+error_reporting($BOT_Config["Error_level"]);
 include './vendor/autoload.php';
 include_once './Module/Api.php';
 
