@@ -1,9 +1,9 @@
 #!/usr/bin/php
 <?php
 /**
- *@version v1.1.6
- *@date 2022.9.3
- *@author Mukuro-l
+ *@version v1.1.6 beta2
+ *@date 2022.6.20
+ *@author coldeggs
  *@copyright 2021-2022 Mukuro-l.AllRightsReserved
  *@start/begin with/in 2021.08.21
  */
@@ -14,7 +14,6 @@ use Swoole\Coroutine;
 
 //外部文件载入
 include './Module/Config.php';
-error_reporting($BOT_Config["Error_level"]);
 include './vendor/autoload.php';
 include_once './Module/Api.php';
 
@@ -64,7 +63,7 @@ include_once './Module/Function.php';
 					}
 					
 					//封解主的动作
-					if (preg_match("/^封解主· ?(.*)\$/", $Data['message'], $Jiezhu)) {
+					if (preg_match("/^M- ?(.*)\$/", $Data['message'], $Jiezhu)) {
 					if ($BOT_Config["qhost"] === $Data['user_id']){
 					if ($Jiezhu[1] === "开" || $Jiezhu[1] === "闭" ){
 					if ($Jiezhu[1] === "开"){
