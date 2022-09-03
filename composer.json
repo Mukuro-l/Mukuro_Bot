@@ -1,0 +1,12 @@
+{
+    "name" : "Mukuro-l/Mukuro_Bot",
+    "authors" : [
+        {
+            "name": "Mukruo-l",
+            "email": "2744602949@qq.com"
+            }
+            ],
+            "require": {
+                "intervention/image:2.4-dev"
+                }
+                }
