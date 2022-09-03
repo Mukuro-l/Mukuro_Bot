@@ -7,6 +7,6 @@
             }
             ],
             "require": [
-                "intervention/image"
+                "intervention/image":"2.4-dev"
                 ]
                 }
