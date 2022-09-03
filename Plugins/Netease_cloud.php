@@ -33,7 +33,7 @@ class Netease_cloud {
 		if ($return != null) {
 		$this->Netease_cloud_Api($return);
 		}else if ($this -> msg == "点歌") {
-		$return_data = $this->context("告诉我你要点什么歌呢",'点歌');
+		$return_data = $this->context("点歌","你要点什么歌？");
 		
 		$this->Netease_cloud_Api($return_data[2]);
 		
