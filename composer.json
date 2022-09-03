@@ -6,7 +6,7 @@
             "email": "2744602949@qq.com"
             }
             ],
-            "require": {
+            "require": [
                 "intervention/image"
-                }
+                ]
                 }
