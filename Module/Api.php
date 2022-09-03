@@ -25,6 +25,7 @@ namespace Mukuro\Module;
 		public $target_id;
 		public $super_user;
 		public $http_port;
+		public $self_id;
 		public function __construct($Data, $database, $BOT_Config,$ws) {
 		$this -> ws = $ws;
 		$this -> database = $database;
@@ -53,6 +54,7 @@ namespace Mukuro\Module;
 					@$this->target_id = $Data['target_id'];//被戳qq
 					@$this->super_user = $BOT_Config['qhost'];//超级用户
 					@$this->http_port = $BOT_Config['http_port'];//http服务器端口
+					@$this->self_id = $Data['self_id'];//收到消息的机器人QQ
 					if (isset($msg)) {
 						$database->set($this->qq, ["Data" => $msg]);
 						//$database->set($this->qun,
@@ -173,8 +175,10 @@ print_r($str_type1);
 print_r($str_type2);
 				}
 				    //上下文 $msg即为你想要定位的消息，函数会一直根据这条消息来获取上下文
-				    public function context($send_msg,$msg) :array{
+				    public function context(string | int $msg,string | int $send_msg=null) :array{
+						if (isset($send_msg)){
 						$this -> send($send_msg);
+						}
 						$url = "http://127.0.0.1:".$this -> http_port."/get_group_msg_history?message_seq=&group_id=".$this -> qun;
 						//获取到的历史记录
 						$json = json_decode(file_get_contents($url),true);
