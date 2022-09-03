@@ -34,6 +34,16 @@ class Event{
 					$this->send("被邀请入群？".$this->qq."是不是小黑子！");
 					}
 				}
+				//戳一戳
+				if ($this->post_type == "notice"){
+					if ($this->notice_type == "notify"){
+						if ($this->sub_type == "poke"&&$this->target_id == $this->self_id){
+							$this->send('官人，你这是想干嘛呢？');
+							$this->send("[CQ:poke,qq=".$this->qq."]");
+							}
+							}
+							}
+
 	}
 }
 ?>
