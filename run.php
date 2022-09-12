@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 /**
- *@version v1.1.6 beta2
+ *@version v1.1.6
  *@date 2022.6.20
  *@author coldeggs
  *@copyright 2021-2022 Mukuro-l.AllRightsReserved
@@ -19,12 +19,17 @@ include_once './Module/Api.php';
 
 
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
+echo "Mukuro_Bot服务器已启动，正在等待客户端连接......\n免责通知：当你使用本软件起，即代表着同意本软件的开源协议证书。\n如违反本开源证书，开发者将会以法律程序向违反开源协议的个人或组织提起上诉\n开源证书：Apache-2.0 license\n";
+
 
 
 
 //监听WebSocket连接打开事件
 $ws->on('Open', function ($ws, $request) {
-	include_once "链接打开.php";
+	//连接打开
+	include_once "connection_opens.php";
+	//载入定时器并启动
+	include_once './Module/Timer.php';
 });
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
@@ -203,11 +208,9 @@ Coroutine::create(function () use ($barrier,$list,$file,$Plugins_name,$file_arra
 
 });
 //监听WebSocket连接关闭事件
-@$ws->on('Close', function ($ws, $fd) use ($the_tick) {
+@$ws->on('Close', function ($ws, $fd) {
 	echo "go-cqhttp客户端：-{$fd} 已关闭\n";
-	Swoole\Timer::clear($the_tick);
 	unlink("service_id");
-	echo "清除定时器\n";
 });
 
 $ws->start();
