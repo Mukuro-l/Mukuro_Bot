@@ -11,12 +11,18 @@
 use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use Swoole\Coroutine;
+//每次启动都会初始化
+if (is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
+unlink("./Doc/Mukuro_Menu_Doc/Menu.doc");
+}
+
 
 //外部文件载入
 include './Module/Config.php';
 include './vendor/autoload.php';
 include_once './Module/Api.php';
-
+include_once 'initialization.php';
+error_reporting($BOT_Config["Error_level"]);
 
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
 echo "Mukuro_Bot服务器已启动，正在等待客户端连接......\n免责通知：当你使用本软件起，即代表着同意本软件的开源协议证书。\n如违反本开源证书，开发者将会以法律程序向违反开源协议的个人或组织提起上诉\n开源证书：Apache-2.0 license\n";
@@ -36,7 +42,8 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 if (!is_file("service_id")){
 file_put_contents("service_id",$frame->fd);
 }
-
+//避免一些错误
+include_once 'initialization.php';
 
 //载入函数库
 include_once './Module/Function.php';
@@ -151,11 +158,11 @@ include_once './Module/Function.php';
 					//这里会对群的全局状态做出判断，但如果插件状态为关，也不会载入
 					if (json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"),true)["status"] === "开" || $Data['message_type'] === 'private'){
 					$file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
+                    $barrier = Barrier::make();
 						for ($i = 0;$i < count($list);$i++) {
 					//创建协程
 					
 						$file = $file_array[$i]["插件名"];
-						$barrier = Barrier::make();
 						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
 				
@@ -179,8 +186,9 @@ Coroutine::create(function () use ($barrier,$list,$file,$Plugins_name,$file_arra
 							
 						
 						});
-						Barrier::wait($barrier);
+						
 						}
+                    
 						if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
 								for ($i = 0;$i < count($list);$i++) {
 									$Menu_doc = explode('.', $file_array[$i]["插件名"]);
@@ -191,6 +199,7 @@ Coroutine::create(function () use ($barrier,$list,$file,$Plugins_name,$file_arra
 								}
 							}
 					}
+                    Barrier::wait($barrier);
 					
 				  }
 				  
@@ -212,6 +221,9 @@ Coroutine::create(function () use ($barrier,$list,$file,$Plugins_name,$file_arra
 	echo "go-cqhttp客户端：-{$fd} 已关闭\n";
 	unlink("service_id");
 });
+
+
+
 
 $ws->start();
 
