@@ -63,25 +63,36 @@ namespace Mukuro\Module;
 				}
 			}
 		}
-		public function send(string | array $set_msg = "Mukuro要告诉官人，官人没有让六儿发送任何消息哦•᷄ࡇ•᷅")  {
+		public function send(string | array $set_msg = "Mukuro要告诉官人，官人没有让六儿发送任何消息哦•᷄ࡇ•᷅",int $Get_user=null)  {
+			//如果类型为通知
             if ($this->post_type == "notice"){
                 $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
                 $submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
                 echo "bot发送消息：[" . $set_msg . "]\n";
                 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
             }
-			if ($this->msg_type == "group") {
+			//指定QQ号私聊
+			if (!empty($Get_user)){
+				$url = ["action" => "send_private_msg", "params" => ["user_id" => $Get_user, "message" => $set_msg]];
+				$url = json_encode($url, JSON_UNESCAPED_UNICODE);
+				echo "bot发送私聊消息：[" . $set_msg . "]\n";
+				$this->ws->push(intval(file_get_contents("service_id")),$url);
+			}
+			//群聊
+			if ($this->msg_type == "group" and empty($Get_user)) {
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
 				 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
 			}
-			if ($this->msg_type == "private") {
+			//私聊
+			if ($this->msg_type == "private" and empty($Get_user)) {
 				$url = ["action" => "send_private_msg", "params" => ["user_id" => $this->qq, "message" => $set_msg]];
 				$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
 				$this->ws->push(intval(file_get_contents("service_id")),$url);
 			}
+			//自定义
 			if (is_array($set_msg) == true) {
 				if ($set_msg["S_type"] == "group") {
 					$url = array("action" => "send_group_msg", "params" => array("group_id" => $set_msg["qun"], "message" => $set_msg["msg"]));
@@ -228,18 +239,19 @@ print_r($str_type2);
 										
 	}
 					//即为Get friends
-					public function GF():
-						string {
-							$BOT_Config = json_decode(file_get_contents("config.json"), true);
-							$url = "http://127.0.0.1:" . $BOT_Config["http_port"] . "/get_friend_list";
+					public function GF():string {
+						if (is_file('./Data/Text/GF.txt')){
+							unlink('./Data/Text/GF.txt');
+						}
+							$url = "http://127.0.0.1:" . $this->http_port . "/get_friend_list";
 							$Data = json_decode(file_get_contents($url), true);
 							for ($i = 0;$i < count($Data["data"]);$i++) {
 								$list = "ID：" . $i . "\r\nQQ：" . $Data["data"][$i]["user_id"] . "\r\n昵称：" . $Data["data"][$i]["nickname"] . "\r\n备注：" . $Data["data"][$i]["remark"] . "\r\n\r\n";
-								file_put_contents("GF.txt", $list, FILE_APPEND);
+								file_put_contents("./Data/Text/GF.txt", $list, FILE_APPEND);
 							}
-							return file_get_contents("GF.txt");
+							return Text_Images("./Data/Text/GF.txt", $this->qq);
 						}
-						public function DF($user_id) {
+						public function DF(int $user_id):string {
 							$BOT_Config = json_decode(file_get_contents("config.json"), true);
 							$url = "http://127.0.0.1:" . $BOT_Config["http_port"] . "/delete_friend?friend_id=" . $user_id;
 							file_get_contents($url);
