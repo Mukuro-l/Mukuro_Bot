@@ -1,5 +1,6 @@
 <?php
 namespace Mukuro\Module;
+use \Swoole\Timer;
 
 
 	trait Api {
@@ -121,6 +122,12 @@ namespace Mukuro\Module;
 				}
 			}
 		}
+        public function Rsend(int|string $Rmsg){
+            $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => '[CQ:reply,id=' .$this->msg_id.',text='.$Rmsg. ' ]'.$Rmsg]];
+            $submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+            echo "bot回复消息：[" . $Rmsg . "]\n";
+            $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
+        }
 		public function MC(array $option, string $msg):
 			bool {
 				$quantity = count($option);
@@ -186,9 +193,9 @@ print_r($str_type1);
 print_r($str_type2);
 				}
 				    //上下文 $msg即为你想要定位的消息，函数会一直根据这条消息来获取上下文
-				    public function context(string | int $msg,string | int $send_msg=null) :array{
+				    public function context(string | int $msg,string | int $send_msg=null) {
 						if (isset($send_msg)){
-						$this -> send($send_msg);
+						$this -> Rsend($send_msg);
 						}
 						$url = "http://127.0.0.1:".$this -> http_port."/get_group_msg_history?message_seq=&group_id=".$this -> qun;
 						//获取到的历史记录
@@ -199,9 +206,12 @@ print_r($str_type2);
 						$result = [];
 						//结果上下文
 						$context = [];
+                        //设置一个定时器，超时退出循环
+                        $Timer = date("His");
 						do {
 							unset($result);
 							unset($context);
+                            
 							$result = [];
 							$context = [];
 							$json = json_decode(file_get_contents($url),true);
@@ -235,6 +245,12 @@ print_r($str_type2);
 													if ($context[2] !== $msg && $context[1] !== null){
 													return $context;
 													}
+                            
+            
+                                                    if ((date("His")-$Timer)>15 ){
+                                                        echo "超时\n";
+                                                        return;
+                                                    }
 													}while ($context[2]==$msg);
 										
 	}
