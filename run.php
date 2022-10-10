@@ -15,6 +15,16 @@ use Swoole\Coroutine;
 if (is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
 unlink("./Doc/Mukuro_Menu_Doc/Menu.doc");
 }
+if (!is_dir("vendor")){
+//解压zip操作
+$zip = new ZipArchive();
+$openRes = $zip->open("vendor.zip");
+if ($openRes === TRUE) {
+//会解压到当前文件夹
+$zip->extractTo(dirname(__FILE__));
+$zip->close();
+}
+}
 
 
 //外部文件载入
