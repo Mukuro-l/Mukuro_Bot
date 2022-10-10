@@ -36,6 +36,10 @@ $ws->on('Open', function ($ws, $request) {
 	include_once "connection_opens.php";
 	//载入定时器并启动
 	include_once './Module/Timer.php';
+	//为了避免非正常关闭带来的无法push
+	if (is_file("service_id")){
+	unlink("service_id");
+	}
 });
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
@@ -158,15 +162,15 @@ include_once './Module/Function.php';
 					//这里会对群的全局状态做出判断，但如果插件状态为关，也不会载入
 					if (json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"),true)["status"] === "开" || $Data['message_type'] === 'private'){
 					$file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
-                    $barrier = Barrier::make();
+                    //$barrier = Barrier::make();
 						for ($i = 0;$i < count($list);$i++) {
 					//创建协程
 					
 						$file = $file_array[$i]["插件名"];
 						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
-				
-Coroutine::create(function () use ($barrier,$list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
+				go(function () use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
+
 						include_once './Module/Api.php';
 						
 						include_once "./Plugins/".$file;
@@ -199,7 +203,7 @@ Coroutine::create(function () use ($barrier,$list,$file,$Plugins_name,$file_arra
 								}
 							}
 					}
-                    Barrier::wait($barrier);
+                    //Barrier::wait($barrier);
 					
 				  }
 				  
