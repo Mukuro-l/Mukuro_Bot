@@ -19,10 +19,13 @@ class Music_selection {
 					$song_list = $result['songs']; //歌曲列表
 					$list_data = $song_list[$return_list[0] - 1]; //选歌
 					$song_id = $list_data["id"];
-					//$this->send("[CQ:music,type=163,id=" . $song_id . "]");
+					$this->send("[CQ:music,type=163,id=" . $song_id . "]");
+					$data = $this->context('语音');
+					if ($data[0]=="语音"){
 					$this->send("正在转换语音……");
 					$this->send("[CQ:record,file=https://music.163.com/song/media/outer/url?id=".$song_id.".mp3]");
 					
+				}
 				}
 				}
 			}
