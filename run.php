@@ -245,10 +245,11 @@ include_once './Module/Function.php';
 							
 						
 						};
-						$task_id = $ws->task($Data);
+					
 						
 						
 						}
+						
                     
 						if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
 								for ($i = 0;$i < count($list);$i++) {
@@ -260,9 +261,7 @@ include_once './Module/Function.php';
 								}
 							}
 					}
-					//$pm->start();
-                    //Barrier::wait($barrier);
-					
+					$task_id = $ws->task($Data);
 				  }
 				  
 	
