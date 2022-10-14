@@ -286,10 +286,20 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 
 
 $ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($list,$file,$Plugins_name,$file_array,$database, $BOT_Config,$service_id){
-if (!empty($list)){
-echo "OK\n";
-print_r($list);
-}
+include_once './Module/Api.php';
+						
+						include_once "./Plugins/".$file;
+							$Plugins_name = explode('.', $file);
+							$Plugins_name = $Plugins_name[0];
+							$Plugins_name_function = "plugins_" . $Plugins_name;
+		
+							$Plugins_test = new $Plugins_name($Data, $database, $BOT_Config,$ws,$service_id);
+							$Plugins_return = $Plugins_test->$Plugins_name_function();
+							//$pm ->add($Plugins_test->$Plugins_name_function(),true);
+							//$Plugins_test -> __destruct();
+							if (isset($Plugins_return)) {
+								$ws->push($frame->fd,$Plugins_return);
+							}
     echo "新的异步任务[id={$task_id}]".PHP_EOL;
     
     
