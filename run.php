@@ -82,7 +82,7 @@ $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
 echo "Mukuro_Bot服务器已启动，正在等待客户端连接......\n免责通知：当你使用本软件起，即代表着同意本软件的开源协议证书。\n如违反本开源证书，开发者将会以法律程序向违反开源协议的个人或组织提起上诉\n开源证书：Apache-2.0 license\n";
 
 
-$pm = new Manager();
+
 
 //监听WebSocket连接打开事件
 $ws->on('Open', function ($ws, $request) {
@@ -96,7 +96,7 @@ $ws->on('Open', function ($ws, $request) {
 	}
 });
 //监听WebSocket消息事件
-$ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config,$pm) {
+$ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 if (!is_file("service_id")){
 file_put_contents("service_id",$frame->fd);
 }
@@ -218,12 +218,12 @@ include_once './Module/Function.php';
 					$file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
                     //$barrier = Barrier::make();
 						for ($i = 0;$i < count($list);$i++) {
-					//创建协程
+					
 					
 						$file = $file_array[$i]["插件名"];
 						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
-				$pm->add(function (Pool $pool,int $workerId) use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
+				/*$pm->add(function (Pool $pool,int $workerId) use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
 
 						include_once './Module/Api.php';
 						
@@ -259,6 +259,7 @@ include_once './Module/Function.php';
 							}
 					}
 					$pm->start();
+					*/
                     //Barrier::wait($barrier);
 					
 				  }
@@ -286,6 +287,7 @@ include_once './Module/Function.php';
 
 
 $ws->start();
+echo "测试\n";
 
 
 ?>
