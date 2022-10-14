@@ -277,12 +277,13 @@ include_once './Module/Function.php';
 	}
 
 });
-
+while(true){
 $Data = $frame->data;
 	//json转为PHP数组，必须转为PHP对象
 	$Data = json_decode($Data, true);
 	//输出data
 			print_r($Data);
+			}
 
 //监听WebSocket连接关闭事件
 @$ws->on('Close', function ($ws, $fd) {
