@@ -285,12 +285,14 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 });
 
 
-$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) {
-if (!empty($Data)){
+$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($list,$file,$Plugins_name,$file_array,$database, $BOT_Config,$ws,$service_id){
+if (!empty($list)){
 echo "OK\n";
-print_r($Data);
+print_r($list);
 }
     echo "新的异步任务[id={$task_id}]".PHP_EOL;
+    
+    
     //返回任务执行的结果
     $ws->finish("{$task_id} -> OK");
 });
