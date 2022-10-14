@@ -277,6 +277,9 @@ include_once './Module/Function.php';
 	}
 
 });
+
+echo "测试\n";
+
 //监听WebSocket连接关闭事件
 @$ws->on('Close', function ($ws, $fd) {
 	echo "go-cqhttp客户端：-{$fd} 已关闭\n";
@@ -287,7 +290,6 @@ include_once './Module/Function.php';
 
 
 $ws->start();
-echo "测试\n";
 
 
 ?>
