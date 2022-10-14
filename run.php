@@ -288,6 +288,7 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 $ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) {
 if (!empty($Data)){
 echo "OK\n";
+print_r($Data);
 }
     echo "新的异步任务[id={$task_id}]".PHP_EOL;
     //返回任务执行的结果
