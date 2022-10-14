@@ -296,11 +296,12 @@ return "[CQ:image,file=".$qq.".png]";
 }
 }
 //自定义合成图片
-function To_Image(int $_x=1280, int $_y=1280, int $x=1280/2,int $y=1280/2, string $img_data, string $path="./images/" ){
+/*function To_Image(int $_x=1280, int $_y=1280, int $x=1280/2,int $y=1280/2, string $img_data, string $path="./images/" ){
 $image = Image::canvas($_x, $_y, '#E6E6FA');
 
 
 }
+*/
 //GuzzleHttp Curl封装
 function Curl(string $Url){
 //创建客户端
