@@ -74,7 +74,7 @@ include './Module/Config.php';
 include './vendor/autoload.php';
 include_once './Module/Api.php';
 include_once 'initialization.php';
-error_reporting($BOT_Config["Error_level"]);
+//error_reporting($BOT_Config["Error_level"]);
 
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
 echo "Mukuro_Bot服务器已启动，正在等待客户端连接......\n免责通知：当你使用本软件起，即代表着同意本软件的开源协议证书。\n如违反本开源证书，开发者将会以法律程序向违反开源协议的个人或组织提起上诉\n开源证书：Apache-2.0 license\n";
