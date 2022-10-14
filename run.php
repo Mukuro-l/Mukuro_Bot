@@ -244,7 +244,7 @@ include_once './Module/Function.php';
 
 							
 						
-						});
+						};
 						$task_id = $ws->task($task_data);
 						
 						
