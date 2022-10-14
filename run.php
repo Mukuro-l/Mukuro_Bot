@@ -11,8 +11,6 @@
 use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use Swoole\Coroutine;
-use Swoole\Process\Manager;
-use Swoole\Process\Pool;
 //运行环境检测，现只支持Linux系统
 if (!strstr("swoole",exec("php -m"))){
 exit("未检测到Swoole扩展，请参考wiki.swoole.com \n");
@@ -279,7 +277,22 @@ include_once './Module/Function.php';
 	}
 
 });
+$ws->on('Receive', function($ws, $fd, $reactor_id, $frame->data) {
+    //投递异步任务
+    $task_id = $serv->task($frame->data);
+    echo "投递异步任务: id={$task_id}\n";
+});
 
+
+$ws->on('Task', function ($ws, $task_id, $reactor_id, $frame->data) {
+    $Data = $frame->data;
+	//json转为PHP数组，必须转为PHP对象
+	$Data = json_decode($Data, true);
+	print_r($Data);
+    echo "New AsyncTask[id={$task_id}]".PHP_EOL;
+    //返回任务执行的结果
+    $serv->finish("{$Data} -> OK");
+});
 
 //监听WebSocket连接关闭事件
 @$ws->on('Close', function ($ws, $fd) {
