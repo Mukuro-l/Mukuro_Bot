@@ -97,7 +97,7 @@ $ws->on('Open', function ($ws, $request) {
 });
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
-$task_id = $ws->task($frame->data);
+
 if (!is_file("service_id")){
 file_put_contents("service_id",$frame->fd);
 }
@@ -224,7 +224,7 @@ include_once './Module/Function.php';
 						$file = $file_array[$i]["插件名"];
 						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
-				/*$pm->add(function (Pool $pool,int $workerId) use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
+				$task_data = function()use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
 
 						include_once './Module/Api.php';
 						
@@ -245,7 +245,7 @@ include_once './Module/Function.php';
 							
 						
 						});
-						*/
+						$task_id = $ws->task($task_data);
 						
 						
 						}
@@ -278,21 +278,17 @@ include_once './Module/Function.php';
 	}
 
 });
-$ws->on('Receive', function($ws, $fd, $reactor_id, $frame) {
+$ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
     //投递异步任务
     $task_id = $ws->task($frame->data);
     echo "投递异步任务: id={$task_id}\n";
 });
 
 
-$ws->on('Task', function ($ws, $task_id, $reactor_id, $frame) {
-    $Data = $frame->data;
-	//json转为PHP数组，必须转为PHP对象
-	$Data = json_decode($Data, true);
-	//print_r($Data);
-    echo "New AsyncTask[id={$task_id}]".PHP_EOL;
+$ws->on('Task', function ($ws, $task_id, $reactor_id, $task_data) {
+    echo "新的异步任务[id={$task_id}]".PHP_EOL;
     //返回任务执行的结果
-    $ws->finish("{$frame} -> OK");
+    $ws->finish("{$task_id} -> OK");
 });
 
 //监听WebSocket连接关闭事件
