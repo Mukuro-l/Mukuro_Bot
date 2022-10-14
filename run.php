@@ -224,7 +224,7 @@ include_once './Module/Function.php';
 						$file = $file_array[$i]["插件名"];
 						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
-				$task_data = function()use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
+				/*$task_data = function()use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
 
 						include_once './Module/Api.php';
 						
@@ -245,6 +245,7 @@ include_once './Module/Function.php';
 							
 						
 						};
+						*/
 					
 						
 						
