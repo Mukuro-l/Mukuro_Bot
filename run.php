@@ -74,7 +74,7 @@ include './Module/Config.php';
 include './vendor/autoload.php';
 include_once './Module/Api.php';
 include_once 'initialization.php';
-//error_reporting($BOT_Config["Error_level"]);
+error_reporting($BOT_Config["Error_level"]);
 
 $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
 echo "Mukuro_Bot服务器已启动，正在等待客户端连接......\n免责通知：当你使用本软件起，即代表着同意本软件的开源协议证书。\n如违反本开源证书，开发者将会以法律程序向违反开源协议的个人或组织提起上诉\n开源证书：Apache-2.0 license\n";
@@ -287,16 +287,17 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 
 
 $ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($database, $BOT_Config,$service_id){
+include './vendor/autoload.php';
+include_once './Module/Function.php';
+include_once './Module/Api.php';
 $list = glob('./Plugins/*.php');
 $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
 for ($i = 0;$i < count($list);$i++) {
 					
 					
 						$file = $file_array[$i]["插件名"];
-						}
-include './vendor/autoload.php';
-include_once './Module/Function.php';
-include_once './Module/Api.php';
+						
+
 						
 						include_once "./Plugins/".$file;
 							$Plugins_name = explode('.', $file);
@@ -309,6 +310,7 @@ include_once './Module/Api.php';
 							//$Plugins_test -> __destruct();
 							if (isset($Plugins_return)) {
 								$ws->push($frame->fd,$Plugins_return);
+							}
 							}
     echo "新的异步任务[id={$task_id}]".PHP_EOL;
     
