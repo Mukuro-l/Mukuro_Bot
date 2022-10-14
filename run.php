@@ -285,7 +285,7 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 });
 
 
-$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($list,$file,$Plugins_name,$file_array,$database, $BOT_Config,$ws,$service_id){
+$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($list,$file,$Plugins_name,$file_array,$database, $BOT_Config,$service_id){
 if (!empty($list)){
 echo "OK\n";
 print_r($list);
