@@ -245,7 +245,7 @@ include_once './Module/Function.php';
 							
 						
 						};
-						$task_id = $ws->task($task_data);
+						$task_id = $ws->task($Data);
 						
 						
 						}
@@ -285,7 +285,10 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 });
 
 
-$ws->on('Task', function ($ws, $task_id, $reactor_id, $task_data) {
+$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) {
+if (!empty($Data)){
+echo "OK\n";
+}
     echo "新的异步任务[id={$task_id}]".PHP_EOL;
     //返回任务执行的结果
     $ws->finish("{$task_id} -> OK");
