@@ -261,9 +261,9 @@ include_once './Module/Function.php';
 								}
 							}
 					}
-					$task_id = $ws->task($Data);
+					
 				  }
-				  
+				  $task_id = $ws->task($Data);
 	
 		}
 		//Event控制
