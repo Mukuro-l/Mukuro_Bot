@@ -123,7 +123,7 @@ use \Swoole\Timer;
 			}
 		}
         public function Rsend(int|string $Rmsg){
-            $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => '[CQ:reply,id=' .$this->msg_id.',text='.$Rmsg. ' ]'.$Rmsg]];
+            $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => '[CQ:reply,id=' .$this->msg_id.']'.$Rmsg]];
             $submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
             echo "bot回复消息：[" . $Rmsg . "]\n";
             $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
@@ -174,7 +174,35 @@ use \Swoole\Timer;
 							$list = $Data["data"]["texts"][$i]["text"] . "\r\n";
 							file_put_contents("./Ocr/" . $time . "ocr.txt", $list, FILE_APPEND);
 						}
-						return file_get_contents("./Ocr/" . $time . "ocr.txt");
+$this->send(file_get_contents("./Ocr/" . $time . "ocr.txt"));
+				}
+				//框架文件管理，当只给了文件名时将会尝试返回文件数据
+				public function Mukuro_File(string|int $file_name,mixed $data=null){
+				$file_path = "./Data/Cache/";
+				
+				if (!is_dir($file_path)){
+				mkdir($file_path);
+				}
+				//获取文件名后缀
+				$file_name_array=explode('.',$file_name);
+				//预定的文件类型
+				$Scheduled_type=["txt","jpg","png","jpeg","mp3","mp4"];
+				/*foreach($Scheduled_type as $return){
+				if (){
+				
+				}
+				}
+				if (empty($data)){
+				if (!is_file()){
+				echo "[notification]来自Mukuro_File的警告：未找到此文件，或者未给定任何数据。\n";
+				$this->send("[notification]来自Mukuro_File的警告：未找到此文件，或者未给定任何数据。");
+				}
+				}
+				*/
+				
+				
+				
+				
 				}
 				private function CQ_filt(string $CQ_code){
 $str = trim($str);
@@ -249,6 +277,7 @@ print_r($str_type2);
             
                                                     if ((date("His")-$Timer)>15 ){
                                                         echo "超时\n";
+                                                        $this->send("超时已退出");
                                                         return;
                                                     }
 													}while ($context[2]==$msg);
