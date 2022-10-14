@@ -289,10 +289,10 @@ $ws->on('Task', function ($ws, $task_id, $reactor_id, $frame) {
     $Data = $frame->data;
 	//json转为PHP数组，必须转为PHP对象
 	$Data = json_decode($Data, true);
-	print_r($Data);
+	//print_r($Data);
     echo "New AsyncTask[id={$task_id}]".PHP_EOL;
     //返回任务执行的结果
-    $serv->finish("{$Data} -> OK");
+    $ws->finish("{$frame} -> OK");
 });
 
 //监听WebSocket连接关闭事件
