@@ -291,7 +291,7 @@ include './vendor/autoload.php';
 include_once './Module/Function.php';
 include_once './Module/Api.php';
 						
-						include_once "./Plugins/".$file;
+						include "./Plugins/".$file;
 							$Plugins_name = explode('.', $file);
 							$Plugins_name = $Plugins_name[0];
 							$Plugins_name_function = "plugins_" . $Plugins_name;
