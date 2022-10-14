@@ -97,6 +97,7 @@ $ws->on('Open', function ($ws, $request) {
 });
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
+$task_id = $ws->task($frame->data);
 if (!is_file("service_id")){
 file_put_contents("service_id",$frame->fd);
 }
