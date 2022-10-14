@@ -244,6 +244,7 @@ include_once './Module/Function.php';
 							
 						
 						});
+						*/
 						
 						
 						}
@@ -258,8 +259,7 @@ include_once './Module/Function.php';
 								}
 							}
 					}
-					$pm->start();
-					*/
+					//$pm->start();
                     //Barrier::wait($barrier);
 					
 				  }
