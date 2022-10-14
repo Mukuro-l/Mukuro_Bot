@@ -11,6 +11,48 @@
 use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use Swoole\Coroutine;
+//运行环境检测，现只支持Linux系统
+if (!strstr("swoole",exec("php -m"))){
+exit("未检测到Swoole扩展，请参考wiki.swoole.com \n");
+}
+if (!is_file("../gocq/go-cqhttp")){
+echo "将会在5秒后下载对应版本的go-cqhttp\n取消请Ctrl + c\n";
+Swoole\Timer::after(5000,function(){
+function download(){
+$Version = exec("uname -m");
+if ($Version == "aarch64"){
+$Version = "arm64";
+}else if ($Version == "x86_64"){
+$Version = "amd64";
+}
+if (empty($Version)){
+exit("错误！未获取到系统指令集版本，现只支持Linux系统。\n");
+}else{
+$go_cq = file_get_contents("https://cdn.githubjs.cf/Mrs4s/go-cqhttp/releases/download/v1.0.0-rc3/go-cqhttp_linux_".$Version.".tar.gz");
+if (empty($go_cq)){
+echo "国内GitHub CDN加速下载失败，正在切换到GitHub官方下载\n";
+$go_cq = file_get_contents("https://cdn.githubjs.cf/Mrs4s/go-cqhttp/releases/download/v1.0.0-rc3/go-cqhttp_linux_".$Version.".tar.gz");
+file_put_contents("../gocq/gocq.tar.gz",$go_cq);
+system("sudo cd ".dirname(__DIR__)."/gocq/ && tar -xzf gocq.tar.gz && rm gocq.tar.gz");
+echo "成功\n";
+}else{
+file_put_contents("../gocq/gocq.tar.gz",$go_cq);
+system("sudo cd ".dirname(__DIR__)."/gocq/ && tar -xzf gocq.tar.gz && rm gocq.tar.gz");
+echo "成功\n";
+}
+}
+}
+
+if (!is_dir("../gocq/")){
+mkdir("../gocq/");
+download();
+}else{
+download();
+}
+});
+}
+
+
 //每次启动都会初始化
 if (is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
 unlink("./Doc/Mukuro_Menu_Doc/Menu.doc");
