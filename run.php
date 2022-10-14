@@ -11,6 +11,8 @@
 use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use Swoole\Coroutine;
+use Swoole\Process\Manager;
+use Swoole\Process\Pool;
 //运行环境检测，现只支持Linux系统
 if (!strstr("swoole",exec("php -m"))){
 exit("未检测到Swoole扩展，请参考wiki.swoole.com \n");
@@ -221,7 +223,7 @@ include_once './Module/Function.php';
 						$file = $file_array[$i]["插件名"];
 						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
-				go(function () use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
+				$pm->add(function (Pool $pool,int $workerId) use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
 
 						include_once './Module/Api.php';
 						
@@ -243,6 +245,7 @@ include_once './Module/Function.php';
 						
 						});
 						
+						
 						}
                     
 						if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
@@ -255,6 +258,7 @@ include_once './Module/Function.php';
 								}
 							}
 					}
+					$pm->start();
                     //Barrier::wait($barrier);
 					
 				  }
