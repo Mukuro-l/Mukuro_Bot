@@ -277,14 +277,14 @@ include_once './Module/Function.php';
 	}
 
 });
-$ws->on('Receive', function($ws, $fd, $reactor_id, $frame->data) {
+$ws->on('Receive', function($ws, $fd, $reactor_id, $frame) {
     //投递异步任务
-    $task_id = $serv->task($frame->data);
+    $task_id = $ws->task($frame->data);
     echo "投递异步任务: id={$task_id}\n";
 });
 
 
-$ws->on('Task', function ($ws, $task_id, $reactor_id, $frame->data) {
+$ws->on('Task', function ($ws, $task_id, $reactor_id, $frame) {
     $Data = $frame->data;
 	//json转为PHP数组，必须转为PHP对象
 	$Data = json_decode($Data, true);
