@@ -286,7 +286,7 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 
 
 $ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($list,$file,$Plugins_name,$file_array,$database, $BOT_Config,$service_id){
-
+include './vendor/autoload.php';
 include_once './Module/Function.php';
 include_once './Module/Api.php';
 						
