@@ -286,12 +286,19 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 });
 
 
-$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($list,$file,$Plugins_name,$file_array,$database, $BOT_Config,$service_id){
+$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($database, $BOT_Config,$service_id){
+$list = glob('./Plugins/*.php');
+$file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
+for ($i = 0;$i < count($list);$i++) {
+					
+					
+						$file = $file_array[$i]["插件名"];
+						}
 include './vendor/autoload.php';
 include_once './Module/Function.php';
 include_once './Module/Api.php';
 						
-						include "./Plugins/".$file;
+						include_once "./Plugins/".$file;
 							$Plugins_name = explode('.', $file);
 							$Plugins_name = $Plugins_name[0];
 							$Plugins_name_function = "plugins_" . $Plugins_name;
