@@ -218,48 +218,17 @@ include_once './Module/Function.php';
 					//这里会对群的全局状态做出判断，但如果插件状态为关，也不会载入
 					if (json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"),true)["status"] === "开" || $Data['message_type'] === 'private'){
 					$file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
-                    //$barrier = Barrier::make();
 						for ($i = 0;$i < count($list);$i++) {
-					
-					
 						$file = $file_array[$i]["插件名"];
 						//插件状态判断
 						if ($file_array[$i]["状态"] == "开") {
-				/*$task_data = function()use ($list,$file,$Plugins_name,$file_array,$Data, $database, $BOT_Config,$ws,$service_id){
-
-						include_once './Module/Api.php';
-						
-						include_once "./Plugins/".$file;
-							$Plugins_name = explode('.', $file);
-							$Plugins_name = $Plugins_name[0];
-							$Plugins_name_function = "plugins_" . $Plugins_name;
-		
-							$Plugins_test = new $Plugins_name($Data, $database, $BOT_Config,$ws,$service_id);
-							$Plugins_return = $Plugins_test->$Plugins_name_function();
-							//$pm ->add($Plugins_test->$Plugins_name_function(),true);
-							//$Plugins_test -> __destruct();
-							if (isset($Plugins_return)) {
-								$ws->push($frame->fd,$Plugins_return);
-							}
-							
-
-							
-						
-						};
-						*/
-					
-						
-						
-						}
-						
-                    
 						if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
 								for ($i = 0;$i < count($list);$i++) {
 									$Menu_doc = explode('.', $file_array[$i]["插件名"]);
 									$doc_data = file_get_contents("./Doc/" . $Menu_doc[0] . "/" . $Menu_doc[0] . ".doc");
 									$doc_name = explode("]", $doc_data);
 									$doc_name = explode("[", $doc_name[0]);
-									file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc", ($i + 1) . $doc_name[1] . "\r\n", FILE_APPEND);
+									file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc",$doc_name[1] . "\r\n", FILE_APPEND);
 								}
 							}
 					}
@@ -292,13 +261,8 @@ include_once './Module/Function.php';
 include_once './Module/Api.php';
 $list = glob('./Plugins/*.php');
 $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
-for ($i = 0;$i < count($list);$i++) {
-					
-					
+                        for ($i = 0;$i < count($list);$i++) {
 						$file = $file_array[$i]["插件名"];
-						
-
-						
 						include_once "./Plugins/".$file;
 							$Plugins_name = explode('.', $file);
 							$Plugins_name = $Plugins_name[0];
@@ -306,15 +270,10 @@ for ($i = 0;$i < count($list);$i++) {
 		
 							$Plugins_test = new $Plugins_name($Data, $database, $BOT_Config,$ws,$service_id);
 							$Plugins_return = $Plugins_test->$Plugins_name_function();
-							//$pm ->add($Plugins_test->$Plugins_name_function(),true);
-							//$Plugins_test -> __destruct();
 							if (isset($Plugins_return)) {
 								$ws->push($frame->fd,$Plugins_return);
 							}
 							}
-    echo "新的异步任务[id={$task_id}]".PHP_EOL;
-    
-    
     //返回任务执行的结果
     $ws->finish("{$task_id} -> OK");
 });
