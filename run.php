@@ -220,8 +220,7 @@ include_once './Module/Function.php';
 					$file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
 						for ($i = 0;$i < count($list);$i++) {
 						$file = $file_array[$i]["插件名"];
-						//插件状态判断
-						if ($file_array[$i]["状态"] == "开") {
+						
 						if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
 								for ($i = 0;$i < count($list);$i++) {
 									$Menu_doc = explode('.', $file_array[$i]["插件名"]);
@@ -231,11 +230,8 @@ include_once './Module/Function.php';
 									file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc",$doc_name[1] . "\r\n", FILE_APPEND);
 								}
 							}
-							$task_id = $ws->task($Data);
-					}
-					
 				  }
-				  
+				  $task_id = $ws->task($Data);
 	
 		}
 		//Event控制
@@ -264,6 +260,8 @@ $list = glob('./Plugins/*.php');
 $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
                         for ($i = 0;$i < count($list);$i++) {
 						$file = $file_array[$i]["插件名"];
+						//插件状态判断
+						if ($file_array[$i]["状态"] == "开") {
 						include_once "./Plugins/".$file;
 							$Plugins_name = explode('.', $file);
 							$Plugins_name = $Plugins_name[0];
@@ -273,6 +271,7 @@ $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
 							$Plugins_return = $Plugins_test->$Plugins_name_function();
 							if (isset($Plugins_return)) {
 								$ws->push($frame->fd,$Plugins_return);
+							}
 							}
 							}
     //返回任务执行的结果
