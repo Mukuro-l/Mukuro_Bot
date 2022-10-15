@@ -123,10 +123,7 @@ use \Swoole\Timer;
 			}
 		}
         public function Rsend(int|string $Rmsg){
-            $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => '[CQ:reply,id=' .$this->msg_id.']'.$Rmsg]];
-            $submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
-            echo "bot回复消息：[" . $Rmsg . "]\n";
-            $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
+            $this->send('[CQ:reply,id=' .$this->msg_id.']'.$Rmsg);
         }
 		public function MC(array $option, string $msg):
 			bool {
@@ -155,7 +152,7 @@ use \Swoole\Timer;
 			]
 			];
 			$json = json_encode($json);
-			$this->send($json);
+			$this->ws->push(intval(file_get_contents("service_id")),$json);
 			echo "自定义转发消息\n";
 			
 			}
