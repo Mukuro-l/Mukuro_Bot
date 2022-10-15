@@ -151,7 +151,7 @@ use \Swoole\Timer;
 			]
 			]
 			];
-			$json = json_encode($json);
+			$json = json_encode($json,JSON_UNESCAPED_UNICODE);
 			$this->ws->push(intval(file_get_contents("service_id")),$json);
 			echo "自定义转发消息\n";
 			
