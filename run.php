@@ -246,7 +246,7 @@ include_once './Module/Function.php';
 	
 	}
 	}
-
+}
 });
 $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
     //投递异步任务
