@@ -137,12 +137,29 @@ use \Swoole\Timer;
 					}
 				}
 			}
-			/*public function Repost_Msg(string $data="我是六儿"){
-			$json = '["action" : "send_group_forward_msg", "params" : {"group_id" : "'.$this->qun.'", "message" :{{"type":"node","data":{"name":"Mukuro","uin":"'.$this->qq.'","content":{{"type":"text", "data":'.$data.'},},},}}}]';
+			//无法实现，原因不明
+			public function Repost_Msg(string $data="我是六儿"){
+			$json = ["action" =>"send_group_forward_msg", 
+			"params" =>["group_id" =>$this->qun,
+			"message"=>[
+			["type"=>"node",
+			"data"=>["name"=>"Mukuro",
+			"uin"=>$this->qq,
+			"content"=>[["type"=>"text",
+			"data"=>$data
+			],
+			],
+			],
+			]
+			]
+			]
+			];
+			$json = json_encode($json);
+			$this->send($json);
+			echo "自定义转发消息\n";
 			
-			return $json;
 			}
-			*/
+			
 			//即为Message search
 			public function MsgS(array $MsgS_Data) {
 					$msg = $MsgS_Data["msg"];
@@ -186,7 +203,7 @@ $this->send(file_get_contents("./Ocr/" . $time . "ocr.txt"));
 				//获取文件名后缀
 				$file_name_array=explode('.',$file_name);
 				//预定的文件类型
-				$Scheduled_type=["txt","jpg","png","jpeg","mp3","mp4"];
+				$Scheduled_type=["txt","jpg","png","jpeg","gif","mp3","mp4","amr","ma4"];
 				/*foreach($Scheduled_type as $return){
 				if (){
 				

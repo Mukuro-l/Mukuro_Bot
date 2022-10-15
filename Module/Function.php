@@ -306,7 +306,7 @@ $image = Image::canvas($_x, $_y, '#E6E6FA');
 function Curl(string $Url){
 //创建客户端
 $client = new Client([
-    'base_uri' => 'http://httpbin.org',
+    'base_uri' => $Url,
     'timeout'  => 2.0,
 ]);
 }
@@ -317,13 +317,12 @@ $client = new Client([
 *@date 2022.6.24
 */
 //frames需要数据流数组
-function To_Gif(array $frames, int $qq){
+function To_Gif(array $frames,array $durations=[40, 40, 40, 40]){
 //按照顺序设置一个包含每帧毫秒时间的数组
-$durations = [40, 40, 40, 40];
 $gc = new GifCreator();
 //设置循环，遵守数组元素数量
 $gc->create($frames, $durations, count($frames));
 //注意，这只会返回一个数据流
 $gifBinary = $gc->getGif();
-
+return $gifBinary;
 }
