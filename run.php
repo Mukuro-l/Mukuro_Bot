@@ -231,8 +231,9 @@ include_once './Module/Function.php';
 									file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc",$doc_name[1] . "\r\n", FILE_APPEND);
 								}
 							}
+							$task_id = $ws->task($Data);
 					}
-					$task_id = $ws->task($Data);
+					
 				  }
 				  
 	
