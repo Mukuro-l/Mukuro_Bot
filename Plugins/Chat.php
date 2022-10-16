@@ -3,7 +3,7 @@ use Mukuro\Module\Api;
 /**
 * @name 跨群聊天
 * @doc 通过机器人来在不同群聊聊天
-* @comment 跨群聊天
+* @comment 跨群聊天+群号
 * @return text
 */
 class Chat{
@@ -30,14 +30,13 @@ class Chat{
       }
       function plugins_Chat(){
       if ($this->msg == "跨群聊天"){
-      $this->Rsend("15秒之内输入目标群号");
-      $begin = $this->context("跨群聊天");
-      
-      if (preg_match("/^[0-9]+$/u",$begin[2],$return)){
-      $this->join_group($begin[2],$this->qun);
+      $this->Rsend("请在指令后加上群号哦");
+      }
+      if (preg_match("/^跨群聊天([0-9]+)$/u",$this->msg,$return)){
+      $this->join_group($return[1],$this->qun);
       
       }
       
-      }
+      
       }
 }
