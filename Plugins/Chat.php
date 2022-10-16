@@ -11,7 +11,7 @@ class Chat{
       function join_group(int $group_id,int $source){
       $this->Rsend("你可以在15秒内发送[取消]来退出\r\n或者在建立任务之后发送[取消]\r\n若15秒之内无任何响应，程序将会退出进程");
     
-      $begin1 = $this->context($group_id,$source);
+      $begin1 = $this->context("跨群聊天".$group_id,$source);
       if ($begin1[2]=="取消"){
       $this->Rsend("已取消");
       return;
