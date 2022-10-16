@@ -64,7 +64,7 @@ use \Swoole\Timer;
 				}
 			}
 		}
-		public function send(string | array $set_msg = "Mukuro要告诉官人，官人没有让六儿发送任何消息哦•᷄ࡇ•᷅",int $Get_user=null)  {
+		public function send(mixed $set_msg = "Mukuro要告诉官人，官人没有让六儿发送任何消息哦•᷄ࡇ•᷅",int $Get_user=null)  {
 			//如果类型为通知
             if ($this->post_type == "notice"){
                 $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
@@ -80,48 +80,40 @@ use \Swoole\Timer;
 				$this->ws->push(intval(file_get_contents("service_id")),$url);
 			}
 			//群聊
-			if ($this->msg_type == "group" and empty($Get_user)) {
+			if ($this->msg_type == "group" and !is_array($set_msg)) {
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
 				 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
 			}
 			//私聊
-			if ($this->msg_type == "private" and empty($Get_user)) {
+			if ($this->msg_type == "private" and !is_array($set_msg)) {
 				$url = ["action" => "send_private_msg", "params" => ["user_id" => $this->qq, "message" => $set_msg]];
 				$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
 				$this->ws->push(intval(file_get_contents("service_id")),$url);
 			}
 			//自定义
-			if (is_array($set_msg) == true) {
-				if ($set_msg["S_type"] == "group") {
-					$url = array("action" => "send_group_msg", "params" => array("group_id" => $set_msg["qun"], "message" => $set_msg["msg"]));
-					$url = json_encode($url, JSON_UNESCAPED_UNICODE);
-					echo "bot发送消息：[" . $set_msg["msg"] . "]\n";
-					$this->ws->push(intval(file_get_contents("service_id")),$url);
-				}
-				if ($set_msg["S_type"] == "private") {
-					$url = array("action" => "send_private_msg", "params" => array("user_id" => $set_msg["qq"], "message" => $set_msg["msg"]));
-					$url = json_encode($url, JSON_UNESCAPED_UNICODE);
-					echo "bot发送消息：[" . $set_msg["msg"] . "]\n";
-					$this->ws->push(intval(file_get_contents("service_id")),$url);
-				}
-				//指定发送方式
-				if ($set_msg["S_type"] == "私聊") {
-					$url = array("action" => "send_private_msg", "params" => array("user_id" => $set_msg["qq"], "message" => $set_msg["msg"]));
-					$url = json_encode($url, JSON_UNESCAPED_UNICODE);
-					echo "bot发送消息：[" . $set_msg["msg"] . "]\n";
-				$this->ws->push(intval(file_get_contents("service_id")),$url);
-				}
-				if ($set_msg["S_type"] == "群聊") {
-					$url = array("action" => "send_group_msg", "params" => array("group_id" => $set_msg["qun"], "message" => $set_msg["msg"]));
-					$url = json_encode($url, JSON_UNESCAPED_UNICODE);
-					echo "bot发送消息：[" . $set_msg["msg"] . "]\n";
-					$this->ws->push(intval(file_get_contents("service_id")),$url);
-				}
+			//格式 ["send_private_msg",1940826077,"你好"]
+			if (is_array($set_msg)) {
+			if (count($set_msg)==3){
+			if ($set_msg[0]=="send_group_msg"){
+			$url = ["action" => "send_group_msg", "params" => ["group_id" => $set_msg[1], "message" => $set_msg[2]]];
+				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				echo "bot发送消息：[" . $set_msg . "]\n";
+				 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
+			}else if ($set_msg[0]=="send_private_msg"){
+			$url = ["action" => "send_private_msg", "params" => ["user_id" => $set_msg[1], "message" => $set_msg[2]]];
+				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				echo "bot发送私聊：[" . $set_msg . "]\n";
+				 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
 			}
+			}else{
+			echo "提供的参数不正确，自定义发送失败\n";
+			}
+				}
 		}
+		public function Mkuro_data
         public function Rsend(int|string $Rmsg){
             $this->send('[CQ:reply,id=' .$this->msg_id.']'.$Rmsg);
         }
@@ -234,11 +226,11 @@ echo "at类型\n";
 print_r($str_type1);
 print_r($str_type2);
 				}
-				    //上下文 $msg即为你想要定位的消息，函数会一直根据这条消息来获取上下文
-				    public function context(string | int $msg,string | int $send_msg=null) {
-						if (isset($send_msg)){
-						$this -> Rsend($send_msg);
-						}
+				    //上下文 $msg即为你想要定位的消息，函数会一直根据这条消息来获取上下文，二参数为指定获取的群聊，三参数为超时时间s(为0则不超时)
+				    public function context(string | int $msg,int $group_id=null,int $timeout=15) {
+				    if ($group_id!==null){
+				    $this->qun=$group_id;
+				    }
 						$url = "http://127.0.0.1:".$this -> http_port."/get_group_msg_history?message_seq=&group_id=".$this -> qun;
 						//获取到的历史记录
 						$json = json_decode(file_get_contents($url),true);
@@ -289,32 +281,23 @@ print_r($str_type2);
 													}
                             
             
-                                                    if ((date("His")-$Timer)>15 ){
-                                                        echo "超时\n";
-                                                        $this->send("超时已退出");
-                                                        return;
+                                                    if ((date("His")-$Timer)>$timeout&&$timeout!==0 ){
+                                                    $this->Rsend("超时已退出");
+                                                    return;
                                                     }
 													}while ($context[2]==$msg);
 										
 	}
 					//即为Get friends
-					public function GF():string {
-						if (is_file('./Data/Text/GF.txt')){
-							unlink('./Data/Text/GF.txt');
-						}
+					public function GF():array {
 							$url = "http://127.0.0.1:" . $this->http_port . "/get_friend_list";
 							$Data = json_decode(file_get_contents($url), true);
-							for ($i = 0;$i < count($Data["data"]);$i++) {
-								$list = "ID：" . $i . "\r\nQQ：" . $Data["data"][$i]["user_id"] . "\r\n昵称：" . $Data["data"][$i]["nickname"] . "\r\n备注：" . $Data["data"][$i]["remark"] . "\r\n\r\n";
-								file_put_contents("./Data/Text/GF.txt", $list, FILE_APPEND);
-							}
-							return Text_Images("./Data/Text/GF.txt", $this->qq);
+						return $data["data"];
 						}
 						public function DF(int $user_id):string {
-							$BOT_Config = json_decode(file_get_contents("config.json"), true);
-							$url = "http://127.0.0.1:" . $BOT_Config["http_port"] . "/delete_friend?friend_id=" . $user_id;
+							$url = "http://127.0.0.1:" . $this->http_port . "/delete_friend?friend_id=" . $user_id;
 							file_get_contents($url);
-							return "已删除好友" . $user_id;
+						$this->Rsend("已删除好友".$user_id);
 						}
 						public function real_ip($type = 0) {
 							$ip = $_SERVER['REMOTE_ADDR'];
