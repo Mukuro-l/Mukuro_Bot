@@ -113,7 +113,7 @@ use \Swoole\Timer;
 			}
 				}
 		}
-		public function Mkuro_data
+	
         public function Rsend(int|string $Rmsg){
             $this->send('[CQ:reply,id=' .$this->msg_id.']'.$Rmsg);
         }
