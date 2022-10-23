@@ -249,6 +249,7 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
     echo "投递异步任务: id={$task_id}\n";
 });
 $service_id = $frame->fd;
+print($service_id);
 
 $ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($database, $BOT_Config,$service_id){
 include './vendor/autoload.php';
