@@ -95,6 +95,8 @@ $ws->on('Open', function ($ws, $request) {
 	//连接打开
 	include_once "connection_opens.php";
 });
+$service_id = $frame->fd;
+print($service_id);
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 
@@ -248,8 +250,7 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
     $task_id = $ws->task($frame->data);
     echo "投递异步任务: id={$task_id}\n";
 });
-$service_id = $frame->fd;
-print($service_id);
+
 
 $ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($database, $BOT_Config,$service_id){
 include './vendor/autoload.php';
