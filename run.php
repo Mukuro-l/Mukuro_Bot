@@ -15,6 +15,10 @@ use Swoole\Coroutine;
 if (!strstr("swoole",exec("php -m"))){
 exit("未检测到Swoole扩展，请参考wiki.swoole.com \n");
 }
+if (!strstr("zip",exec("php -m"))){
+echo "未检测到php-zip扩展，正在尝试安装\n";
+system("sudo apt install -y php-zip");
+}
 if (!is_file("../gocq/go-cqhttp")){
 echo "将会在5秒后下载对应版本的go-cqhttp\n取消请Ctrl + c\n";
 Swoole\Timer::after(5000,function(){
@@ -33,11 +37,13 @@ if (empty($go_cq)){
 echo "国内GitHub CDN加速下载失败，正在切换到GitHub官方下载\n";
 $go_cq = file_get_contents("https://cdn.githubjs.cf/Mrs4s/go-cqhttp/releases/download/v1.0.0-rc3/go-cqhttp_linux_".$Version.".tar.gz");
 file_put_contents("../gocq/gocq.tar.gz",$go_cq);
-system("sudo cd ".dirname(__DIR__)."/gocq/ && tar -xzf gocq.tar.gz && rm gocq.tar.gz");
+system("sudo tar -xzf ../gocq/gocq.tar.gz");
+system("sudo rm ../gocq/gocq.tar.gz");
 echo "成功\n";
 }else{
 file_put_contents("../gocq/gocq.tar.gz",$go_cq);
-system("sudo cd ".dirname(__DIR__)."/gocq/ && tar -xzf gocq.tar.gz && rm gocq.tar.gz");
+system("sudo tar -xzf ../gocq/gocq.tar.gz");
+system("sudo rm ../gocq/gocq.tar.gz");
 echo "成功\n";
 }
 }
@@ -98,10 +104,7 @@ $ws->on('Open', function ($ws, $request) {
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 
-if (!is_file("service_id")){
-file_put_contents("service_id",$frame->fd);
-$service_id = file_get_contents("service_id");
-}
+$service_id = $frame->fd;
 //避免一些错误
 include_once 'initialization.php';
 
@@ -234,6 +237,7 @@ include_once './Module/Function.php';
 				  $task_id = $ws->task($Data);
 	
 		}
+		}
 		//Event控制
 		if (@$Data["post_type"] === "notice"){
 	//载入模块
@@ -242,7 +246,7 @@ include_once './Module/Function.php';
 	$Event->plugins_Event();
 	
 	}
-	}
+	
 }
 });
 $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
