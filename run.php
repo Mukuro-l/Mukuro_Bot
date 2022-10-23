@@ -95,8 +95,7 @@ $ws->on('Open', function ($ws, $request) {
 	//连接打开
 	include_once "connection_opens.php";
 });
-$service_id = $frame->fd;
-print($service_id);
+
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 
@@ -117,6 +116,8 @@ include_once './Module/Function.php';
 			print_r($Data);
 		}
 	}
+	$service_id = $frame->fd;
+	$Data[]=["service_id"=>$service_id];
 	if (@$Data['meta_event_type'] !== 'heartbeat' && @$Data['meta_event_type'] !== 'lifecycle') {
 		if (@$Data['status'] === null &&@$Data["post_type"] === "message") {
 		//这里进行载入为了避免不必要的数据
@@ -252,7 +253,8 @@ $ws->on('Receive', function($ws, $fd, $reactor_id, $task_data) {
 });
 
 
-$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($database, $BOT_Config,$service_id){
+$ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($database, $BOT_Config){
+
 include './vendor/autoload.php';
 include_once './Module/Function.php';
 include_once './Module/Api.php';
@@ -267,7 +269,7 @@ $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
 							$Plugins_name = $Plugins_name[0];
 							$Plugins_name_function = "plugins_" . $Plugins_name;
 		
-							$Plugins_test = new $Plugins_name($Data, $database, $BOT_Config,$ws,$service_id);
+							$Plugins_test = new $Plugins_name($Data, $database, $BOT_Config,$ws);
 							$Plugins_return = $Plugins_test->$Plugins_name_function();
 							if (isset($Plugins_return)) {
 								$ws->push($frame->fd,$Plugins_return);
