@@ -27,9 +27,11 @@ use \Swoole\Timer;
 		public $super_user;
 		public $http_port;
 		public $self_id;
+		public $service_id;
 		public function __construct($Data, $database, $BOT_Config,$ws) {
-		$this -> ws = $ws;
-		$this -> database = $database;
+		$this->ws = $ws;
+		$this->database = $database;
+		$this->service_id = $service_id;
 	
 			if (is_array($Data)) {
 				if (@$Data['meta_event_type'] != 'heartbeat') {
@@ -70,28 +72,28 @@ use \Swoole\Timer;
                 $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
                 $submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
                 echo "bot发送消息：[" . $set_msg . "]\n";
-                $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
+                $this->ws->push(intval($this->service_id),$submit_data);
             }
 			//指定QQ号私聊
 			if (!empty($Get_user)){
 				$url = ["action" => "send_private_msg", "params" => ["user_id" => $Get_user, "message" => $set_msg]];
 				$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送私聊消息：[" . $set_msg . "]\n";
-				$this->ws->push(intval(file_get_contents("service_id")),$url);
+				$this->ws->push(intval($this->service_id),$url);
 			}
 			//群聊
 			if ($this->msg_type == "group" and !is_array($set_msg)) {
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
-				 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
+				 $this->ws->push(intval($this->service_id),$submit_data);
 			}
 			//私聊
 			if ($this->msg_type == "private" and !is_array($set_msg)) {
 				$url = ["action" => "send_private_msg", "params" => ["user_id" => $this->qq, "message" => $set_msg]];
 				$url = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
-				$this->ws->push(intval(file_get_contents("service_id")),$url);
+				$this->ws->push(intval($this->service_id),$url);
 			}
 			//自定义
 			//格式 ["send_private_msg",1940826077,"你好"]
@@ -101,12 +103,12 @@ use \Swoole\Timer;
 			$url = ["action" => "send_group_msg", "params" => ["group_id" => $set_msg[1], "message" => $set_msg[2]]];
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送消息：[" . $set_msg . "]\n";
-				 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
+				 $this->ws->push(intval($this->service_id),$submit_data);
 			}else if ($set_msg[0]=="send_private_msg"){
 			$url = ["action" => "send_private_msg", "params" => ["user_id" => $set_msg[1], "message" => $set_msg[2]]];
 				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
 				echo "bot发送私聊：[" . $set_msg . "]\n";
-				 $this->ws->push(intval(file_get_contents("service_id")),$submit_data);
+				 $this->ws->push(intval($this->service_id),$submit_data);
 			}
 			}else{
 			echo "提供的参数不正确，自定义发送失败\n";
@@ -144,7 +146,7 @@ use \Swoole\Timer;
 			]
 			];
 			$json = json_encode($json,JSON_UNESCAPED_UNICODE);
-			$this->ws->push(intval(file_get_contents("service_id")),$json);
+			$this->ws->push(intval($this->service_id),$json);
 			echo "自定义转发消息\n";
 			
 			}
