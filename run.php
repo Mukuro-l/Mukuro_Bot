@@ -94,12 +94,6 @@ $ws->set([
 $ws->on('Open', function ($ws, $request) {
 	//连接打开
 	include_once "connection_opens.php";
-	//载入定时器并启动
-	include_once './Module/Timer.php';
-	//为了避免非正常关闭带来的无法push
-	if (is_file("service_id")){
-	unlink("service_id");
-	}
 });
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
