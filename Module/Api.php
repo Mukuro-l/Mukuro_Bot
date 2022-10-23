@@ -31,7 +31,7 @@ use \Swoole\Timer;
 		public function __construct($Data, $database, $BOT_Config,$ws) {
 		$this->ws = $ws;
 		$this->database = $database;
-		$this->service_id = $Data["service_id"];
+		$this->service_id = $Data[0]["service_id"];
 	
 			if (is_array($Data)) {
 				if (@$Data['meta_event_type'] != 'heartbeat') {
