@@ -110,14 +110,15 @@ include_once './Module/Function.php';
 	$Data = $frame->data;
 	//json转为PHP数组，必须转为PHP对象
 	$Data = json_decode($Data, true);
+	$service_id = $frame->fd;
+	$Data[]=["service_id"=>$service_id];
 	//输出data
 	if ($BOT_Config["Return_Data"] == true) {
 		if (@$Data['meta_event_type'] != 'heartbeat') {
 			print_r($Data);
 		}
 	}
-	$service_id = $frame->fd;
-	$Data[]=["service_id"=>$service_id];
+	
 	if (@$Data['meta_event_type'] !== 'heartbeat' && @$Data['meta_event_type'] !== 'lifecycle') {
 		if (@$Data['status'] === null &&@$Data["post_type"] === "message") {
 		//这里进行载入为了避免不必要的数据
