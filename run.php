@@ -145,7 +145,7 @@ include_once './Module/Function.php';
 				$Config_data = json_encode($BOT_Config, JSON_UNESCAPED_UNICODE);
 	file_put_contents("config.json", $Config_data);
 	system("chmod +x restart.sh");
-	system("nohup ./restart.sh &");
+	exec("nohup ./restart.sh &> /dev/null & echo $! > pidfile.txt");
 				
 		}
 				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>"现在是无主模式，请查看控制台输出\n" ]];
