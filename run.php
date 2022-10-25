@@ -141,7 +141,12 @@ include_once './Module/Function.php';
 		if (@$Data['status'] === null &&@$Data["post_type"] === "message") {
 		if ($Data['message_type']==="private"&&$Data["user_id"]==$BOT_Config["qhost"]){
 		if ($Data['message'] === "!/终止"){
-		exit("程序已退出\n");
+		$Swoole_pid=exec("netstat -tunlp|grep ".$BOT_Config["port"]);
+		$Swoole_arr=trim($Swoole_pid);
+		$Swoole_arr=explode("LISTEN",$Swoole_arr);
+		$Swoole_arr=trim($Swoole_arr[1]);
+		$Swoole_arr=explode("/",$Swoole_arr);
+		system("kill ".$Swoole_arr[0]);
 		}
 		
 		}
