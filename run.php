@@ -108,10 +108,7 @@ $ws->on('Open', function ($ws, $request)use($BOT_Config) {
     include_once './Module/Function.php';
 	//连接打开
 	include_once "connection_opens.php";
-	if (is_file("Restart")){
-	unlink("Restart");
-	Send(["send_private_msg",$BOT_Config["qhost"],"[notification]:Mukuro_Bot已重启"]);
-	}
+	
 });
 
 //监听WebSocket消息事件
@@ -135,6 +132,13 @@ include_once './Module/Function.php';
 		if (@$Data['meta_event_type'] != 'heartbeat') {
 			print_r($Data);
 		}
+	}
+	
+	if (is_file("Restart")){
+	unlink("Restart");
+		$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $BOT_Config["qhost"] ,"message" =>"[notification]:Mukuro_Bot已重启" ]];
+				$submit_data = Json($url);
+				$ws->push($frame->fd,$submit_data);
 	}
 	
 	if (@$Data['meta_event_type'] !== 'heartbeat' && @$Data['meta_event_type'] !== 'lifecycle') {
