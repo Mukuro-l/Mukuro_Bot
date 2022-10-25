@@ -70,28 +70,28 @@ use \Swoole\Timer;
 			//如果类型为通知
             if ($this->post_type == "notice"){
                 $url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
-                $submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+                $submit_data = Json($url);
                 echo "bot发送消息：[" . $set_msg . "]\n";
                 $this->ws->push(intval($this->service_id),$submit_data);
             }
 			//指定QQ号私聊
 			if (!empty($Get_user)){
 				$url = ["action" => "send_private_msg", "params" => ["user_id" => $Get_user, "message" => $set_msg]];
-				$url = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$url = Json($url);
 				echo "bot发送私聊消息：[" . $set_msg . "]\n";
 				$this->ws->push(intval($this->service_id),$url);
 			}
 			//群聊
 			if ($this->msg_type == "group" and !is_array($set_msg)) {
 				$url = ["action" => "send_group_msg", "params" => ["group_id" => $this->qun, "message" => $set_msg]];
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				echo "bot发送消息：[" . $set_msg . "]\n";
 				 $this->ws->push(intval($this->service_id),$submit_data);
 			}
 			//私聊
 			if ($this->msg_type == "private" and !is_array($set_msg)) {
 				$url = ["action" => "send_private_msg", "params" => ["user_id" => $this->qq, "message" => $set_msg]];
-				$url = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$url = Json($url);
 				echo "bot发送消息：[" . $set_msg . "]\n";
 				$this->ws->push(intval($this->service_id),$url);
 			}
@@ -101,12 +101,12 @@ use \Swoole\Timer;
 			if (count($set_msg)==3){
 			if ($set_msg[0]=="send_group_msg"){
 			$url = ["action" => "send_group_msg", "params" => ["group_id" => $set_msg[1], "message" => $set_msg[2]]];
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				echo "bot发送消息：[" . $set_msg . "]\n";
 				 $this->ws->push(intval($this->service_id),$submit_data);
 			}else if ($set_msg[0]=="send_private_msg"){
 			$url = ["action" => "send_private_msg", "params" => ["user_id" => $set_msg[1], "message" => $set_msg[2]]];
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				echo "bot发送私聊：[" . $set_msg . "]\n";
 				 $this->ws->push(intval($this->service_id),$submit_data);
 			}
@@ -119,6 +119,7 @@ use \Swoole\Timer;
         public function Rsend(int|string $Rmsg){
             $this->send('[CQ:reply,id=' .$this->msg_id.']'.$Rmsg);
         }
+        
 		public function MC(array $option, string $msg):
 			bool {
 				$quantity = count($option);
@@ -290,6 +291,29 @@ print_r($str_type2);
 													}while ($context[2]==$msg);
 										
 	}
+	                //重启服务$time为是否延时
+	                public function Restart(int $time=0){
+	                $this->Rsend("是否重启Mukuro_Bot服务？\r\n 输入y(是)或者n(否)");
+	                $return = $this->context("!/重启");
+	                if (!empty($return[2])){
+	                if ($return[2]=="y"){
+	                if ($time!==0){
+	                \Swoole\Timer::after($time,function(){
+	                file_put_contents("Restart",$this->super_user);
+	                exec("nohup ./restart.sh &> /dev/null & echo $! > pidfile.txt");
+	                });
+	                }else{
+	                file_put_contents("Restart",$this->super_user);
+	                exec("nohup ./restart.sh &> /dev/null & echo $! > pidfile.txt");
+	                }
+	                
+	                }else if ($return[2]=="n"){
+	                $this->Rsend("六儿已经为官人取消了");
+	                
+	                }
+	                }
+	                
+	                }
 					//即为Get friends
 					public function GF():array {
 							$url = "http://127.0.0.1:" . $this->http_port . "/get_friend_list";
