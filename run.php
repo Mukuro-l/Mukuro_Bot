@@ -139,6 +139,12 @@ include_once './Module/Function.php';
 	
 	if (@$Data['meta_event_type'] !== 'heartbeat' && @$Data['meta_event_type'] !== 'lifecycle') {
 		if (@$Data['status'] === null &&@$Data["post_type"] === "message") {
+		if ($Data['message_type']==="private"&&$Data["user_id"]==$BOT_Config["qhost"]){
+		if ($Data['message'] === "!/终止"){
+		exit("程序已退出\n");
+		}
+		
+		}
 		if ($BOT_Config["qhost"] === 0&&$Data['message_type']==="private"){
 		if ($Data['message'] === "!/Mukuro"){
 		$bothost = $Data['user_id'];
