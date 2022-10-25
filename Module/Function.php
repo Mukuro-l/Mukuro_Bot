@@ -10,21 +10,7 @@ function Json(array $jsonData){
 return json_encode($jsonData, JSON_UNESCAPED_UNICODE);
 }
 
-function Send(array $data){
-if (count($data)==3){
-			if ($data[0]=="send_group_msg"){
-			$url = ["action" => "send_group_msg", "params" => ["group_id" => $data[1], "message" => $data[2]]];
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
-				echo "bot发送消息：[" . $data[2] . "]\n";
-				$ws->push($frame->fd,$submit_data);
-			}else if ($data[0]=="send_private_msg"){
-			$url = ["action" => "send_private_msg", "params" => ["user_id" => $data[1], "message" => $data[2]]];
-				$submit_data = Json($data);
-				echo "bot发送私聊：[" . $data[2] . "]\n";
-				 $ws->push($frame->fd,$submit_data);
-			}
-}
-}
+
 
 /**
 *@author Mukuro-l
