@@ -13,7 +13,7 @@ if ($this->msg=="!/重启"){
 if ($this->qq !==$this->super_user){
 $this->Rsend("六儿，只听官人的话");
 }else{
-$this->Restart(5000);
+$this->Restart();
 }
 }
 }
