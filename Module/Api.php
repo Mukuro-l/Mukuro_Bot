@@ -293,24 +293,25 @@ print_r($str_type2);
 	}
 	                //重启服务$time为是否延时
 	                public function Restart(int $time=0){
+	                if ($time!==0){
 	                $this->Rsend("是否重启Mukuro_Bot服务？\r\n 输入y(是)或者n(否)");
 	                $return = $this->context("!/重启");
 	                if (!empty($return[2])){
 	                if ($return[2]=="y"){
-	                if ($time!==0){
+	                
 	                \Swoole\Timer::after($time,function(){
 	                file_put_contents("Restart",$this->super_user);
 	                exec("nohup ./restart.sh &> /dev/null & echo $! > pidfile.txt");
 	                });
-	                }else{
-	                file_put_contents("Restart",$this->super_user);
-	                exec("nohup ./restart.sh &> /dev/null & echo $! > pidfile.txt");
-	                }
-	                
 	                }else if ($return[2]=="n"){
 	                $this->Rsend("六儿已经为官人取消了");
 	                
 	                }
+	                }
+	                }else{
+	                $this->Rsend("Mukuro_Bot正在重启，请注意私聊……");
+	                file_put_contents("Restart",$this->super_user);
+	                exec("nohup ./restart.sh &> /dev/null & echo $! > pidfile.txt");
 	                }
 	                
 	                }
