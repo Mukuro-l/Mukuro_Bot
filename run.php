@@ -11,13 +11,26 @@
 use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use Swoole\Coroutine;
-//运行环境检测，现只支持Linux系统
+//运行环境检测，现只支持Linux系统，且不支持多php版本环境
 if (!strstr("swoole",exec("php -m"))){
 exit("未检测到Swoole扩展，请参考wiki.swoole.com \n");
 }
 if (!strstr("zip",exec("php -m"))){
 echo "未检测到php-zip扩展，正在尝试安装\n";
 system("sudo apt install -y php-zip");
+}
+
+if (!strstr("gd",exec("php -m"))){
+echo "未检测到gd处理库，正在尝试安装\n";
+system("sudo apt install -y php-gd");
+}
+if (!strstr("imagick",exec("php -m"))){
+echo "未检测到imagick处理库，正在尝试安装\n";
+system("sudo apt install -y php-imagick");
+}
+if (!strstr("redis",exec("php -m"))){
+echo "未检测到redis扩展，请确保系统有Redis数据库，正在尝试安装扩展\n";
+system("sudo apt install -y php-redis");
 }
 if (!is_file("../gocq/go-cqhttp")){
 echo "将会在5秒后下载对应版本的go-cqhttp\n取消请Ctrl + c\n";
@@ -121,9 +134,27 @@ include_once './Module/Function.php';
 	
 	if (@$Data['meta_event_type'] !== 'heartbeat' && @$Data['meta_event_type'] !== 'lifecycle') {
 		if (@$Data['status'] === null &&@$Data["post_type"] === "message") {
-		//这里进行载入为了避免不必要的数据
-		
-			
+		if ($BOT_Config["qhost"] === 0&&$Data['message_type']==="private"){
+		if ($Data['message'] === "!/Mukuro"){
+		$Detailed_description="version:v1.1.6\r\n欢迎使用Mukuro_Bot开发框架\r\n现已认证主人[$Data['user_id']]\r\n[M-开]在一个群聊中发送这条指令即可开启群聊\r\n[M-闭]来关闭群聊\r\n[M-插件名]来合成插件的注释并发送，可在[Doc]文件夹编辑\r\n将在5秒后重启Mukuro_Bot服务，请留意go-cqhttp控制台输出";
+		$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>$Detailed_description ]];
+				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$ws->push($frame->fd,$submit_data);
+				$BOT_Config["qhost"]=$Data['user_id'];
+				$Config_data = json_encode($BOT_Config, JSON_UNESCAPED_UNICODE);
+	file_put_contents("config.json", $Config_data);
+	system("chmod +x restart.sh");
+	system("./restart.sh");
+				
+		}
+				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>"现在是无主模式，请查看控制台输出\n" ]];
+				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$ws->push($frame->fd,$submit_data);
+				echo "[notification]：目前无主人状态，现私聊发送[!/Mukuro]即可完成认证\n";
+				
+				
+				}
+		//这里进行载入为了避免不必要的数据			
 			    $list = glob('./Plugins/*.php');
 			    $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
 				
@@ -179,6 +210,7 @@ include_once './Module/Function.php';
 				}
 				}
 				}else{
+				
 				if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭" ){
 				for ($i=0;$i<count($file_array);$i++){
 				
