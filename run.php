@@ -104,9 +104,14 @@ $ws->set([
 
 
 //监听WebSocket连接打开事件
-$ws->on('Open', function ($ws, $request) {
+$ws->on('Open', function ($ws, $request)use($BOT_Config) {
+    include_once './Module/Function.php';
 	//连接打开
 	include_once "connection_opens.php";
+	if (is_file("Restart")){
+	unlink("Restart");
+	Send(["send_private_msg",$BOT_Config["qhost"],"[notification]:Mukuro_Bot已重启"]);
+	}
 });
 
 //监听WebSocket消息事件
@@ -139,7 +144,7 @@ include_once './Module/Function.php';
 		$bothost = $Data['user_id'];
 		$Detailed_description="version:v1.1.6\r\n欢迎使用Mukuro_Bot开发框架\r\n现已认证主人[$bothost]\r\n[M-开]在一个群聊中发送这条指令即可开启群聊\r\n[M-闭]来关闭群聊\r\n[M-插件名]来合成插件的注释并发送，可在[Doc]文件夹编辑\r\n将在5秒后重启Mukuro_Bot服务，请留意go-cqhttp控制台输出";
 		$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>$Detailed_description ]];
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				$ws->push($frame->fd,$submit_data);
 				$BOT_Config["qhost"]=$Data['user_id'];
 				$Config_data = json_encode($BOT_Config, JSON_UNESCAPED_UNICODE);
@@ -149,7 +154,7 @@ include_once './Module/Function.php';
 				
 		}
 				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>"现在是无主模式，请查看控制台输出\n" ]];
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				$ws->push($frame->fd,$submit_data);
 				echo "[notification]：目前无主人状态，现私聊发送[!/Mukuro]即可完成认证\n";
 				
@@ -163,7 +168,7 @@ include_once './Module/Function.php';
 					if (!is_file("./Group/".$Data['group_id']."/config.json")&&!empty($Data['group_id'])){
 					mkdir("./Group/".$Data['group_id']);
 					$Group_data = ["status"=>"关"];
-					file_put_contents("./Group/".$Data['group_id']."/config.json",json_encode($Group_data, JSON_UNESCAPED_UNICODE));
+					file_put_contents("./Group/".$Data['group_id']."/config.json",Json($Group_data));
 					
 					}
 					
@@ -178,10 +183,10 @@ include_once './Module/Function.php';
 					}
 					$Jiezhu_data=json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"),true);
 					$Jiezhu_data["status"]=$Jiezhu[1];
-					file_put_contents("./Group/".$Data['group_id']."/config.json",json_encode($Jiezhu_data, JSON_UNESCAPED_UNICODE));
+					file_put_contents("./Group/".$Data['group_id']."/config.json",Json($Jiezhu_data));
 					
 					$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>"官人～六儿把群[".$Data['group_id']."]".$instruction."｜д•´)!!" ]];
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				$ws->push($frame->fd,$submit_data);
 				}
 				if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭" ){
@@ -201,7 +206,7 @@ include_once './Module/Function.php';
 				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>$menu_data_code ]];
 				
 				}
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				$ws->push($frame->fd,$submit_data);
 				}
 				}
@@ -230,7 +235,7 @@ include_once './Module/Function.php';
 				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>$menu_data_code ]];
 				
 				}
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				$ws->push($frame->fd, $submit_data);
 				}
 				continue;
@@ -242,7 +247,7 @@ include_once './Module/Function.php';
 				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦"]];
 				
 				}
-				$submit_data = json_encode($url, JSON_UNESCAPED_UNICODE);
+				$submit_data = Json($url);
 				$ws->push($frame->fd,$submit_data);
 				}
 				}
@@ -317,7 +322,6 @@ $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
 //监听WebSocket连接关闭事件
 @$ws->on('Close', function ($ws, $fd) {
 	echo "go-cqhttp客户端：-{$fd} 已关闭\n";
-	unlink("service_id");
 });
 
 
