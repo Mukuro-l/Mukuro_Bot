@@ -57,7 +57,7 @@ TODO：
 # 配置Mukuro_Bot  
 - 打开[Module]文件夹  
 - 在Config.php文件内配置  
-- 返回根目录，**在根目录执行：```unzip vendor.zip```**
+- ~~返回根目录，**在根目录执行：```unzip vendor.zip```**~~
 # 启动  
 - 需先配置完毕，直接在Mukuro_Bot根目录```php run.php```即可  
 - ~~如果没有执行权限请```chmod 777 run```~~
