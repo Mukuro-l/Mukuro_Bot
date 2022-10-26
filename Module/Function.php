@@ -10,7 +10,9 @@ function Json(array $jsonData){
 return json_encode($jsonData, JSON_UNESCAPED_UNICODE);
 }
 
-
+function de_Json($jsonData):array{
+return json_decode($jsonData,true);
+}
 
 /**
 *@author Mukuro-l

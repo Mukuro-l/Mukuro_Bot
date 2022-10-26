@@ -229,8 +229,8 @@ echo "at类型\n";
 print_r($str_type1);
 print_r($str_type2);
 				}
-				    //上下文 $msg即为你想要定位的消息，函数会一直根据这条消息来获取上下文，二参数为指定获取的群聊，三参数为超时时间s(为0则不超时)
-				    public function context(string | int $msg,int $group_id=null,int $timeout=15) {
+				    //上下文 $msg即为你想要定位的消息(或者获取最新消息的群号数组)，函数会一直根据这条消息来获取上下文，二参数为指定获取的群聊，三参数为超时时间s(为0则不超时)
+				    public function context(mixed $msg=null,int $group_id=null,int $timeout=15) {
 				    if ($group_id!==null){
 				    $this->qun=$group_id;
 				    }
@@ -245,6 +245,16 @@ print_r($str_type2);
 						$context = [];
                         //设置一个定时器，超时退出循环
                         $Timer = date("His");
+                        //判断是否获取最新群消息消息，并循环获取最新群消息返回
+                        if (is_array($msg)){
+                        foreach ($msg as $group){
+                        $url = "http://127.0.0.1:".$this -> http_port."/get_group_msg_history?message_seq=&group_id=".$group;
+                        $json = json_decode(file_get_contents($url),true);
+                        
+                        }
+                        
+                        }else{
+                        
 						do {
 							unset($result);
 							unset($context);
@@ -282,6 +292,7 @@ print_r($str_type2);
 													if ($context[2] !== $msg && $context[1] !== null){
 													return $context;
 													}
+													
                             
             
                                                     if ((date("His")-$Timer)>$timeout&&$timeout!==0 ){
@@ -289,6 +300,7 @@ print_r($str_type2);
                                                     return;
                                                     }
 													}while ($context[2]==$msg);
+													}
 										
 	}
 	                //重启服务$time为是否延时
@@ -315,6 +327,51 @@ print_r($str_type2);
 	                }
 	                
 	                }
+	                //文件夹检索，$Dir欲检索文件夹，$select排除文件 false排除，true不排除
+	                function File_retrieval(string $Dir="./", bool $select=false):array{
+	                $data = scandir($Dir);
+	                $group_dir = [];
+	                if ($select == false){
+	                foreach ($data as $return){
+	                if ($return == '.' || $return == '..'){
+	                continue;
+	                }
+	                if (is_dir($dir.$return)){
+	                $group_dir[] = $return;
+	                }
+	                }
+	                return $group_dir;
+	                }else{
+	                foreach ($data as $return){
+	                if ($return == '.' || $return == '..'){
+	                continue;
+	                }
+	                $group_dir[] = $return;
+	                }
+	                return $group_dir;
+	                }
+	                
+	                }
+	                //广播消息，不可循环调用！$Group_list群号数组[114514,1998225] $Group_msg需要广播的消息
+	                function Group_Send(array $Group_list,string | int $Group_msg="未设置任何广播消息"){
+	                $Group=[];
+	                foreach ($Group_list as $Group_int){
+	                $condition = de_Json(file_get_contents("./Group/".$Group_int."/config.json"));
+	                if ($condition["状态"]=="关"){
+	                continue;
+	                }else{
+	                $Group[]=$Group_int;
+	                }
+	                }
+	                
+	                foreach ($Group as $To_Groups){
+	                $this->send(["send_group_msg",$To_Groups,$Group_msg]);
+	                echo "bot向群[$To_Groups]广播消息：[$Group_msg]\n";
+	                
+	                }
+	                
+	                }
+	                
 					//即为Get friends
 					public function GF():array {
 							$url = "http://127.0.0.1:" . $this->http_port . "/get_friend_list";
@@ -438,22 +495,31 @@ print_r($str_type2);
 								}
 							}
 						}
-						public function UD() {
-						}
-						public function __destruct() {
-						}
 					}
-				//}
-
-//namespace Mukuro\Module\Run;
-if (!class_exists("CQ")) {
-	#[Attribute]
-	trait CQ {
-		
-	}
-        //获取指令通过Api判断，然后实例化插件交给Api处理
-	function CQ_get(){
-		
-	}
-	}
+					
+					//超级用户类
+					class Passive{
+					      use Api;
+					      //主动
+					      function To_Passive(array $instruction){
+					      $this->send($instruction);
+					      
+					      }
+					      //被动
+					      function do_Passive(mixed $instruction,mixed $msg=null){
+					      if ($instruction=="send"){
+					      $this->send($msg);
+					      }
+					      
+					      
+					      }
+					      //定时器，准点
+					      function To_tick(){
+					      \Swoole\Timer::tick(1000,function(){
+					      
+					      });
+					      
+					      }
+					}
+				
 ?>
