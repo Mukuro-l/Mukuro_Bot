@@ -230,8 +230,8 @@ print_r($str_type1);
 print_r($str_type2);
 				}
 				    //上下文 $msg即为你想要定位的消息(或者获取最新消息的群号数组)，函数会一直根据这条消息来获取上下文，二参数为指定获取的群聊，三参数为超时时间s(为0则不超时)
-				    public function context(mixed $msg=null,int $group_id=null,int $user_id=null ,int $timeout=15) {
-				    if ($group_id!==null){
+				    public function context(mixed $msg=null,int $group_id=0,int $user_id=0 ,int $timeout=15) {
+				    if ($group_id!==0){
 				    $this->qun=$group_id;
 				    }
 						$url = "http://127.0.0.1:".$this -> http_port."/get_group_msg_history?message_seq=&group_id=".$this -> qun;
@@ -246,7 +246,7 @@ print_r($str_type2);
                         //设置一个定时器，超时退出循环
                         $Timer = date("His");
                         //如果没有提供QQ号
-                        if ($user_id == null){
+                        if ($user_id == 0){
                         $time_data = [];
                         $msg_data = [];
                         while(true){
@@ -273,14 +273,14 @@ print_r($str_type2);
                         }
                         
                         //判断是否获取最新群消息消息，并循环获取最新群消息返回
-                        if (is_array($msg)&&$user_id==null){
+                        if (is_array($msg)&&$user_id==0){
                         foreach ($msg as $group){
                         $url = "http://127.0.0.1:".$this -> http_port."/get_group_msg_history?message_seq=&group_id=".$group;
                         $json = json_decode(file_get_contents($url),true);
                         
                         }
                         
-                        }else if ($user_id!==null&&$group_id!==null){
+                        }else if ($user_id!==0&&$group_id!==0){
                         
 						do {
 							unset($result);

@@ -10,7 +10,7 @@ class Repeat{
       use Api;
       function plugins_Repeat(){
       if ($this->msg_type !== 'private'){
-      $data = $this->context();
+      $data = $this->context(0,0,0,1);
       if (!empty($data)){
       if ($data[0]==$data[1]){
       $this->send($data[1]);
