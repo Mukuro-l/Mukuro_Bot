@@ -11,6 +11,7 @@
 use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use Swoole\Coroutine;
+use Mukuro\Module\Passive;
 //运行环境检测，现只支持Linux系统，且不支持多php版本环境
 if (!strstr("swoole",exec("php -m"))){
 exit("未检测到Swoole扩展，请参考wiki.swoole.com \n");
@@ -121,6 +122,10 @@ include_once 'initialization.php';
 //载入函数库
 include_once './Module/Function.php';
 
+//控制类
+include_once './Module/Api.php';
+
+
 	//fd为客户端标识, $ws调用push函数发送(第二个参数为消息内容)
 	$Data = $frame->data;
 	//json转为PHP数组，必须转为PHP对象
@@ -136,9 +141,9 @@ include_once './Module/Function.php';
 	
 	if (is_file("Restart")){
 	unlink("Restart");
-		$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $BOT_Config["qhost"] ,"message" =>"[notification]:Mukuro_Bot已重启" ]];
-				$submit_data = Json($url);
-				$ws->push($frame->fd,$submit_data);
+		$url = ["send_private_msg",$BOT_Config["qhost"],"[notification]:Mukuro_Bot已重启"];
+		$Passive = new Passive($url);
+		$Passive->To_Passive($url);
 	}
 	
 	if (@$Data['meta_event_type'] !== 'heartbeat' && @$Data['meta_event_type'] !== 'lifecycle') {
