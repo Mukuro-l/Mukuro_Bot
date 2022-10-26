@@ -11,9 +11,10 @@ class Repeat{
       function plugins_Repeat(){
       if ($this->msg_type !== 'private'){
       $data = $this->context();
-      print_r($data);
-      if ($data[0]==$data[2]){
-      $this->send($data[2]);
+      if (!empty($data)){
+      if ($data[0]==$data[1]){
+      $this->send($data[1]);
+      }
       }
       }
       }

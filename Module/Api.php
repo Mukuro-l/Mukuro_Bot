@@ -261,7 +261,7 @@ print_r($str_type2);
                         $time_data[]=$time;
                         $msg_data[]=$msg_arr;
                         print_r($msg_data);
-                        if (count($msg_data)==3){
+                        if (count($msg_data)==2){
                         return $msg_data;
                         }
                         }
