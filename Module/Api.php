@@ -230,7 +230,7 @@ print_r($str_type1);
 print_r($str_type2);
 				}
 				    //上下文 $msg即为你想要定位的消息(或者获取最新消息的群号数组)，函数会一直根据这条消息来获取上下文，二参数为指定获取的群聊，三参数为超时时间s(为0则不超时)
-				    public function context(mixed $msg=null,int $group_id=null,int $timeout=15) {
+				    public function context(mixed $msg=null,int $group_id=null,int $user_id=null ,int $timeout=15) {
 				    if ($group_id!==null){
 				    $this->qun=$group_id;
 				    }
@@ -245,15 +245,41 @@ print_r($str_type2);
 						$context = [];
                         //设置一个定时器，超时退出循环
                         $Timer = date("His");
+                        //如果没有提供QQ号
+                        if ($user_id == null){
+                        $time_data = [];
+                        $msg_data = [];
+                        while(true){
+                        $json = json_decode(file_get_contents($url),true);
+                        $time =$json["data"]["messages"][19]["time"];
+                        $msg_arr = $json["data"]["messages"][19]["message"];
+                        $msg_larr = $json["data"]["messages"][18]["message"];
+                        if (count($time_data)==0&&count($msg_data)==0){
+                        $msg_data[]=$msg_larr;
+                        }
+                        if ($time_data[count($time_data)-1]!==$time){
+                        $time_data[]=$time;
+                        $msg_data[]=$msg_arr;
+                        if (count($msg_data)==3){
+                        return $msg_data;
+                        }
+                        }
+                        if ((date("His")-$Timer)>$timeout&&$timeout!==0 ){
+                                                    return;
+                                                    }
+                        
+                        }
+                        }
+                        
                         //判断是否获取最新群消息消息，并循环获取最新群消息返回
-                        if (is_array($msg)){
+                        if (is_array($msg)&&$user_id==null){
                         foreach ($msg as $group){
                         $url = "http://127.0.0.1:".$this -> http_port."/get_group_msg_history?message_seq=&group_id=".$group;
                         $json = json_decode(file_get_contents($url),true);
                         
                         }
                         
-                        }else{
+                        }else if ($user_id!==null&&$group_id!==null){
                         
 						do {
 							unset($result);
@@ -264,7 +290,7 @@ print_r($str_type2);
 							$json = json_decode(file_get_contents($url),true);
 						for ($i=0;$i<$sum;$i++){
 							//当找到指定QQ号的聊天记录时
-							if ($json["data"]["messages"][$i]["user_id"]==$this->qq){
+							if ($json["data"]["messages"][$i]["user_id"]==$user_id){
 								//填入
 								$result[] = $json["data"]["messages"][$i]["message"];
 								}
@@ -510,6 +536,10 @@ print_r($str_type2);
 					      function do_Passive(mixed $instruction,mixed $msg=null){
 					      if ($instruction=="send"){
 					      $this->send($msg);
+					      }
+					      if ($instruction=="context"){
+					      return $this->context();
+					      
 					      }
 					      
 					      

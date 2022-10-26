@@ -335,3 +335,11 @@ $gc->create($frames, $durations, count($frames));
 $gifBinary = $gc->getGif();
 return $gifBinary;
 }
+
+//开发中
+function M_Database(array $test){
+         //使用predis
+         $client = new Predis\Client();
+         $client->set('foo', 'bar');
+         $value = $client->get('foo');
+}
