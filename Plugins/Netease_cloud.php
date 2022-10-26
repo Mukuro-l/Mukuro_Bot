@@ -34,7 +34,7 @@ class Netease_cloud {
 		$this->Netease_cloud_Api($return);
 		}else if ($this -> msg == "点歌") {
 		$this->Rsend("请输入你要搜索的歌曲");
-		$return_data = $this->context("点歌");
+		$return_data = $this->context("点歌",$this->qun,$this->qq);
 		$this->Netease_cloud_Api($return_data[2]);
 		
 		}
