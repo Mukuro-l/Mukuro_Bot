@@ -142,8 +142,8 @@ include_once './Module/Api.php';
 	if (is_file("Restart")){
 	unlink("Restart");
 		$url = ["send_private_msg",$BOT_Config["qhost"],"[notification]:Mukuro_Bot已重启"];
-		$Passive = new Passive($url,"[notification]:Mukuro_Bot已重启");
-		$Passive->To_Passive($url,"[notification]:Mukuro_Bot已重启");
+		$Passive = new Passive($Data, $database, $BOT_Config,$ws);
+		$Passive->To_Passive($url);
 	}
 	
 	if (@$Data['meta_event_type'] !== 'heartbeat' && @$Data['meta_event_type'] !== 'lifecycle') {
