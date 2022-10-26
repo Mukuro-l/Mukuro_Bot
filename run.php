@@ -160,12 +160,12 @@ include_once './Module/Api.php';
 		
 		}
 		if ($BOT_Config["qhost"] === 0&&$Data['message_type']==="private"){
+		$Passive = new Passive($Data, $database, $BOT_Config,$ws);
 		if ($Data['message'] === "!/Mukuro"){
 		$bothost = $Data['user_id'];
 		$Detailed_description="version:v1.1.6\r\n欢迎使用Mukuro_Bot开发框架\r\n现已认证主人[$bothost]\r\n[M-开]在一个群聊中发送这条指令即可开启群聊\r\n[M-闭]来关闭群聊\r\n[M-插件名]来合成插件的注释并发送，可在[Doc]文件夹编辑\r\n将在5秒后重启Mukuro_Bot服务，请留意go-cqhttp控制台输出";
-		$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>$Detailed_description ]];
-				$submit_data = Json($url);
-				$ws->push($frame->fd,$submit_data);
+		
+		$Passive->do_Passive("send",$Detailed_description);
 				$BOT_Config["qhost"]=$Data['user_id'];
 				$Config_data = json_encode($BOT_Config, JSON_UNESCAPED_UNICODE);
 	file_put_contents("config.json", $Config_data);
@@ -173,9 +173,7 @@ include_once './Module/Api.php';
 	exec("nohup ./restart.sh &> /dev/null & echo $! > pidfile.txt");
 				
 		}
-				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>"现在是无主模式，请查看控制台输出\n" ]];
-				$submit_data = Json($url);
-				$ws->push($frame->fd,$submit_data);
+				$Passive->do_Passive("send","现在是无主模式，请查看控制台输出");
 				echo "[notification]：目前无主人状态，现私聊发送[!/Mukuro]即可完成认证\n";
 				
 				
@@ -194,6 +192,7 @@ include_once './Module/Api.php';
 					
 					//封解主的动作
 					if (preg_match("/^M- ?(.*)\$/", $Data['message'], $Jiezhu)) {
+					$Passive = new Passive($Data, $database, $BOT_Config,$ws);
 					if ($BOT_Config["qhost"] === $Data['user_id']){
 					if ($Jiezhu[1] === "开" || $Jiezhu[1] === "闭" ){
 					if ($Jiezhu[1] === "开"){
@@ -204,10 +203,7 @@ include_once './Module/Api.php';
 					$Jiezhu_data=json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"),true);
 					$Jiezhu_data["status"]=$Jiezhu[1];
 					file_put_contents("./Group/".$Data['group_id']."/config.json",Json($Jiezhu_data));
-					
-					$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>"官人～六儿把群[".$Data['group_id']."]".$instruction."｜д•´)!!" ]];
-				$submit_data = Json($url);
-				$ws->push($frame->fd,$submit_data);
+				$Passive->do_Passive("send","已成功开启此群聊");
 				}
 				if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭" ){
 				for ($i=0;$i<count($file_array);$i++){
@@ -219,15 +215,7 @@ include_once './Module/Api.php';
 			
 				if (trim($doc_name[1])==$Jiezhu[1]){
 				$menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc",$Data['user_id']);
-				if ($Data['message_type']==="group"){
-				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>$menu_data_code ]];
-				}
-				if ($Data['message_type']==="private"){
-				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>$menu_data_code ]];
-				
-				}
-				$submit_data = Json($url);
-				$ws->push($frame->fd,$submit_data);
+				$Passive->do_Passive("send",$menu_data_code);
 				}
 				}
 				
@@ -248,27 +236,11 @@ include_once './Module/Api.php';
 			
 				if (trim($doc_name[1])==$Jiezhu[1]){
 				$menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc",$Data['user_id']);
-				if ($Data['message_type']==="group"){
-				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>$menu_data_code ]];
+				$Passive->do_Passive("send",$menu_data_code);
 				}
-				if ($Data['message_type']==="private"){
-				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>$menu_data_code ]];
-				
-				}
-				$submit_data = Json($url);
-				$ws->push($frame->fd, $submit_data);
-				}
-				continue;
+				//continue;
 				}else{
-				if ($Data['message_type']==="group"){
-				$url = ["action" => "send_group_msg", "params" => ["group_id" => $Data['group_id'], "message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦" ]];
-				}
-				if ($Data['message_type']==="private"){
-				$url = ["action" => "send_private_msg", "params" => ["group_id" => $Data['group_id'],"user_id"=> $Data['user_id'] ,"message" =>"六儿提示官人你这个大笨蛋！没有这个插件（噗）啦"]];
-				
-				}
-				$submit_data = Json($url);
-				$ws->push($frame->fd,$submit_data);
+				$Passive->do_Passive("send","暂无此插件");
 				}
 				}
 				}
