@@ -264,14 +264,19 @@ include_once './Module/Api.php';
 							}
 				  }
 				  $task_id = $ws->task($Data);
+	if (is_file("./Module/Repeat.php")){
+	include_once "./Module/Repeat.php";
+	$Event = new Repeat($Data, $database, $BOT_Config,$ws);
+	$Event->plugins_Repeat();
 	
+	}
 		}
 		}
 		//Event控制
 		if (@$Data["post_type"] === "notice"){
 	//载入模块
 	include_once "./Module/Event.php";
-	$Event = new Event($Data, $database, $BOT_Config,$ws,$service_id);
+	$Event = new Event($Data, $database, $BOT_Config,$ws);
 	$Event->plugins_Event();
 	
 	}
