@@ -324,6 +324,7 @@ print_r($str_type2);
 	                $this->Rsend("Mukuro_Bot正在重启，请注意私聊……");
 	                file_put_contents("Restart",$this->super_user);
 	                exec("nohup ./restart.sh &> /dev/null & echo $! > pidfile.txt");
+	                exit;
 	                }
 	                
 	                }
