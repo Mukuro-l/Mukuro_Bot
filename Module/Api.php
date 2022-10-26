@@ -260,6 +260,7 @@ print_r($str_type2);
                         if ($time_data[count($time_data)-1]!==$time){
                         $time_data[]=$time;
                         $msg_data[]=$msg_arr;
+                        print_r($msg_data);
                         if (count($msg_data)==3){
                         return $msg_data;
                         }
