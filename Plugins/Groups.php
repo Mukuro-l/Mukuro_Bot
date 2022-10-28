@@ -13,6 +13,7 @@ class Groups{
       if ($this->super_user == $this->qq){
       $group_list = $this->File_retrieval("./Group/",true);
       print_r($group_list);
+      print_r($return);
       $this->Group_Send($group_list,$return[1]);
       
       }
