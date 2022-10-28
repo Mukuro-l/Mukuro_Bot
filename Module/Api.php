@@ -317,6 +317,7 @@ print_r($str_type2);
 													$context[] = $result[$sm-2];
 													$context[] = $result[$sm-1];
 													if ($context[2] !== $msg && $context[1] !== null){
+													//print_r($context);
 													return $context;
 													}
 													
@@ -357,6 +358,10 @@ print_r($str_type2);
 	                }
 	                //文件夹检索，$Dir欲检索文件夹，$select排除文件 false排除，true不排除
 	                function File_retrieval(string $Dir="./", bool $select=false):array{
+	                if (!is_dir($Dir)){
+	                $this->Rsend("error:File_retrieval first value is not a dir\r\n错误！没有[$Dir]文件夹！");
+	     
+	                }else{
 	                $data = scandir($Dir);
 	                $group_dir = [];
 	                if ($select == false){
@@ -378,7 +383,7 @@ print_r($str_type2);
 	                }
 	                return $group_dir;
 	                }
-	                
+	                }
 	                }
 	                //广播消息，不可循环调用！$Group_list群号数组[114514,1998225] $Group_msg需要广播的消息
 	                function Group_Send(array $Group_list,string | int $Group_msg="未设置任何广播消息"){
@@ -393,6 +398,7 @@ print_r($str_type2);
 	                }
 	                
 	                foreach ($Group as $To_Groups){
+	                Co::sleep(2);
 	                $this->send(["send_group_msg",$To_Groups,$Group_msg]);
 	                echo "bot向群[$To_Groups]广播消息：[$Group_msg]\n";
 	                
