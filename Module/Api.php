@@ -390,14 +390,12 @@ print_r($str_type2);
 	                $Group=[];
 	                foreach ($Group_list as $Group_int){
 	                $condition = de_Json(file_get_contents("./Group/".$Group_int."/config.json"));
-	                print_r($condition);
 	                if ($condition["状态"]=="关"){
 	                continue;
 	                }else{
 	                $Group[]=$Group_int;
 	                }
 	                }
-	                print_r($Group);
 	                foreach ($Group as $To_Groups){
 	                //Co::sleep(2);
 	                $this->send(["send_group_msg",$To_Groups,$Group_msg]);
