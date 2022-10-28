@@ -125,7 +125,7 @@ include_once './Module/Function.php';
 //控制类
 include_once './Module/Api.php';
 
-    $Passive = new Passive($Data, $database, $BOT_Config,$ws);
+    
 	//fd为客户端标识, $ws调用push函数发送(第二个参数为消息内容)
 	$Data = $frame->data;
 	//json转为PHP数组，必须转为PHP对象
@@ -140,6 +140,7 @@ include_once './Module/Api.php';
 	}
 	
 	if (is_file("Restart")){
+	$Passive = new Passive($Data, $database, $BOT_Config,$ws);
 	unlink("Restart");
 		$url = ["send_private_msg",$BOT_Config["qhost"],"[notification]:Mukuro_Bot已重启"];
 		$Passive->To_Passive($url);
@@ -160,7 +161,9 @@ include_once './Module/Api.php';
 		
 		}
 		if ($BOT_Config["qhost"] === 0&&$Data['message_type']==="private"){
+		$Passive = new Passive($Data, $database, $BOT_Config,$ws);
 		if ($Data['message'] === "!/Mukuro"){
+		
 		$bothost = $Data['user_id'];
 		$BOT_Config["qhost"]=$Data['user_id'];
 		$Config_data = json_encode($BOT_Config, JSON_UNESCAPED_UNICODE);
@@ -191,6 +194,7 @@ include_once './Module/Api.php';
 					
 					//封解主的动作
 					if (preg_match("/^M- ?(.*)\$/", $Data['message'], $Jiezhu)) {
+					$Passive = new Passive($Data, $database, $BOT_Config,$ws);
 					if ($BOT_Config["qhost"] === $Data['user_id']){
 					if ($Jiezhu[1] === "开" || $Jiezhu[1] === "闭" ){
 					if ($Jiezhu[1] === "开"){
@@ -224,6 +228,7 @@ include_once './Module/Api.php';
 				}else{
 				
 				if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭" ){
+				$Passive = new Passive($Data, $database, $BOT_Config,$ws);
 				for ($i=0;$i<count($file_array);$i++){
 				
 				$Jiezhu_Plugins=explode('.',$file_array[$i]["插件名"]);
