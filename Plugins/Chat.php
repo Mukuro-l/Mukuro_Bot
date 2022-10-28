@@ -10,14 +10,19 @@ class Chat{
       use Api;
       function join_group(int $group_id,int $source){
       $this->Rsend("你可以在15秒内发送[取消]来退出\r\n或者在建立任务之后发送[取消]\r\n若15秒之内无任何响应，程序将会退出进程");
-    
+    //获取来源群聊的下一条消息
       $begin1 = $this->context("跨群聊天".$group_id,$source,0);
       if ($begin1[2]=="取消"){
       $this->Rsend("已取消");
-      return;
       }else if (!empty($begin1[2])){
+      $group_list = $this->File_retrieval("./Group/",true);
+      if (in_array($group_id,$group_list)){
       $this->send(["send_group_msg",$source,"已建立任务，并将消息发送对应群聊"]);
+      
       $this->send(["send_group_msg",$group_id,"来自群聊[$source]的\r\n[$this->qq]说：\r\n[".$begin1[2]."]\r\nPS：你可以通过跨群聊天功能来回复"]);
+      }else{
+      $this->Rsend("Mukuro未加入该群聊哦");
+      }
       }
       }
       function plugins_Chat(){
