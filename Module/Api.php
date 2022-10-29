@@ -390,6 +390,7 @@ print_r($str_type2);
 	                $Group=[];
 	                foreach ($Group_list as $Group_int){
 	                $condition = de_Json(file_get_contents("./Group/".$Group_int."/config.json"));
+	                
 	                if ($condition["状态"]=="关"){
 	                continue;
 	                }else{
@@ -397,9 +398,10 @@ print_r($str_type2);
 	                }
 	                }
 	                foreach ($Group as $To_Groups){
+	                Co::sleep(3);
 	                $this->send(["send_group_msg",$To_Groups,$Group_msg]);
 	                echo "bot向群[$To_Groups]广播消息：[$Group_msg]\n";
-	                \Co::sleep(5);
+	                
 	                
 	                }
 	                
