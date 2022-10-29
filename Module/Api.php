@@ -1,7 +1,7 @@
 <?php
 namespace Mukuro\Module;
 use \Swoole\Timer;
-
+use \Swoole\Coroutine;
 
 	trait Api {
 	    public $ws;
@@ -397,9 +397,9 @@ print_r($str_type2);
 	                }
 	                }
 	                foreach ($Group as $To_Groups){
-	                //Co::sleep(2);
 	                $this->send(["send_group_msg",$To_Groups,$Group_msg]);
 	                echo "bot向群[$To_Groups]广播消息：[$Group_msg]\n";
+	                \Co::sleep(5);
 	                
 	                }
 	                
