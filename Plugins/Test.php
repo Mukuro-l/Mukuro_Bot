@@ -7,14 +7,15 @@ use Mukuro\Module\Api;
 *@comment 测试
 *@return text
 */
-class Test {
-use Api;
-public	function plugins_Test() {
-		if ($this->msg == "测试") {
-			$this->send("测试成功");
-			sleep(2);
-			$this->send("欢迎使用本框架");
-		}
-	}
+class Test
+{
+    use Api;
+    public function plugins_Test()
+    {
+        if ($this->msg == "测试") {
+            $this->send("测试成功");
+            Co::sleep(2);
+            $this->send("欢迎使用本框架", $this->super_user);
+        }
+    }
 }
-?>
