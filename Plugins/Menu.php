@@ -7,15 +7,18 @@ use Mukuro\Module\Api;
 *@comment 菜单
 *@return image
 */
-class Menu{
-use Api;
-function plugins_Menu(){
-if ($this->msg == "菜单"){
-$qq=$this->qq;
-Auto_doc($qq);
-return $this->send("[CQ:image,file=".$qq.".jpg]");
-}
-}
-public function __destruct() {
-	}
+class Menu
+{
+    use Api;
+    public function plugins_Menu()
+    {
+        if ($this->msg == "菜单") {
+            $qq=$this->qq;
+            Auto_doc($qq);
+            return $this->send("[CQ:image,file=".$qq.".jpg]");
+        }
+    }
+    public function __destruct()
+    {
+    }
 }
