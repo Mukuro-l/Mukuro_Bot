@@ -1,4 +1,3 @@
-# 请注意：main分支存在未发布的功能及特性，稳定性未知。建议使用发行版。  
 # [Mukuro_Bot使用手册] by Mukuro-l  
 ## 引用Intervention\Image  
 ***
