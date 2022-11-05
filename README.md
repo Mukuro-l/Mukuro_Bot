@@ -9,7 +9,7 @@
 3. 如果你的PHP没有安装所需的图像处理模块，请安装。
 ***
 加入QQ群
-[![xXSq3T.jpg](https://s1.ax1x.com/2022/11/05/xXSq3T.jpg)](https://imgse.com/i/xXSq3T)
+<img src="https://s1.ax1x.com/2022/11/05/xXSq3T.jpg" height="500px" width="500px"/>
 
 你好！  欢迎阅读本程序的使用文档  
 运行环境：
