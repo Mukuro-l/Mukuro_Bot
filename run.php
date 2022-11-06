@@ -153,7 +153,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
             $Passive->To_Passive($url);
         }
     }
-    if ($Data["status"]!==null){
+    if ($Data["status"]!==null&&!is_array($Data["status"])){
         print_r($Data["status"]);
     if (@$Data["status"]!=="ok"&&$BOT_Config["qhost"]!==0) {
         $Passive = new Passive($Data, $database, $BOT_Config, $ws);
