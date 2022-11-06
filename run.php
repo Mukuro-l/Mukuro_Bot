@@ -148,9 +148,9 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
             $Passive->To_Passive($url);
         } elseif (is_file("Error")) {
             $Error_msg = file_get_contents("Error");
+            unlink("Error");
             $url = ["send_private_msg",$BOT_Config["qhost"],$Error_msg];
             $Passive->To_Passive($url);
-            unlink("Error");
         }
     }
     if (!empty($Data["status"])){
