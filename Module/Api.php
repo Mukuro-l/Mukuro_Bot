@@ -217,7 +217,7 @@ use \Swoole\Coroutine;
             }
             */
         }
-        private function CQ_filt(string $CQ_code)
+        function CQ_filt(string $CQ_code)
         {
             $str = trim($CQ_code);
             $str = explode("[CQ:", $str);
