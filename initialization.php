@@ -14,7 +14,7 @@ if (!is_dir("Group")) {
     }
 }
 
-
+$file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
 
 $list = glob('./Plugins/*.php');
                 if (is_file("Plugins_switch.json") == false) {
@@ -40,6 +40,7 @@ $list = glob('./Plugins/*.php');
                             $Doc_doc_ = explode("*", $Doc);
                             if (empty($Doc_doc_[3])) {
                                 throw new Exception("官人！Mukuro检测到插件".$Plugins_name."出现异常！异常为：未获取到类的注释\r\nMukuro已自动关闭此异常插件\r\n");
+                                file_put_contents("Error","官人！Mukuro检测到插件".$Plugins_name."出现异常！异常为：未获取到类的注释\r\nMukuro已自动关闭此异常插件\r\n");
                             } else {
                                 //名字会出现在菜单上
                                 $Doc_name = explode("@name", $Doc_doc_[3]);
@@ -63,3 +64,21 @@ $list = glob('./Plugins/*.php');
                         }
                     }
                 }
+                //判断是否增加
+                    if (count($list) > count($file_array)) {
+                        for ($i = 0;$i < count($list);$i++) {
+                            $file = explode('/', $list[$i]) [2];
+                            if ($file_array[$i]["插件名"] != $file) {
+                                unlink("Plugins_switch.json");
+                            }
+                        }
+                    }
+                    //如果少于
+                    if (count($list) < count($file_array)) {
+                        for ($i = 0;$i < count($list);$i++) {
+                            $file = explode('/', $list[$i]) [2];
+                            if ($file_array[$i]["插件名"] != $file) {
+                                unlink("Plugins_switch.json");
+                            }
+                        }
+                    }
