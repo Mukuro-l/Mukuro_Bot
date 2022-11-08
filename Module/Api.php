@@ -219,20 +219,24 @@ use \Swoole\Coroutine;
         }
         private function CQ_filt(string $CQ_code)
         {
-            $str = trim($str);
+            $str = trim($CQ_code);
             $str = explode("[CQ:", $str);
+            if (count($str)!==1){
             $str_type1 = explode(',', $str[1]);
+            //数据
             $str1 = explode(']', $str_type1[1]);
-            $str_type2 = explode(',', $str[2]);
-            $str2 = explode(']', $str_type2[1]);
-            if ($str1[0] == "image") {
-                echo "image类型\n";
-            }
-            if ($str2[0] == "at") {
-                echo "at类型\n";
-            }
-            print_r($str_type1);
-            print_r($str_type2);
+            $str1 = explode('=', $str1[0]);
+            //类型
+            $str2 = explode(']', $str_type1[0]);
+            $return_Data = [
+            "type"=>$str2[0],
+            "data"=>$str1[1]
+            ];
+            return $return_Data;
+            
+        }else{
+        $this->send("Mukuro_Api报错，未检测到CQ码",$this->super_user);
+        }
         }
         //上下文 $msg即为你想要定位的消息(或者获取最新消息的群号数组)，函数会一直根据这条消息来获取上下文，二参数为指定获取的群聊，三参数为超时时间s(为0则不超时)
         public function context(mixed $msg=null, int $group_id=0, int $user_id=0, int $timeout=15)
