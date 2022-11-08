@@ -173,7 +173,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                     $Swoole_arr=explode("LISTEN", $Swoole_arr);
                     $Swoole_arr=trim($Swoole_arr[1]);
                     $Swoole_arr=explode("/", $Swoole_arr);
-                    system("kill ".$Swoole_arr[0]);
+                    system("kill -9 ".$Swoole_arr[0]);
                     exit;
                 }
             }
@@ -249,10 +249,10 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                                 if (trim($doc_name[1])==$Jiezhu[1]) {
                                     $menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc", $Data['user_id']);
                                     $Passive->do_Passive("send", $menu_data_code);
-                                }
-                                //continue;
-                            } else {
+                               } else {
+
                                 $Passive->do_Passive("send", "暂无此插件");
+                                }
                             }
                         }
                     }
