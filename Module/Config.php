@@ -8,7 +8,7 @@ $Config_data = [
 //主人QQ，管理机器人
 "qhost" => 0,
 //版本号
-"SDK" => 116,
+"SDK" => 117,
 //是否输出完整data
 "Return_Data" => false,
 //报告错误等级 8为屏蔽通知，0为不上报错误
