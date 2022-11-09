@@ -1,5 +1,6 @@
 # [Mukuro_Bot使用手册] by Mukuro-l  
 ## 引用Intervention\Image  
+### 提示：据目前为了获取api数据更稳定，Mukuro_Bot需要go-cqhttp的http服务器，默认端口为3366
 ***
 > 版本更新需知  
 1. 在新版之后插件返回执行结果时
