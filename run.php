@@ -1,9 +1,9 @@
 #!/usr/bin/php
 <?php
 /**
- *@version v1.1.6
- *@date 2022.6.20
- *@author coldeggs
+ *@version v1.1.7
+ *@date 2022.11.10
+ *@author Mukuro-l
  *@copyright 2021-2022 Mukuro-l.AllRightsReserved
  *@start/begin with/in 2021.08.21
  */
