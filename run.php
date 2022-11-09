@@ -184,7 +184,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                     $BOT_Config["qhost"]=$Data['user_id'];
                     $Config_data = json_encode($BOT_Config, JSON_UNESCAPED_UNICODE);
                     file_put_contents("config.json", $Config_data);
-                    $Detailed_description="version:v1.1.6\r\n欢迎使用Mukuro_Bot开发框架\r\n现已认证主人[$bothost]\r\n[M-开]在一个群聊中发送这条指令即可开启群聊\r\n[M-闭]来关闭群聊\r\n[M-插件名]来合成插件的注释并发送，可在[Doc]文件夹编辑\r\n将在5秒后重启Mukuro_Bot服务，请留意go-cqhttp控制台输出";
+                    $Detailed_description="version:v1.1.7\r\n欢迎使用Mukuro_Bot开发框架\r\n现已认证主人[$bothost]\r\n[M-开]在一个群聊中发送这条指令即可开启群聊\r\n[M-闭]来关闭群聊\r\n[M-插件名]来合成插件的注释并发送，可在[Doc]文件夹编辑\r\n将在5秒后重启Mukuro_Bot服务，请留意go-cqhttp控制台输出";
                     $Passive->do_Passive("send", $Detailed_description);
         
                     system("chmod +x restart.sh");
