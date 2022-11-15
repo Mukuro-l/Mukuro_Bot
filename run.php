@@ -14,23 +14,23 @@ use Swoole\Coroutine;
 use Mukuro\Module\Passive;
 
 //运行环境检测，现只支持Linux系统，且不支持多php版本环境
-if (!strstr("swoole", exec("php -m"))) {
+if (!extension_loaded("swoole")) {
     exit("未检测到Swoole扩展，请参考wiki.swoole.com \n");
 }
-if (!strstr("zip", exec("php -m"))) {
+if (!extension_loaded("zip")) {
     echo "未检测到php-zip扩展，正在尝试安装\n";
     system("sudo apt install -y php-zip");
 }
 
-if (!strstr("gd", exec("php -m"))) {
+if (!extension_loaded("gd")) {
     echo "未检测到gd处理库，正在尝试安装\n";
     system("sudo apt install -y php-gd");
 }
-if (!strstr("imagick", exec("php -m"))) {
+if (!extension_loaded("imagick")) {
     echo "未检测到imagick处理库，正在尝试安装\n";
     system("sudo apt install -y php-imagick");
 }
-if (!strstr("redis", exec("php -m"))) {
+if (!extension_loaded("redis")) {
     echo "未检测到redis扩展，请确保系统有Redis数据库，正在尝试安装扩展\n";
     system("sudo apt install -y php-redis");
 }
@@ -48,10 +48,10 @@ if (!is_file("../gocq/go-cqhttp")) {
             if (empty($Version)) {
                 exit("错误！未获取到系统指令集版本，现只支持Linux系统。\n");
             } else {
-                $go_cq = file_get_contents("https://cdn.githubjs.cf/Mrs4s/go-cqhttp/releases/download/v1.0.0-rc3/go-cqhttp_linux_".$Version.".tar.gz");
+                $go_cq = file_get_contents("https://github.com/Mrs4s/go-cqhttp/releases/download/v1.0.0-rc3/go-cqhttp_linux_".$Version.".tar.gz");
                 if (empty($go_cq)) {
                     echo "国内GitHub CDN加速下载失败，正在切换到GitHub官方下载\n";
-                    $go_cq = file_get_contents("https://cdn.githubjs.cf/Mrs4s/go-cqhttp/releases/download/v1.0.0-rc3/go-cqhttp_linux_".$Version.".tar.gz");
+                    $go_cq = file_get_contents("https://github.com/Mrs4s/go-cqhttp/releases/download/v1.0.0-rc3/go-cqhttp_linux_".$Version.".tar.gz");
                     file_put_contents("../gocq/gocq.tar.gz", $go_cq);
                     system("sudo tar -xzf ../gocq/gocq.tar.gz");
                     system("sudo rm ../gocq/gocq.tar.gz");
@@ -217,7 +217,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                         $Jiezhu_data=json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"), true);
                         $Jiezhu_data["status"]=$Jiezhu[1];
                         file_put_contents("./Group/".$Data['group_id']."/config.json", Json($Jiezhu_data));
-                        $Passive->do_Passive("send", "已成功$instruction此群聊");
+                        $Passive->do_Passive("send", "已成功".$instruction."此群聊");
                     }
                     if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭") {
                         for ($i=0;$i<count($file_array);$i++) {
@@ -299,6 +299,7 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $task_data) {
 
 
 $ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($database, $BOT_Config) {
+run(function()use ($ws,$task_id,$reactor_id,$Data,$database,$BOT_Config){
     include './vendor/autoload.php';
     include_once './Module/Function.php';
     include_once './Module/Api.php';
@@ -320,8 +321,9 @@ $ws->on('Task', function ($ws, $task_id, $reactor_id, $Data) use ($database, $BO
             }
         }
     }
+}
     //返回任务执行的结果
-    $ws->finish("{$task_id} -> OK");
+    echo("异步任务{$task_id} -> OK\n");
 });
 
 //监听WebSocket连接关闭事件
