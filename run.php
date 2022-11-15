@@ -11,6 +11,7 @@
 use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use Swoole\Coroutine;
+use function Swoole\Coroutine\run;
 use Mukuro\Module\Passive;
 
 //运行环境检测，现只支持Linux系统，且不支持多php版本环境
