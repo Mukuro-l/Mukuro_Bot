@@ -320,9 +320,9 @@ run(function()use ($ws,$task_id,$reactor_id,$Data,$database,$BOT_Config){
             }
         }
     }
-}
+});
     //返回任务执行的结果
-    echo("异步任务{$task_id} -> OK\n");
+    print("异步任务{$task_id} -> OK\n");
 });
 
 //监听WebSocket连接关闭事件
