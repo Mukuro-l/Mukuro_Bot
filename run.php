@@ -307,6 +307,7 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $Data) {
 
 $ws->on('Task', function ($ws,$task_id) use ($database, $BOT_Config, $passage) {
     $Data=$passage->pop();
+    var_dump($Data);
     include './vendor/autoload.php';
     include_once './Module/Function.php';
     include_once './Module/Api.php';
