@@ -295,7 +295,7 @@ var_dump($task_id);
         }
     }
 });
-$ws->on('Receive', function ($ws, $fd, $reactor_id, $task_data) {
+$ws->on('Receive', function ($ws, $fd, $reactor_id, $Data) {
     //投递异步任务
     $task_id = $ws->task($frame->data);
     echo "投递异步任务: id={$task_id}\n";
@@ -303,6 +303,11 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $task_data) {
 
 
 $ws->on('Task', function ($ws,$task_id) use ($database, $BOT_Config) {
+$Data = $frame->data;
+    //json转为PHP数组，必须转为PHP对象
+    $Data = json_decode($Data, true);
+    $service_id = $frame->fd;
+    $Data[]=["service_id"=>$service_id];
 var_dump($Data);
 go(function()use ($ws,$Data,$database,$BOT_Config){
     include './vendor/autoload.php';
