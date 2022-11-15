@@ -277,6 +277,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                     }
                 }
                 $task_id = $ws->task($Data);
+var_dump($task_id);
                 if (is_file("./Module/Repeat.php")) {
                     include_once "./Module/Repeat.php";
                     $Event = new Repeat($Data, $database, $BOT_Config, $ws);
