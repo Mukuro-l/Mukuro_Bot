@@ -302,7 +302,7 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $Data) {
 });
 
 
-$ws->on('Task', function ($ws,$task_id) use ($database, $BOT_Config) {
+$ws->on('Task', function ($ws,$task_id,$Data) use ($database, $BOT_Config) {
     include './vendor/autoload.php';
     include_once './Module/Function.php';
     include_once './Module/Api.php';
