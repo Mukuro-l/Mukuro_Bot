@@ -143,7 +143,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config,$passage) 
             print_r($Data);
         }
     }
-    $passage->push($Data);
+    
     
     if (is_file("Restart")||is_file("Error")) {
         $Passive = new Passive($Data, $database, $BOT_Config, $ws);
@@ -279,6 +279,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config,$passage) 
                         }
                     }
                 }
+$passage->push($Data);
                 $task_id = $ws->task($Data);
 var_dump($task_id);
                 if (is_file("./Module/Repeat.php")) {
