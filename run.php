@@ -260,6 +260,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                 }
             }
             //这里会对群的全局状态做出判断，但如果插件状态为关，也不会载入
+            if (!empty($Data['group_id'])){
             if (json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"), true)["status"] === "开" || $Data['message_type'] === 'private') {
                 $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
                 for ($i = 0;$i < count($list);$i++) {
@@ -282,6 +283,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                     $Event->plugins_Repeat();
                 }
             }
+}
         }
         //Event控制
         if (@$Data["post_type"] === "notice") {
