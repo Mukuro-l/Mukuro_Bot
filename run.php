@@ -324,7 +324,6 @@ $ws->on('Task', function ($ws,$task_id) use ($database, $BOT_Config) {
             }
         }
     }
-});
     //返回任务执行的结果
     print("异步任务{$task_id} -> OK\n");
 });
