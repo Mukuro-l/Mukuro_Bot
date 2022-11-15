@@ -155,7 +155,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
             $Passive->To_Passive($url);
         }
     }
-    if ($Data["status"]!==null&&!is_array($Data["status"])){
+    if (@$Data["status"]!==null&&!is_array(@$Data["status"])){
     if (@$Data["status"]!=="ok"&&$BOT_Config["qhost"]!==0) {
         $Passive = new Passive($Data, $database, $BOT_Config, $ws);
         $url = ["send_private_msg",$BOT_Config["qhost"],"调用API时产生错误\r\n报错：".$Data["msg"]."\r\n详情：".$Data["wording"]."\r\n请检查客户端输出\r\n".date("Y-m-d H:i:s")];
@@ -199,7 +199,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
             $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
                 
             //这里会载入Plugins文件夹下的所有插件 115版本增加是否载入
-            if (!is_file("./Group/".$Data['group_id']."/config.json")&&!empty($Data['group_id'])) {
+            if (!is_file("./Group/".@$Data['group_id']."/config.json")&&!empty($Data['group_id'])) {
                 mkdir("./Group/".$Data['group_id']);
                 $Group_data = ["status"=>"关"];
                 file_put_contents("./Group/".$Data['group_id']."/config.json", Json($Group_data));
@@ -301,7 +301,7 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $task_data) {
 });
 
 
-$ws->on('Task', function ($ws,$Data) use ($database, $BOT_Config) {
+$ws->on('Task', function ($ws,$Data) use ($database, $BOT_Config,$task_id) {
 
 run(function()use ($ws,$Data,$database,$BOT_Config){
     include './vendor/autoload.php';
