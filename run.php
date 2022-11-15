@@ -11,6 +11,7 @@
 use Swoole\Coroutine\Barrier;
 use Swoole\Coroutine\System;
 use Swoole\Coroutine;
+use Swoole\Coroutine\Channel;
 use function Swoole\Coroutine\run;
 use Mukuro\Module\Passive;
 
@@ -107,6 +108,7 @@ $ws->set([
     'task_enable_coroutine' => true
 ]);
 
+$passage = new Channel(1);
 
 //监听WebSocket连接打开事件
 $ws->on('Open', function ($ws, $request) use ($BOT_Config) {
@@ -116,7 +118,7 @@ $ws->on('Open', function ($ws, $request) use ($BOT_Config) {
 });
 
 //监听WebSocket消息事件
-$ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
+$ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config,$passage) {
 
 
 //避免一些错误
@@ -141,6 +143,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
             print_r($Data);
         }
     }
+    $passage->push($Data);
     
     if (is_file("Restart")||is_file("Error")) {
         $Passive = new Passive($Data, $database, $BOT_Config, $ws);
@@ -302,7 +305,8 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $Data) {
 });
 
 
-$ws->on('Task', function ($ws,$task_id,$Data) use ($database, $BOT_Config) {
+$ws->on('Task', function ($ws,$task_id) use ($database, $BOT_Config, $passage) {
+    $Data=$passage->pop();
     include './vendor/autoload.php';
     include_once './Module/Function.php';
     include_once './Module/Api.php';
