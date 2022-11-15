@@ -154,7 +154,6 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
         }
     }
     if ($Data["status"]!==null&&!is_array($Data["status"])){
-        print_r($Data["status"]);
     if (@$Data["status"]!=="ok"&&$BOT_Config["qhost"]!==0) {
         $Passive = new Passive($Data, $database, $BOT_Config, $ws);
         $url = ["send_private_msg",$BOT_Config["qhost"],"调用API时产生错误\r\n报错：".$Data["msg"]."\r\n详情：".$Data["wording"]."\r\n请检查客户端输出\r\n".date("Y-m-d H:i:s")];
