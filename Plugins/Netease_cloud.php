@@ -32,7 +32,7 @@ class Netease_cloud
             $return_data=$this->context($song_Msg,$this->qun,$this->qq);
             if (preg_match("/^[0-9]+\$/",$return_data[2],$song_int)){
                 $list_data = $song_list[$song_int[0]-1];
-                $this->send()
+                $this->send("[CQ:music,type=163,id=" . $list_data["id"] . "]");
 }
         }
     }
