@@ -104,7 +104,7 @@ $ws = new Swoole\WebSocket\Server('0.0.0.0', $BOT_Config["port"]);
 echo "Mukuro_Bot服务器已启动，正在等待客户端连接......\n免责通知：当你使用本软件起，即代表着同意本软件的开源协议证书。\n如违反本开源证书，开发者将会以法律程序向违反开源协议的个人或组织提起上诉\n开源证书：Apache-2.0 license\n";
 
 $ws->set([
-    'task_worker_num' => 4,
+    'task_worker_num' => 8,
     'task_enable_coroutine' => true
 ]);
 
@@ -279,7 +279,6 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                     }
                 }
                 $task_id = $ws->task($Data);
-var_dump($task_id);
                 if (is_file("./Module/Repeat.php")) {
                     include_once "./Module/Repeat.php";
                     $Event = new Repeat($Data, $database, $BOT_Config, $ws);
@@ -297,13 +296,8 @@ var_dump($task_id);
         }
     }
 });
-$ws->on('Receive', function ($ws, $fd, $reactor_id, $Data) {
-    //投递异步任务
-    $task_id = $ws->task($frame->data);
-    echo "投递异步任务: id={$task_id}\n";
-});
 
-
+//异步回调
 $ws->on('Task', function ($ws,$task) use ($database, $BOT_Config) {
     $Data=$database->get('data');
     include './vendor/autoload.php';
@@ -320,7 +314,6 @@ $ws->on('Task', function ($ws,$task) use ($database, $BOT_Config) {
             $Plugins_name = explode('.', $file);
             $Plugins_name = $Plugins_name[0];
             $Plugins_name_function = "plugins_" . $Plugins_name;
-        
             $Plugins_test = new $Plugins_name($Data, $database, $BOT_Config, $ws);
             $Plugins_return = $Plugins_test->$Plugins_name_function();
             if (isset($Plugins_return)) {
@@ -329,7 +322,7 @@ $ws->on('Task', function ($ws,$task) use ($database, $BOT_Config) {
         }
     }
     //返回任务执行的结果
-    print("异步任务 -> OK\n");
+    print("异步任务[".date("Y-m-d H:i:s")."] -> OK\n");
 });
 
 //监听WebSocket连接关闭事件
