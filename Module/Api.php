@@ -66,7 +66,7 @@ use \Swoole\Coroutine;
                         //$database->set($this->qun,
                     }
                     if (!empty($this->msg)){
-                    if ($cq_data=CQ_filt($this->msg)&&$cq_data[0]["type"]=="at"){
+                    if ($cq_data=$this->CQ_filt($this->msg)&&$cq_data[0]["type"]=="at"){
                     
                         if ($cq_data[0]["data"]==$this->self_id){
                         $this->msg = trim($cq_data[0]['msg']);
