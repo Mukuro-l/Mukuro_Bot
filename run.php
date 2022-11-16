@@ -278,7 +278,6 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                         }
                     }
                 }
-$passage->push($Data);
                 $task_id = $ws->task($Data);
 var_dump($task_id);
                 if (is_file("./Module/Repeat.php")) {
