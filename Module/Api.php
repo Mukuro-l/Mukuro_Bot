@@ -65,6 +65,11 @@ use \Swoole\Coroutine;
                         $database->set($this->qq, ["Data" => $msg]);
                         //$database->set($this->qun,
                     }
+                    if ($this->CQ_filt($this->msg)!==false){
+                        $cq_data = $this->CQ_filt($this->msg);
+                        
+                        $this->msg = $cq_data['msg'];
+}
                 }
             }
         }
