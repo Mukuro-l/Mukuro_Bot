@@ -68,7 +68,7 @@ use \Swoole\Coroutine;
                     if ($this->CQ_filt($this->msg)!==false){
                         $cq_data = $this->CQ_filt($this->msg);
                         
-                        $this->msg = $cq_data['msg'];
+                        $this->msg = $cq_data[0]['msg'];
 }
                 }
             }
