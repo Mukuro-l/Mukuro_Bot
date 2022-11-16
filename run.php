@@ -108,7 +108,6 @@ $ws->set([
     'task_enable_coroutine' => true
 ]);
 
-$passage = new Channel(1);
 
 //监听WebSocket连接打开事件
 $ws->on('Open', function ($ws, $request) use ($BOT_Config) {
@@ -118,7 +117,7 @@ $ws->on('Open', function ($ws, $request) use ($BOT_Config) {
 });
 
 //监听WebSocket消息事件
-$ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config,$passage) {
+$ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 
 
 //避免一些错误
@@ -143,7 +142,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config,$passage) 
             print_r($Data);
         }
     }
-    
+    $database->set('data',['Data'=>$Data]);
     
     if (is_file("Restart")||is_file("Error")) {
         $Passive = new Passive($Data, $database, $BOT_Config, $ws);
@@ -306,8 +305,8 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $Data) {
 });
 
 
-$ws->on('Task', function ($ws,$task_id) use ($database, $BOT_Config, $passage) {
-    $Data=$passage->pop();
+$ws->on('Task', function ($ws,$task_id) use ($database, $BOT_Config) {
+    $Data=$database->get('data');
     var_dump($Data);
     include './vendor/autoload.php';
     include_once './Module/Function.php';
