@@ -221,21 +221,45 @@ use \Swoole\Coroutine;
         {
             $str = trim($CQ_code);
             $str = explode("[CQ:", $str);
-            if (count($str)!==1){
+            if (count($str)>1){
             $str_type1 = explode(',', $str[1]);
             //数据
             $str1 = explode(']', $str_type1[1]);
             $str1 = explode('=', $str1[0]);
             //类型
             $str2 = explode(']', $str_type1[0]);
+            if (count($str)==2){
+            $cq_Return = str_replace('[CQ:'.$str2[0].','.$str1[0].'='.$str1[1].']', '', $CQ_code);
             $return_Data = [
+            [
             "type"=>$str2[0],
-            "data"=>$str1[1]
+            "data"=>$str1[1],
+            "msg"=>$cq_Return
+            ]
             ];
             return $return_Data;
+            } else if(count($str)>=3){
+            $return_Data = [];
+            for ($i=1;$i<count($str);$i++){
+            $str_type1 = explode(',', $str[$i]);
+            //数据
+            $str1 = explode(']', $str_type1[1]);
+            $str1 = explode('=', $str1[0]);
+            //类型
+            $str2 = explode(']', $str_type1[0]);
+            $cq_Return = str_replace('[CQ:'.$str2[0].','.$str1[0].'='.$str1[1].']', '', $CQ_code);
+            $return_Data[]=[
+            "type"=>$str2[0],
+            "data"=>$str1[1],
+            "msg"=>$cq_Return
+            ];
+            
+            }
+            return $return_Data;
+            }
             
         }else{
-        $this->send("Mukuro_Api报错，未检测到CQ码",$this->super_user);
+        return false;
         }
         }
         //上下文 $msg即为你想要定位的消息(或者获取最新消息的群号数组)，函数会一直根据这条消息来获取上下文，二参数为指定获取的群聊，三参数为超时时间s(为0则不超时)
