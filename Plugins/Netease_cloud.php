@@ -10,7 +10,7 @@ use Mukuro\Module\Api;
 class Netease_cloud
 {
     use Api;
-    public function Netease_cloud_Api($return)
+    public function Netease_cloud_Api($return,$song_Msg)
     {
         $url = "http://cloud-music.pl-fe.cn/search?keywords=" . urlencode($return);
         $song_data = json_decode(file_get_contents($url), true);
@@ -28,17 +28,20 @@ class Netease_cloud
             Text_Images("./Data/Text/".$this->qq . "song_list.txt", $this->qq);
             $this->send("[CQ:image,file=" . $this->qq . ".jpg]");
             unlink("./Data/Text/".$this->qq . "song_list.txt");
+            $this->Rsend("请直接发送序号来选择");
+            $return_data=$this->context($song_Msg,$this->qun,$this->qq);
+            if (preg)
         }
     }
     public function plugins_Netease_cloud()
     {
         $return = $this->MsgS(["msg" => "点歌", "data" => $this->msg]);
         if ($return != null) {
-            $this->Netease_cloud_Api($return);
+            $this->Netease_cloud_Api($return,$this->msg);
         } elseif ($this -> msg == "点歌") {
             $this->Rsend("请输入你要搜索的歌曲");
             $return_data = $this->context("点歌", $this->qun, $this->qq);
-            $this->Netease_cloud_Api($return_data[2]);
+            $this->Netease_cloud_Api($return_data[2],$this->msg);
         }
     }
 }
