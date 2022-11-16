@@ -304,7 +304,7 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $Data) {
 });
 
 
-$ws->on('Task', function ($ws,$task) use ($database, $BOT_Config,$task_id) {
+$ws->on('Task', function ($ws,$task) use ($database, $BOT_Config) {
     $Data=$database->get('data');
     include './vendor/autoload.php';
     include_once './Module/Function.php';
@@ -329,7 +329,7 @@ $ws->on('Task', function ($ws,$task) use ($database, $BOT_Config,$task_id) {
         }
     }
     //返回任务执行的结果
-    print("异步任务{$task_id} -> OK\n");
+    print("异步任务 -> OK\n");
 });
 
 //监听WebSocket连接关闭事件
