@@ -30,7 +30,10 @@ class Netease_cloud
             unlink("./Data/Text/".$this->qq . "song_list.txt");
             $this->Rsend("请直接发送序号来选择");
             $return_data=$this->context($song_Msg,$this->qun,$this->qq);
-            if (preg)
+            if (preg_match("/^[0-9]+\$/",$return_data[2],$song_int)){
+                $list_data = $song_list[$song_int[0]-1];
+                $this->send()
+}
         }
     }
     public function plugins_Netease_cloud()
