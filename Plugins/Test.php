@@ -15,9 +15,12 @@ class Test
         if ($this->msg == "测试") {
             $this->send("测试成功");
             Co::sleep(2);
-            $this->send("测试魔法表情发送");
+            $this->send("测试魔法表情发送：猜拳石头");
             Co::sleep(2);
             $this->send("[CQ:rps,value=0]");
+            $this->send("剪刀");
+            Co::sleep(2);
+            $this->send("[CQ:rps,value=1]");
         }
     }
 }
