@@ -142,7 +142,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
             print_r($Data);
         }
     }
-    $database->set('data',['Data'=>$Data]);
+    $database->set('data',['Data'=>Json($Data)]);
     
     if (is_file("Restart")||is_file("Error")) {
         $Passive = new Passive($Data, $database, $BOT_Config, $ws);
