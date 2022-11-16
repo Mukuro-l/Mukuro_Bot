@@ -306,10 +306,10 @@ $ws->on('Receive', function ($ws, $fd, $reactor_id, $Data) {
 
 $ws->on('Task', function ($ws,$task_id) use ($database, $BOT_Config) {
     $Data=$database->get('data');
-    var_dump($Data);
     include './vendor/autoload.php';
     include_once './Module/Function.php';
     include_once './Module/Api.php';
+    $Data=de_Json($Data['Data']);
     $list = glob('./Plugins/*.php');
     $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
     for ($i = 0;$i < count($list);$i++) {
