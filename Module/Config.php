@@ -26,9 +26,10 @@ if (file_exists("config.json") != true) {
         echo "[notification]：Mukuro_Bot检测到配置更改已重新生成配置文件\n";
     }
 }
-$database = new Swoole\Table(4024);
-$database->column("Data", Swoole\Table::TYPE_STRING, 1024);
-$database->column("Group_message", Swoole\Table::TYPE_STRING, 1024);
+//申请1MB的内存
+$database = new Swoole\Table(1024*1024);
+$database->column("Data", Swoole\Table::TYPE_STRING, (1024*1024)/2);
+$database->column("Group_message", Swoole\Table::TYPE_STRING, (1024*1024)/2);
 $database->create();
 $BOT_Config = json_decode(file_get_contents("config.json"), true);
 //检查配置
