@@ -165,8 +165,11 @@ function Text_Images(string $text, int|string $qq):
 
     //半屏可容下
     //1382400/3969=348个字
-
+if (is_file($text)){
     $number=String_File_size($text);
+}else{
+    $number=String_size($text);
+}
     $tall=count(file($text))-20;
     if ($number>17&&$number!==17) {
         $number = $number-17;
