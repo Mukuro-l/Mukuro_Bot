@@ -22,12 +22,12 @@ class Netease_cloud
             $this->send("获取失败");
         } else {
             for ($i = 0;$i < 20;$i++) {
-                $list = ($i + 1) . ".<" . $song_list[$i]['name'] . ">--" . $song_list[$i]['artists'][0]['name'] . "\r\n";
-                file_put_contents("./Data/Text/".$this->qq . "song_list.txt", $list, FILE_APPEND);
+                $list .= ($i + 1) . ".<" . $song_list[$i]['name'] . ">--" . $song_list[$i]['artists'][0]['name'] . '\r\n';
+                
             }
-            Text_Images("./Data/Text/".$this->qq . "song_list.txt", $this->qq);
+            Text_Images($list, $this->qq);
             $this->send("[CQ:image,file=" . $this->qq . ".jpg]");
-            unlink("./Data/Text/".$this->qq . "song_list.txt");
+            
             $this->Rsend("请直接发送序号来选择");
             $return_data=$this->context($song_Msg,$this->qun,$this->qq);
             if (preg_match("/^[0-9]+\$/",$return_data[2],$song_int)){
