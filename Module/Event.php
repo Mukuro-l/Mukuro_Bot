@@ -43,7 +43,7 @@ class Event
                       if ($msg_data[2]=="验证"){
                          $this->send("[CQ:at,qq=".$this->qq."] 验证成功");
 }else{
-                         $this->ban($this->qun,$this->qq,2592000);
+                         $this->ban($this->qun,$this->qq,43200);
 }
 }
 }
