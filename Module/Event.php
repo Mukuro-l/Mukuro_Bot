@@ -40,7 +40,7 @@ class Event
                    $qq = $this->qq;
                    $this->send("[CQ:at,qq=".$this->qq."] 请在2分钟之内发送2次[验证]，超时则禁言");
                    Co::sleep(60);
-                   $msg_data=$this->context("验证",$x,$qq,120);
+                   $msg_data=$this->context(0,$x,$qq,120);
                       if ($msg_data[1]=="验证"){
                          $this->send("[CQ:at,qq=".$qq."] 验证成功");
 }else{
