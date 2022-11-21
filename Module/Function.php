@@ -174,10 +174,11 @@ if (is_file($text)){
     $tall=20;
     $array = explode('\r\n', $text);
         foreach ($array as $file) {
-            $quantity .= $file."\r\n";
+            $quantity = "直接发送数字来选择\r\n";
+            $quantity .= "$file\r\n";
             
         }
-        $text = $quantity;
+        $text_data = $quantity;
 }
     
     if ($number>17&&$number!==17) {
