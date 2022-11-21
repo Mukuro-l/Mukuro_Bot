@@ -168,9 +168,11 @@ function Text_Images(string $text, int|string $qq):
 if (is_file($text)){
     $number=String_File_size($text);
     $tall=count(file($text))-20;
+    $text_data=file_get_contents($text);
 }else{
     $number=String_size($text);
     $tall=20;
+    $text_data=$text;
 }
     
     if ($number>17&&$number!==17) {
@@ -243,8 +245,8 @@ if (is_file($text)){
         $font->angle(0);
     });
 
-
-    $image->text(file_get_contents($text), 0, 470, function ($font) {
+    
+    $image->text($text_data, 0, 470, function ($font) {
         $font->file('./Data/Font/cute.TTF');
         $font->size(60);
         $font->color('#000000');
