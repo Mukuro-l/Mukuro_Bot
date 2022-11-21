@@ -168,7 +168,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
         
     
     if (@$Data['meta_event_type'] !== 'heartbeat' && @$Data['meta_event_type'] !== 'lifecycle') {
-        if (@$Data['status'] === null &&@$Data["post_type"] === "message") {
+        if (@$Data['status'] === null &&@$Data["post_type"] === "message"||@$Data["post_type"] === "notice") {
             if ($Data['message_type']==="private"&&$Data["user_id"]==$BOT_Config["qhost"]) {
                 if ($Data['message'] === "!/终止") {
                     $Swoole_pid=exec("netstat -tunlp|grep ".$BOT_Config["port"]);
