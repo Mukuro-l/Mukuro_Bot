@@ -22,6 +22,7 @@ class Netease_cloud
             $this->send("获取失败");
         } else {
             for ($i = 0;$i < 20;$i++) {
+                $list = "歌曲列表：\r\n";
                 $list .= ($i + 1) . ".<" . $song_list[$i]['name'] . ">--" . $song_list[$i]['artists'][0]['name'] . '\r\n';
                 
             }
