@@ -172,7 +172,12 @@ if (is_file($text)){
 }else{
     $number=String_size($text);
     $tall=20;
-    $text_data=$text;
+    $array = explode('\r\n', $text);
+        foreach ($array as $file) {
+            $quantity .= $file."\r\n";
+            
+        }
+        $text = $quantity;
 }
     
     if ($number>17&&$number!==17) {
