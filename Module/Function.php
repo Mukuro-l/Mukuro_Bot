@@ -173,8 +173,8 @@ if (is_file($text)){
     $number=String_size($text);
     $tall=20;
     $array = explode('\r\n', $text);
+        $quantity = "直接发送数字来选择\r\n";
         foreach ($array as $file) {
-            $quantity = "直接发送数字来选择\r\n";
             $quantity .= "$file\r\n";
             
         }
