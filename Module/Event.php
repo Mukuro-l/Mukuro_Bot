@@ -13,7 +13,7 @@ class Event
     public function plugins_Event()
     {
         //需要开启入群验证的群，需要管理员权限
-        $group = [];
+        $group = [654816907];
         //管理员变动
         if ($this->notice_type == "group_admin") {
             if ($this->sub_type == "set") {
