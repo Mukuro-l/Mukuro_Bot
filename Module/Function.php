@@ -167,10 +167,12 @@ function Text_Images(string $text, int|string $qq):
     //1382400/3969=348个字
 if (is_file($text)){
     $number=String_File_size($text);
+    $tall=count(file($text))-20;
 }else{
     $number=String_size($text);
+    $tall=20;
 }
-    $tall=count(file($text))-20;
+    
     if ($number>17&&$number!==17) {
         $number = $number-17;
         $number = $number*63;
