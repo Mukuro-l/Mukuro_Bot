@@ -255,6 +255,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                                } else {
 
                                 $Passive->do_Passive("send", "暂无此插件");
+                                break;
                                 }
                             }
                         }
