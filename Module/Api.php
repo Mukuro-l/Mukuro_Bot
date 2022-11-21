@@ -368,7 +368,7 @@ $cq_data=$this->CQ_filt($this->msg);
                         $this->Rsend("超时已退出");
                         return;
                     }
-                } while ($context[2]==$msg);
+                } while (strstr($context[2],$msg));
             }
         }
         //重启服务$time为是否延时
