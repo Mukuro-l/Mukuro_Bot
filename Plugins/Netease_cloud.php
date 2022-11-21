@@ -21,7 +21,7 @@ class Netease_cloud
         if ($song_id == null) {
             $this->send("获取失败");
         } else {
-            $list = "歌曲列表：\r\n";
+            $list = '歌曲列表：\r\n';
             for ($i = 0;$i < 20;$i++) {
                 
                 $list .= ($i + 1) . ".<" . $song_list[$i]['name'] . ">--" . $song_list[$i]['artists'][0]['name'] . '\r\n';
