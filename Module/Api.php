@@ -357,8 +357,8 @@ $cq_data=$this->CQ_filt($this->msg);
                     $context[] = $result[$sm-3];
                     $context[] = $result[$sm-2];
                     $context[] = $result[$sm-1];
-                    if ($context[2] !== $msg && $context[1] !== null) {
-                        //print_r($context);
+                    if ($context[2] !== $msg && $context[1] !== null||$context[0]==null&&$context[2]!==null) {
+                        print_r($context);
                         return $context;
                     }
                                                     
