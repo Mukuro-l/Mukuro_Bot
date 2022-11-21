@@ -288,13 +288,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
             }
 }
         }
-        //Event控制
-        if (@$Data["post_type"] === "notice") {
-            //载入模块
-            include_once "./Module/Event.php";
-            $Event = new Event($Data, $database, $BOT_Config, $ws);
-            $Event->plugins_Event();
-        }
+        
     }
 });
 
@@ -322,6 +316,12 @@ $ws->on('Task', function ($ws,$task) use ($database, $BOT_Config) {
             }
         }
     }
+if (@$Data["post_type"] === "notice") {
+            //载入模块
+            include_once "./Module/Event.php";
+            $Event = new Event($Data, $database, $BOT_Config, $ws);
+            $Event->plugins_Event();
+        }
     //返回任务执行的结果
     print("异步任务[".date("Y-m-d H:i:s")."] -> OK\n");
 });
