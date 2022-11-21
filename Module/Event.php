@@ -37,13 +37,14 @@ class Event
                 $group_List = $this->File_retrieval("./Group/",true);
                 foreach ($group as $x) {
                 if (in_array($x,$group_List)){
+                   $qq = $this->qq;
                    $this->send("[CQ:at,qq=".$this->qq."] 请在2分钟之内发送2次[验证]，超时则禁言");
-                   sleep(10);
-                   $msg_data=$this->context("验证",$x,$this->qq,120);
-                      if ($msg_data[2]=="验证"){
-                         $this->send("[CQ:at,qq=".$this->qq."] 验证成功");
+                   Co::sleep(60);
+                   $msg_data=$this->context("验证",$x,$qq,120);
+                      if ($msg_data[1]=="验证"){
+                         $this->send("[CQ:at,qq=".$qq."] 验证成功");
 }else{
-                         $this->ban($this->qun,$this->qq,43200);
+                         $this->ban($this->qun,$qq,43200);
 }
 break;
 }
