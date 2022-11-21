@@ -12,6 +12,8 @@ class Event
     use Api;
     public function plugins_Event()
     {
+        //需要开启入群验证的群，需要管理员权限
+        $group = [];
         //管理员变动
         if ($this->notice_type == "group_admin") {
             if ($this->sub_type == "set") {
@@ -32,6 +34,19 @@ class Event
         if ($this->notice_type == "group_increase") {
             if ($this->sub_type == "approve") {
                 $this->send("hi！".$this->qq."管理员刚刚同意你入群，还不来打个招呼");
+                $group_List = $this->File_retrieval("./Group/",false);
+                foreach ($group as $x) {
+                if (in_array($x,$group_List)){
+                   $this->send("[CQ:at,qq=".$this->qq."] 请在2分钟之内发送[验证]，超时则禁言");
+                   $newqq = $this->qq;
+                   Swoole\Timer::after(120000,function() use($newqq){
+                   if ($this->qq==$newqq&&$this->msg=="验证"){
+                      $this->send("[CQ:at,qq=".$this->qq."] 验证成功");
+}else if($this->){}
+});
+}
+}
+
             } elseif ($this->sub_type == "invite") {
                 $this->send("被邀请入群？".$this->qq."是不是小黑子！");
             }
