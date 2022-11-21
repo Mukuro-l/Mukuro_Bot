@@ -547,9 +547,9 @@ $cq_data=$this->CQ_filt($this->msg);
             return $ret;
         }
         //Super user group
-        public function ban(int $qq, int $time = 600, array $array=null)
+        public function ban(int $group, int $qq, int $time = 600, array $array=null)
         {
-            $url = array("action" => "set_group_ban", "params" => array("group_id" => $this->qun, "user_id" => $qq, "duration" => $time));
+            $url = array("action" => "set_group_ban", "params" => array("group_id" => $group, "user_id" => $qq, "duration" => $time));
             $url = json_encode($url, JSON_UNESCAPED_UNICODE);
             $this->ws->push(intval($this->service_id), $url);
                                 
