@@ -38,12 +38,11 @@ class Event
                 foreach ($group as $x) {
                 if (in_array($x,$group_List)){
                    $this->send("[CQ:at,qq=".$this->qq."] 请在2分钟之内发送2次[验证]，超时则禁言");
-                   if ($msg_data=$this->context("验证",$x,$this->qq,120)){
+                   $msg_data=$this->context("验证",$x,$this->qq,120);
                       if ($msg_data[2]=="验证"){
                          $this->send("[CQ:at,qq=".$this->qq."] 验证成功");
 }else{
                          $this->ban($this->qq,2592000);
-}
 }
 }
 }
