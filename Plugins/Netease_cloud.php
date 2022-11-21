@@ -27,7 +27,7 @@ class Netease_cloud
                 $list .= ($i + 1) . ".<" . $song_list[$i]['name'] . ">--" . $song_list[$i]['artists'][0]['name'] . '\r\n';
                 
             }
-            echo $list;
+            
             Text_Images($list, $this->qq);
             $this->send("[CQ:image,file=" . $this->qq . ".jpg]");
             
