@@ -12,10 +12,8 @@ class Menu
     use Api;
     public function plugins_Menu()
     {
-        if ($this->msg == "菜单") {
-            $qq=$this->qq;
-            Auto_doc($qq);
-            return $this->send("[CQ:image,file=".$qq.".jpg]");
+        if ($this->msg == "菜单"){
+            $this->send(Auto_doc($this->qq));
         }
     }
     public function __destruct()
