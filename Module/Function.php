@@ -275,7 +275,7 @@ if (is_file($text)){
     //$image -> fit(150, 50);
     $image -> insert("./images/xx.png", 'top-left', 0, 0);
     $image -> save('./images/'.  $qq . ".jpg");
-    $image_data = "file://".realpath(dirname("./images/". $qq . ".jpg"))."/". $qq ."jpg";
+    $image_data = "file://".realpath(dirname("./images/". $qq . ".jpg"))."/". $qq .".jpg";
     return "[CQ:image,file=".$image_data."]";
 }
     
