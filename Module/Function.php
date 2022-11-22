@@ -173,7 +173,7 @@ if (is_file($text)){
     $number=String_size($text);
     $tall=20;
     $array = explode('\r\n', $text);
-        $quantity = "直接发送数字来选择\r\n";
+        $quantity = "\r\n";
         foreach ($array as $file) {
             $quantity .= "$file\r\n";
             
@@ -275,14 +275,14 @@ if (is_file($text)){
     //$image -> fit(150, 50);
     $image -> insert("./images/xx.png", 'top-left', 0, 0);
     $image -> save('./images/'.  $qq . ".jpg");
-    copy('./images/'.  $qq . ".jpg", "../gocq/data/images/" . $qq . ".jpg");
-    return "[CQ:image,file=".$qq.".jpg]";
+    $image_data = "file://".realpath(dirname("./images/". $qq . ".jpg"))."/". $qq ."jpg";
+    return "[CQ:image,file=".$image_data."]";
 }
     
     function Auto_doc(int $qq):
      string
     {
-        $Mukuro_doc_First = "<---六儿的小功能--->\r\n";
+        $Mukuro_doc_First = "<---六儿的插件--->\r\n";
         $data = file_get_contents("./Doc/Mukuro_Menu_Doc/Menu.doc");
         $Mukuro_doc = $Mukuro_doc_First . $data;
         file_put_contents("./Data/Text/".$qq.".txt", $Mukuro_doc);
