@@ -28,8 +28,8 @@ class Netease_cloud
                 
             }
             
-            Text_Images($list, $this->qq);
-            $this->send("[CQ:image,file=" . $this->qq . ".jpg]");
+            
+            $this->send(Text_Images($list, $this->qq));
             
             $this->Rsend("请直接发送序号来选择");
             $return_data=$this->context($song_Msg,$this->qun,$this->qq);
