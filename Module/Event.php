@@ -35,11 +35,11 @@ class Event
             if ($this->sub_type == "approve") {
                 $this->send("hi！".$this->qq."管理员刚刚同意你入群，还不来打个招呼");
                 $group_List = $this->File_retrieval("./Group/",true);
-                foreach ($group as $x) {
-                if (in_array($x,$group_List)){
+                foreach ($group_List as $x) {
+                if (in_array($x,$group)){
                    $qq = $this->qq;
                    $this->send("[CQ:at,qq=".$this->qq."] 请在2分钟之内发送2次[验证]，超时则禁言，结果会在2分钟之后告知");
-                   Co::sleep(120);
+                   Co::sleep(45);
                    $msg_data=$this->context(0,$x,$qq,120);
                       if ($msg_data[1]=="验证"){
                          $this->send("[CQ:at,qq=".$qq."] 验证成功");
