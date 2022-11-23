@@ -407,7 +407,7 @@ $cq_data=$this->CQ_filt($this->msg);
                         if ($return == '.' || $return == '..') {
                             continue;
                         }
-                        if (is_dir($dir.$return)) {
+                        if (is_dir($Dir.$return)) {
                             $group_dir[] = $return;
                         }
                     }
