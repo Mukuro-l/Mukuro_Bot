@@ -14,7 +14,8 @@ use Swoole\Coroutine;
 use Swoole\Coroutine\Channel;
 use function Swoole\Coroutine\run;
 use Mukuro\Module\Passive;
-
+//GC
+gc_enable();
 //运行环境检测，现只支持Linux系统，且不支持多php版本环境
 if (!extension_loaded("swoole")) {
     exit("未检测到Swoole扩展，请参考wiki.swoole.com \n");
@@ -115,6 +116,7 @@ $ws->on('Open', function ($ws, $request) use ($BOT_Config) {
 //监听WebSocket消息事件
 $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 
+gc_enable();
 
 //避免一些错误
     include_once 'initialization.php';
@@ -295,6 +297,7 @@ $menu_Array[]=$return[2];
 
 //异步回调
 $ws->on('Task', function ($ws,$task) use ($database, $BOT_Config) {
+    gc_enable();
     $Data=$database->get('data');
     include './vendor/autoload.php';
     include_once './Module/Function.php';
