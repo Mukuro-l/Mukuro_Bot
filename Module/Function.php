@@ -174,6 +174,8 @@ if (is_file($text)){
     }
     
     $text_data=file_get_contents($text);
+    print_r($text_data);
+    echo "ok\n";
 }else{
     $number=String_size($text);
     $tall=20;
@@ -224,7 +226,7 @@ if (is_file($text)){
     });
     */
 
-    print_r($text_data);
+    
 
     $time_array = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
 
