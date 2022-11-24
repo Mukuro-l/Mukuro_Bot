@@ -280,7 +280,8 @@ $menu_Array[]=$return[2];
                 for ($i = 0;$i < count($list);$i++) {
                     $file = $file_array[$i]["插件名"];
                         
-                    if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
+            
+                       $Menu_data = '插件列表：\r\n';
                         for ($i = 0;$i < count($list);$i++) {
                             $Menu_doc = explode('.', $file_array[$i]["插件名"]);
                             $doc_data = file_get_contents("./Doc/" . $Menu_doc[0] . "/" . $Menu_doc[0] . ".txt");
@@ -290,12 +291,12 @@ $menu_Array[]=$return[2];
 指令：?(.*)
 返回：?(.*)\$/m",trim($doc_data),$return)){
 
-file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc", $return[2] , FILE_APPEND);
+$Menu_data .= $return[2];
 }
                             
                         }
                     }
-                }
+                
                 $task_id = $ws->task($Data);
                 if (is_file("./Module/Repeat.php")) {
                     include_once "./Module/Repeat.php";
