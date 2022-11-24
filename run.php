@@ -223,6 +223,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                         $Passive->do_Passive("send", "已成功".$instruction."此群聊");
                     }
                     if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭") {
+$menu_Array = [];
                         for ($i=0;$i<count($file_array);$i++) {
                             $Jiezhu_Plugins=explode('.', $file_array[$i]["插件名"]);
                             if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt")) {
@@ -234,6 +235,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 返回：?(.*)\$/m",trim($menu_data),$return)){
 
 }
+$menu_Array[]=$return[2];
                                 if (trim($return[2])==$Jiezhu[1]) {
                                     $menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt", $Data['user_id']);
                                     $Passive->do_Passive("send", $menu_data_code);
@@ -256,13 +258,12 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 详情：?(.*)
 指令：?(.*)
 返回：?(.*)\$/m",trim($menu_data),$return)){
-print_r($return);
 }
                                 $menu_Array[]=$return[2];
                                 if (trim($return[2])==$Jiezhu[1]) {
                                     $menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt", $Data['user_id']);
                                     $Passive->do_Passive("send", $menu_data_code);
-                               } else {
+                               } else if (!in_array($return[2],$menu_Array)){
 
                                 $Passive->do_Passive("send", "暂无此插件");
                                 break;
