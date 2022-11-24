@@ -282,6 +282,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 详情：?(.*)
 指令：?(.*)
 返回：?(.*)\$/m",trim($doc_data),$return)){
+print_r($return);
 file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.txt", $return[1][2] . "\r\n", FILE_APPEND);
 }
                             
