@@ -290,6 +290,7 @@ if (is_file($text)){
     function Auto_doc(int $qq):
      string
     {
+                        $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
                         $list = glob('./Plugins/*.php');
                         $Menu_data = '插件列表：\r\n';
                         for ($i = 0;$i < count($list);$i++) {
