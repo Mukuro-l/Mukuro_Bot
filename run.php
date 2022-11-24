@@ -272,6 +272,7 @@ $menu_Array[]=$return[2];
             //这里会对群的全局状态做出判断，但如果插件状态为关，也不会载入
             if (!empty($Data['group_id'])){
             if (json_decode(file_get_contents("./Group/".$Data['group_id']."/config.json"), true)["status"] === "开" || $Data['message_type'] === 'private') {
+                $task_id = $ws->task($Data);
                 $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
                 for ($i = 0;$i < count($list);$i++) {
                     $file = $file_array[$i]["插件名"];
@@ -279,7 +280,7 @@ $menu_Array[]=$return[2];
             
                        
       
-                $task_id = $ws->task($Data);
+                
                 if (is_file("./Module/Repeat.php")) {
                     include_once "./Module/Repeat.php";
                     $Event = new Repeat($Data, $database, $BOT_Config, $ws);
