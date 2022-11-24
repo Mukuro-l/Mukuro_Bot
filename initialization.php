@@ -47,9 +47,9 @@ $list = glob('./Plugins/*.php');
                                 $Doc_doc = explode("@doc", $Doc_doc_[4]);
                                 $Doc_comment = explode("@comment", $Doc_doc_[5]);
                                 $Doc_return = explode("@return", $Doc_doc_[6]);
-                                $Doc_data = "    Mukuro  --" . $Plugins_name . "插件帮助\r\n名字：[" . trim($Doc_name[1]) . "]\r\n详情：[" . trim($Doc_doc[1]) . "]\r\n指令：[" . trim($Doc_comment[1]) . "]\r\n返回：[" . trim($Doc_return[1]) . "]";
+                                $Doc_data = "    Mukuro  --" . $Plugins_name . "插件帮助\r\n名字：" . trim($Doc_name[1]) . "\r\n详情：" . trim($Doc_doc[1]) . "\r\n指令：" . trim($Doc_comment[1]) . "\r\n返回：" . trim($Doc_return[1]);
                                 mkdir("./Doc/" . $Plugins_name);
-                                file_put_contents("./Doc/" . $Plugins_name . "/" . $Plugins_name . ".doc", $Doc_data);
+                                file_put_contents("./Doc/" . $Plugins_name . "/" . $Plugins_name . ".txt", $Doc_data);
                             }
                         } catch (Exception $e) {
                             echo $e->getMessage();
