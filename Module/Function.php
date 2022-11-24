@@ -290,6 +290,7 @@ if (is_file($text)){
     function Auto_doc(int $qq):
      string
     {
+                        $list = glob('./Plugins/*.php');
                         $Menu_data = '插件列表：\r\n';
                         for ($i = 0;$i < count($list);$i++) {
                             $Menu_doc = explode('.', $file_array[$i]["插件名"]);
