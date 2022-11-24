@@ -305,7 +305,7 @@ $Menu_data .= $return[2].'\r\n';
 }
                             
                         }
-                    }
+                    
         return Text_Images($Menu_data, $qq);
     }
 
