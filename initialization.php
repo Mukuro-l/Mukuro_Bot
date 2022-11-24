@@ -6,12 +6,13 @@ include_once './Module/Api.php';
 //应该在启动之前开启一个进程进行初始化
 if (!is_dir("Group")) {
     mkdir("Group");
-    mkdir("Doc");
-    mkdir("Doc/Mukuro_Menu_Doc/");
 } else {
     if (!is_dir('./Data/Text/')) {
         mkdir('./Data/Text/');
     }
+}
+if (!is_dir("Doc")) {
+    mkdir("Doc");
 }
 
 $file_array = json_decode(file_get_contents("Plugins_switch.json"), true);
