@@ -290,7 +290,7 @@ $menu_Array[]=$return[2];
 指令：?(.*)
 返回：?(.*)\$/m",trim($doc_data),$return)){
 
-file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.txt", $return[2] , FILE_APPEND);
+file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.txt", $return[2] ."\r", FILE_APPEND);
 }
                             
                         }
