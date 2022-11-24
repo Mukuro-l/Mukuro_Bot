@@ -255,6 +255,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 详情：?(.*)
 指令：?(.*)
 返回：?(.*)\$/m",trim($menu_data),$return)){
+print_r($return);
 }
                                 if (trim($return[2])==$Jiezhu[1]) {
                                     $menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt", $Data['user_id']);
@@ -286,7 +287,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 指令：?(.*)
 返回：?(.*)\$/m",trim($doc_data),$return)){
 
-file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.txt", $return[2] . "\r\n", FILE_APPEND);
+file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.txt", $return[2] , FILE_APPEND);
 }
                             
                         }
