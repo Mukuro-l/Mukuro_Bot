@@ -78,8 +78,8 @@ if (!is_file("../gocq/go-cqhttp")) {
 
 
 //每次启动都会初始化
-if (is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
-    unlink("./Doc/Mukuro_Menu_Doc/Menu.doc");
+if (is_file("./Doc/Mukuro_Menu_Doc/Menu.txt")) {
+    unlink("./Doc/Mukuro_Menu_Doc/Menu.txt");
 }
 if (!is_dir("vendor")) {
     //解压zip操作
@@ -225,13 +225,17 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                     if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭") {
                         for ($i=0;$i<count($file_array);$i++) {
                             $Jiezhu_Plugins=explode('.', $file_array[$i]["插件名"]);
-                            if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc")) {
-                                $menu_data=file_get_contents("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc");
-                                $doc_name = explode("]", $menu_data);
-                                $doc_name = explode("[", $doc_name[0]);
-            
-                                if (trim($doc_name[1])==$Jiezhu[1]) {
-                                    $menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".doc", $Data['user_id']);
+                            if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt")) {
+                                $menu_data=file_get_contents("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt");
+                                if (preg_match("/^Mukuro ?(.*)
+名字：?(.*)
+详情：?(.*)
+指令：?(.*)
+返回：?(.*)\$/m",trim($menu_data),$return)){
+
+}
+                                if (trim($return[1][2])==$Jiezhu[1]) {
+                                    $menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt", $Data['user_id']);
                                     $Passive->do_Passive("send", $menu_data_code);
                                 }
                             }
