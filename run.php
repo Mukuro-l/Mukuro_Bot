@@ -246,6 +246,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                 } else {
                     if ($Jiezhu[1] != "开" && $Jiezhu[1] != "闭") {
                         $Passive = new Passive($Data, $database, $BOT_Config, $ws);
+                        $menu_Array = [];
                         for ($i=0;$i<count($file_array);$i++) {
                             $Jiezhu_Plugins=explode('.', $file_array[$i]["插件名"]);
                             if (is_file("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt")) {
@@ -257,6 +258,7 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
 返回：?(.*)\$/m",trim($menu_data),$return)){
 print_r($return);
 }
+                                $menu_Array[]=$return[2];
                                 if (trim($return[2])==$Jiezhu[1]) {
                                     $menu_data_code=Text_Images("./Doc/".$Jiezhu_Plugins[0]."/".$Jiezhu_Plugins[0].".txt", $Data['user_id']);
                                     $Passive->do_Passive("send", $menu_data_code);
