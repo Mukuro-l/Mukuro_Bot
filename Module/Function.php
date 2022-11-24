@@ -290,8 +290,22 @@ if (is_file($text)){
     function Auto_doc(int $qq):
      string
     {
-        
-        return Text_Images("./Doc/Mukuro_Menu_Doc/Menu.doc", $qq);
+                        $Menu_data = '插件列表：\r\n';
+                        for ($i = 0;$i < count($list);$i++) {
+                            $Menu_doc = explode('.', $file_array[$i]["插件名"]);
+                            $doc_data = file_get_contents("./Doc/" . $Menu_doc[0] . "/" . $Menu_doc[0] . ".txt");
+                            if (preg_match("/^Mukuro ?(.*)
+名字：?(.*)
+详情：?(.*)
+指令：?(.*)
+返回：?(.*)\$/m",trim($doc_data),$return)){
+
+$Menu_data .= $return[2].'\r\n';
+}
+                            
+                        }
+                    }
+        return Text_Images($Menu_data, $qq);
     }
 
 function Heihei(string $order, int $qq):string
