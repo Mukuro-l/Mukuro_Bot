@@ -283,7 +283,7 @@ if (is_file($text)){
      string
     {
         $Mukuro_doc_First = "<---六儿的插件--->\r\n";
-        $data = file_get_contents("./Doc/Mukuro_Menu_Doc/Menu.doc");
+        $data = file_get_contents("./Doc/Mukuro_Menu_Doc/Menu.txt");
         $Mukuro_doc = $Mukuro_doc_First . $data;
         file_put_contents("./Data/Text/".$qq.".txt", $Mukuro_doc);
         return Text_Images("./Data/Text/".$qq.".txt", $qq);
