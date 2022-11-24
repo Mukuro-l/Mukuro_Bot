@@ -167,15 +167,14 @@ function Text_Images(string $text, int|string $qq):
     //1382400/3969=348个字
 if (is_file($text)){
     $number=String_File_size($text);
-   
+    $text_data=file_get_contents($text);
+    echo $text_data."\n";
     $tall=count(file($text))-20;
     if ($tall<20){
     $tall=20;
     }
     
-    $text_data=file_get_contents($text);
-    print_r($text_data);
-    echo "ok\n";
+    
 }else{
     $number=String_size($text);
     $tall=20;
@@ -292,7 +291,7 @@ if (is_file($text)){
      string
     {
         
-        return Text_Images("./Doc/Mukuro_Menu_Doc/Menu.txt", $qq);
+        return Text_Images("./Doc/Mukuro_Menu_Doc/Menu.doc", $qq);
     }
 
 function Heihei(string $order, int $qq):string
