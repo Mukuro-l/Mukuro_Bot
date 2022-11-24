@@ -269,13 +269,18 @@ $ws->on('Message', function ($ws, $frame) use ($database, $BOT_Config) {
                 for ($i = 0;$i < count($list);$i++) {
                     $file = $file_array[$i]["插件名"];
                         
-                    if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.doc")) {
+                    if (!is_file("./Doc/Mukuro_Menu_Doc/Menu.txt")) {
                         for ($i = 0;$i < count($list);$i++) {
                             $Menu_doc = explode('.', $file_array[$i]["插件名"]);
-                            $doc_data = file_get_contents("./Doc/" . $Menu_doc[0] . "/" . $Menu_doc[0] . ".doc");
-                            $doc_name = explode("]", $doc_data);
-                            $doc_name = explode("[", $doc_name[0]);
-                            file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.doc", $doc_name[1] . "\r\n", FILE_APPEND);
+                            $doc_data = file_get_contents("./Doc/" . $Menu_doc[0] . "/" . $Menu_doc[0] . ".txt");
+                            if (preg_match("/^Mukuro ?(.*)
+名字：?(.*)
+详情：?(.*)
+指令：?(.*)
+返回：?(.*)\$/m",trim($doc_data),$return)){
+file_put_contents("./Doc/Mukuro_Menu_Doc/Menu.txt", $return[1][2] . "\r\n", FILE_APPEND);
+}
+                            
                         }
                     }
                 }
