@@ -35,8 +35,8 @@ class Event
             if ($this->sub_type == "approve") {
                 $this->send("hi！".$this->qq."管理员刚刚同意你入群，还不来打个招呼");
                 $group_List = $this->File_retrieval("./Group/",true);
-                foreach ($group_List as $x) {
-                if (in_array($x,$group)){
+                foreach ($group as $x) {
+                if (in_array($x,$group_List)){
                    $qq = $this->qq;
                    $this->send("[CQ:at,qq=".$this->qq."] 请在2分钟之内发送2次[验证]，超时则禁言，结果会在2分钟之后告知");
                    Co::sleep(45);
