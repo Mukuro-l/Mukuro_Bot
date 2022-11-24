@@ -281,22 +281,8 @@ $menu_Array[]=$return[2];
                     $file = $file_array[$i]["插件名"];
                         
             
-                       $Menu_data = '插件列表：\r\n';
-                        for ($i = 0;$i < count($list);$i++) {
-                            $Menu_doc = explode('.', $file_array[$i]["插件名"]);
-                            $doc_data = file_get_contents("./Doc/" . $Menu_doc[0] . "/" . $Menu_doc[0] . ".txt");
-                            if (preg_match("/^Mukuro ?(.*)
-名字：?(.*)
-详情：?(.*)
-指令：?(.*)
-返回：?(.*)\$/m",trim($doc_data),$return)){
-
-$Menu_data .= $return[2];
-}
-                            
-                        }
-                    }
-                
+                       
+      
                 $task_id = $ws->task($Data);
                 if (is_file("./Module/Repeat.php")) {
                     include_once "./Module/Repeat.php";
