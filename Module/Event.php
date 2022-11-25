@@ -37,6 +37,7 @@ class Event
                 $group_List = $this->File_retrieval("./Group/",true);
                 foreach ($group as $x) {
                 if (in_array($x,$group_List)){
+                   if ($x==$this->qun){
                    $qq = $this->qq;
                    $this->send("[CQ:at,qq=".$this->qq."] 请在2分钟之内发送2次[验证]，超时则禁言，结果会在2分钟之后告知");
                    Co::sleep(45);
@@ -45,6 +46,7 @@ class Event
                          $this->send("[CQ:at,qq=".$qq."] 验证成功");
 }else{
                          $this->ban($this->qun,$qq,43200);
+}
 }
 break;
 }
